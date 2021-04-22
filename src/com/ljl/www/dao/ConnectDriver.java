@@ -12,9 +12,26 @@ public class ConnectDriver {
 
          Connection connection = DriverManager.getConnection(url,username,password);
 
+         /*connection.rollback();
+         connection.commit();*/
+         //connection.setAutoCommit() ;
+
          Statement statement = connection.createStatement();
          String sql="SELECT * FROM  course";
          ResultSet resultSet=statement.executeQuery(sql);
+
+         /*
+         statement.execute();//基本不用？
+         statement.executeQuery();//查
+         statement.executeUpdate();//增删改
+         statement.executeBatch();//不作要求
+         */
+          /*resultSet.beforeFirst();
+          resultSet.afterLast();
+          resultSet.next();
+          resultSet.previous();//前一行
+          resultSet.absolute();//指定行
+          */
 
          while(resultSet.next()){
              System.out.println("id="+resultSet.getObject("CNO"));

@@ -1,0 +1,10 @@
+CREATE TABLE POSTS(  
+posts_id VARCHAR(15)PRIMARY KEY,user_id VARCHAR(11), 
+posts_new_date DATETIME DEFAULT '2021-01-01' NOT NULL,
+post_title MEDIUMTEXT,
+post_article LONGTEXT,
+likes_count INT,
+stores_count INT,
+comments_count INT,
+FOREIGN KEY(user_id) REFERENCES USERS(user_account) ON DELETE CASCADE ON UPDATE CASCADE
+);##TYPE =INNODB;##ENGINE INNODB;
