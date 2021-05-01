@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.Login">
+   <children>
+      <Label layoutX="163.0" layoutY="67.0" prefHeight="44.0" prefWidth="72.0" text="账号：">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="163.0" layoutY="169.0" prefHeight="44.0" prefWidth="72.0" text="密码：">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="clientNameField" layoutX="235.0" layoutY="74.0" />
+      <TextField fx:id="clientPasswordField" layoutX="235.0" layoutY="176.0" />
+      <Button fx:id="loginButton" layoutX="423.0" layoutY="265.0" mnemonicParsing="false" onAction="#eventOnButtonLogin" text="登录" />
+      <Button fx:id="registerButton" layoutX="181.0" layoutY="265.0" mnemonicParsing="false" onAction="#eventOnButtonRegister" text="注册" />
+      <Label layoutX="159.0" layoutY="119.0" prefHeight="44.0" prefWidth="72.0" text="电话：">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="clientTelField" layoutX="235.0" layoutY="126.0" />
+   </children>
+</AnchorPane>

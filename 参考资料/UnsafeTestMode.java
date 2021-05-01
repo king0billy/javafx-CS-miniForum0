@@ -1,3 +1,6 @@
+/**
+ * 此类学习用，没有preparedStatement会导致sql注入，作废
+ */
 package com.ljl.www.dao;
 
 import java.sql.Connection;

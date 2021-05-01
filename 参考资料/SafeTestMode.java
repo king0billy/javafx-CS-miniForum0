@@ -1,3 +1,6 @@
+/**
+ * 对课本例题表的测试
+ */
 package com.ljl.www.dao;
 
 import java.sql.*;

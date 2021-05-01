@@ -1,5 +1,5 @@
 ##命令行create datebase
-CREATE TABLE USERS(  
+CREATE TABLE subscriber(  
 user_account VARCHAR(11) PRIMARY KEY, 
 user_password VARCHAR(20) NOT NULL,
 user_nickname VARCHAR(20),

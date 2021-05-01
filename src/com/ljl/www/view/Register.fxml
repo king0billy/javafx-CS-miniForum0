@@ -6,9 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.ljl.www.view.Register"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.Register">
+   <children>
+      <Label layoutX="162.0" layoutY="173.0" text="输入密码：" />
+      <PasswordField fx:id="passWord1st" layoutX="237.0" layoutY="168.0" />
+      <PasswordField fx:id="passWord2nd" layoutX="237.0" layoutY="241.0" />
+      <Label layoutX="137.0" layoutY="246.0" text="再次输入密码：" />
+      <TextField fx:id="clientTelField" layoutX="237.0" layoutY="98.0" />
+      <Label layoutX="152.0" layoutY="103.0" text="输入手机号：" />
+      <Button fx:id="enroll" layoutX="288.0" layoutY="319.0" mnemonicParsing="false" onAction="#eventOnButtonRegister" text="注册" />
+      <Button fx:id="backToLogin" layoutX="469.0" layoutY="349.0" mnemonicParsing="false" onAction="#eventOnButtonBackToLogin" text="返回登录页面" />
+      <Label layoutX="14.0" layoutY="43.0" text="若想注册为管理员，请输入密钥：" />
+      <PasswordField fx:id="adminCodeField" layoutX="237.0" layoutY="38.0" promptText="非必填" />
+   </children>
 </AnchorPane>

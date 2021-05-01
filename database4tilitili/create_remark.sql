@@ -1,0 +1,12 @@
+CREATE TABLE remark(  
+##REPLY_id VARCHAR(15)PRIMARY KEY,
+father_id BIGINT,
+floor INT DEFAULT 1,
+client_id BIGINT, 
+remark_new_date DATETIME DEFAULT '2021-01-01' NOT NULL,
+remark_article LONGTEXT,
+thumbs_up_count INT,
+PRIMARY KEY(father_id,floor),
+FOREIGN KEY(client_id) REFERENCES client(client_id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY(father_id) REFERENCES POST(post_id) ON DELETE CASCADE ON UPDATE CASCADE 
+);##TYPE =INNODB;##ENGINE INNODB;

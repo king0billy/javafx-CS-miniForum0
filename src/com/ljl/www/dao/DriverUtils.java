@@ -1,3 +1,6 @@
+/**
+ * 提供静态方法块获取properties文件数据，getConnection链接数据库，release释放
+ */
 package com.ljl.www.dao;
 
 import java.io.IOException;

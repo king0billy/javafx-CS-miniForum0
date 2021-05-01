@@ -1,7 +1,11 @@
+/**
+ * 此类学习用，没有封装，作废
+ */
 package com.ljl.www.dao;
 
 
 import java.sql.*;
+
 
 public class ConnectDriver {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {

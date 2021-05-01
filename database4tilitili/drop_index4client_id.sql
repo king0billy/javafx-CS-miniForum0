@@ -1,0 +1,1 @@
+DROP INDEX clnt_id ON client;

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX clnt_id ON client(client_id ASC)
