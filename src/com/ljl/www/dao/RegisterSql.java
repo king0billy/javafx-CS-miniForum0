@@ -3,11 +3,15 @@
  */
 package com.ljl.www.dao;
 
+import com.ljl.www.po.Client;
 import com.ljl.www.util.MyID;
 
 import java.sql.*;
 
 public class RegisterSql{
+    public long insert(Client client){
+        return (client.getClientTel(),client.getClientPassword());
+    }
     public long insert(String tel,String password){
         Connection connection=null;
         PreparedStatement statement=null;

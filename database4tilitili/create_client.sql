@@ -7,7 +7,7 @@ client_password VARCHAR(20) NOT NULL,
 client_nickname VARCHAR(20),
 client_sex ENUM('男','man','女','woman','保密','secret','LGBTQ'),
 client_address VARCHAR(500),
-client_descript MEDIUMTEXT,
+client_description MEDIUMTEXT,
 ##user_descript VARCHAR(2184),
 client_enroll_date DATETIME DEFAULT '2021-01-01' NOT NULL,
 client_privilege SMALLINT

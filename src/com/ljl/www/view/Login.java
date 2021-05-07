@@ -2,6 +2,7 @@ package com.ljl.www.view;
 
 
 import com.ljl.www.dao.LoginQuery;
+import com.ljl.www.dao.PostListSql;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -31,6 +33,8 @@ public class Login {
     @FXML
     private TextField clientTelField;
 
+    @FXML
+    private CheckBox keepPassword;
 
     public Button getRegisterField() {
         return registerButton;
@@ -103,16 +107,6 @@ public class Login {
             }
         }
     }
-    /*public void eventOnButtonRegister()throws Exception{
-        //String text = text_1.getText();//获取文本框输入的内容
-
-        Parent root= FXMLLoader.load(getClass().getResource("Register.fxml"));
-        Scene scene=new Scene(root);
-        primaryStage.setTitle("注册&登录界面");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        System.out.println("fuck u!!");
-    }*/
     public void eventOnButtonRegister(ActionEvent event) throws IOException {
     /*
         Parent Operation_Parent = FXMLLoader.load(getClass().getResource("CreateString.fxml"));
@@ -129,6 +123,11 @@ public class Login {
         reflectedStage.setScene(creatingScene);
         reflectedStage.show();
     }
+    public void eventOnCheckBoxKeepON(ActionEvent event) throws IOException {
 
+    }
+    public void eventOnCheckBoxKeepOff(ActionEvent event) throws IOException {
+
+    }
 
 }

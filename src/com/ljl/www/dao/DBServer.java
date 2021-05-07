@@ -3,18 +3,30 @@
  */
 package com.ljl.www.dao;
 
+import com.ljl.www.po.Client;
+import com.ljl.www.po.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-public class DriverUtils {
+
+public class DBServer {
     private static String driver=null;
     private static String url=null;
     private static String username=null;
     private static String password=null;
 
-    static{
+    public static Client client;
+    public static Favorite favorite;
+    public static Post post;
+    public static Remark remark;
+    public static Report report;
+    public static ThumbsUp thumbsUp;
+
+
+    public DBServer(){
         try{
             InputStream input =DriverUtils.class.getClassLoader().getResourceAsStream("db.properties");
             Properties properties=new Properties();
@@ -23,6 +35,7 @@ public class DriverUtils {
             url=properties.getProperty("url");
             username=properties.getProperty("username");
             password=properties.getProperty("password");
+            DriverManager.getConnection(url,username,password);
 
             Class.forName(driver);
 
@@ -30,10 +43,11 @@ public class DriverUtils {
             e.printStackTrace();
         }
     }
-
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url,username,password);
+    public long insertClient(Client client){
+        return  new RegisterSql().insert(client);
     }
+
+
 
     public static void release(Connection connection, Statement statement, ResultSet resultSet){
         if(resultSet!=null){

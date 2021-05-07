@@ -1,14 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.ljl.www.view.HomePage"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.HomePage">
+   <children>
+      <TabPane prefHeight="768.0" prefWidth="1506.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="主页">
+            <content>
+              <AnchorPane fx:id="rootAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="458.0" prefWidth="1505.0">
+                     <children>
+                        <Pagination fx:id="postPagination" layoutX="224.0" layoutY="199.0" prefHeight="729.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="206.0" AnchorPane.topAnchor="0.0">
+                          <!--- <test pattern="SECAM" />
+                          <fx:define>
+                            <fx:include source="Login.fxml" fx:id="loginButton" />
+                            <Button layoutX="84.0" layoutY="10.0" mnemonicParsing="false" text="发帖" />
+                          </fx:define>
+                       <test pattern="NTSC" /> -->
 
+                        </Pagination>
+                        <Button fx:id="refreshPost" layoutX="1300.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" text="刷新事件列表" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="事件详情">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="发布事件">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="已发布事件">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="已发布评论">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+          <Tab text="点赞合集">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="收藏合集">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="举办与私信合集">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="个人信息">
+              <content>
+
+                      <fx:include fx:id="fx_user_pane" source="Login.fxml" />
+
+              </content>
+            </Tab>
+            <Tab text="他人信息">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab fx:id="reserveTab" text="保留页">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ToolBar layoutX="404.0" layoutY="365.0" prefHeight="44.0" prefWidth="681.0">
+                          <items>
+                            <Button fx:id="BackButton" mnemonicParsing="false" text="返回" />
+                              <Button fx:id="HomePageButton" mnemonicParsing="false" text="主页" />
+                              <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="5.0" />
+                              <Separator layoutX="120.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="5.0" />
+                              <Button layoutX="84.0" layoutY="10.0" mnemonicParsing="false" text="发帖" />
+                              <Button layoutX="169.0" layoutY="10.0" mnemonicParsing="false" text="点赞列表" />
+                              <Button layoutX="243.0" layoutY="10.0" mnemonicParsing="false" text="收藏列表" />
+                              <Button layoutX="317.0" layoutY="10.0" mnemonicParsing="false" text="举报信息列表" />
+                              <Separator layoutX="131.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="5.0" />
+                          </items>
+                        </ToolBar>
+                        <SplitMenuButton layoutX="240.0" layoutY="269.0" mnemonicParsing="false" text="SplitMenuButton">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </SplitMenuButton>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
 </AnchorPane>

@@ -3,9 +3,16 @@
  */
 package com.ljl.www.dao;
 
+import com.ljl.www.po.Client;
+
 import java.sql.*;
 
 public class LoginQuery{
+    public boolean query(Client client){
+        if(client.getClientTel().equals("")){
+                query(client.getClientId().toString(),client.getClientPassword());
+        }
+    }
     public boolean query(String id,String password){
         Connection connection=null;
         PreparedStatement statement=null;
@@ -17,7 +24,7 @@ public class LoginQuery{
             statement=connection.prepareStatement(sql);
             statement.setString(1,id);
             statement.setString(2,password);
-            resultSets=statement.executeQuery();
+            //resultSets=statement.executeQuery();
             while(resultSets.next()){
                 tag=true;
                 System.out.println(resultSets.getString("client_password"));

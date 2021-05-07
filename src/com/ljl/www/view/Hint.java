@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 
 
 public class Hint {
-    static void  pop(String shit) {
+    public static void  pop(String shit) {
         Label lbl = new Label(shit);//创建面板
        // Font font=new Font("Monospaced", Font.BOLD,32);//设置字体格式和大小
        // lbl.setFont(font);
