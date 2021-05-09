@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotResult;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 
 
 public class Hint {
@@ -37,7 +39,7 @@ public class Hint {
         PopStage.setScene(creatingScene);
         PopStage.show();
     }
-    static void  pop(long id) {
+    static void  pop(Long id) {
         Label lbl = new Label("注册成功！请复制并保管你的id！");//创建面板
         TextField textField=new TextField(String.valueOf(id));
         lbl.setFont(Font.font("Cambria", 20));
@@ -51,5 +53,14 @@ public class Hint {
         PopStage.initModality(Modality.APPLICATION_MODAL);
         PopStage.setScene(creatingScene);
         PopStage.show();
+    }
+    public void sceneSwitch(String xml) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource(xml));//只能加载同一包下的？
+        Scene creatingScene = new Scene(parent);
+        ActionEvent event = null;
+        Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
+        reflectedStage.hide();
+        reflectedStage.setScene(creatingScene);
+        reflectedStage.show();
     }
 }

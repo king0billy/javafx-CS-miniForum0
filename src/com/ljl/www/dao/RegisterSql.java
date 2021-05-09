@@ -9,14 +9,14 @@ import com.ljl.www.util.MyID;
 import java.sql.*;
 
 public class RegisterSql{
-    public long insert(Client client){
-        return (client.getClientTel(),client.getClientPassword());
+    public Long insert(Client client){
+        return insert(client.getClientTel(),client.getClientPassword());
     }
-    public long insert(String tel,String password){
+    public Long insert(String tel,String password){
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
-        long tag=0L;
+        Long tag=-9223372036854775808L;
         try{
             connection = DriverUtils.getConnection();
             String sql0="SELECT * FROM client WHERE client_tel=?";

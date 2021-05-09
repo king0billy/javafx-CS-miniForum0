@@ -1,39 +1,40 @@
 package com.ljl.www.po;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Favorite {
+public class Favorite implements Serializable {
 
-  private long postId;
-  private long clientId;
+  private Long postId;
+  private Long clientId;
   private java.sql.Timestamp favoriteNewDate;
   private String tag;
 
   public Favorite() {
   }
 
-  public Favorite(long postId, long clientId, Timestamp favoriteNewDate, String tag) {
+  public Favorite(Long postId, Long clientId, Timestamp favoriteNewDate, String tag) {
     this.postId = postId;
     this.clientId = clientId;
     this.favoriteNewDate = favoriteNewDate;
     this.tag = tag;
   }
 
-  public long getPostId() {
+  public Long getPostId() {
     return postId;
   }
 
-  public void setPostId(long postId) {
+  public void setPostId(Long postId) {
     this.postId = postId;
   }
 
 
-  public long getClientId() {
+  public Long getClientId() {
     return clientId;
   }
 
-  public void setClientId(long clientId) {
+  public void setClientId(Long clientId) {
     this.clientId = clientId;
   }
 

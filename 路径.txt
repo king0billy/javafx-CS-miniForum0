@@ -1,7 +1,8 @@
-C:\[D]\Software_Engeenering\GIT\android
+【把父文件夹和子文件夹在idea下当两个窗口打开】C:\[D]\Software_Engeenering\GIT\android
 C\[D]\Software_Engeenering\GIT\android
 C:/[D]/Software_Engeenering/GIT/android
 C:/Users/22427/Documents/Navicat/MySQL/Servers/android
 C:/Users/22427/OneDrive - mail2.gdut.edu.cn/文档/Navicat/MySQL/Servers/android
 C:/Users/22427/"OneDrive - mail2.gdut.edu.cn"/文档/Navicat/MySQL/Servers/android
 feat(dao&util&view):用户注册与登录功能
+feat(all):首页空框架，假的分页功能，完全重构服务器端前备份

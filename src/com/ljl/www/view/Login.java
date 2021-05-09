@@ -3,6 +3,7 @@ package com.ljl.www.view;
 
 import com.ljl.www.dao.LoginQuery;
 import com.ljl.www.dao.PostListSql;
+import com.ljl.www.po.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +15,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 
 public class Login {
-
+    public static Client clientLocal;
     @FXML
     private Button registerButton;
 
@@ -70,17 +71,12 @@ public class Login {
         this.loginButton = loginButton;
     }
 
-    /*private class myEventHandler implements EventHandler<ActionEvent>{
-                @Override
-                public void handle(ActionEvent event) {
 
-                }
-            }*/
     public void eventOnButtonLogin(ActionEvent event)throws Exception{
         String id=clientNameField.getText();
         String tel=clientTelField.getText();
         String password=clientPasswordField.getText();
-        if(id!=null){
+        /*if(id!=null){
             if(new LoginQuery().query(id,password)){
                 Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
                 Scene creatingScene = new Scene(parent);
@@ -105,6 +101,59 @@ public class Login {
             else{
                 Hint.pop("账号密码输入错误");
             }
+        }*/
+        try {
+            //写数据
+            DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
+            //读数据
+            DataInputStream in=new DataInputStream(MainView.ss.getInputStream());
+
+            out.writeUTF("enter");                                        //向服务器说是登陆
+            out.flush();
+
+            Client client=new Client(Long.parseLong(id),tel,password);
+            //String msg=name+"+"+password;                                  //用户信息
+            ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
+            oos.writeObject(client);                                  //将用户信息发过去
+            oos.flush();
+
+            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
+            Object obj = ois.readObject();
+            Client replyClient = (Client) obj;
+
+            if(replyClient.equals(client)==false){
+                //Hint.pop("登陆成功!");
+                clientLocal=replyClient;
+                // PostListSql.setLimit(3);new PostListSql.createPaginationList();
+                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+                Scene creatingScene = new Scene(parent);
+                Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
+                reflectedStage.hide();
+                reflectedStage.setScene(creatingScene);
+                reflectedStage.show();
+            }
+            else{
+                Hint.pop("失败!");
+            }
+
+            /*int flag=in.read();
+            if(flag==1){
+                //Hint.pop("登陆成功!");
+                clientLocal=client;
+                // PostListSql.setLimit(3);new PostListSql.createPaginationList();
+                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+                Scene creatingScene = new Scene(parent);
+                Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
+                reflectedStage.hide();
+                reflectedStage.setScene(creatingScene);
+                reflectedStage.show();
+            }
+            else{
+                Hint.pop("失败!");
+            }*/
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
     public void eventOnButtonRegister(ActionEvent event) throws IOException {

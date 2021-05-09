@@ -5,10 +5,13 @@ package com.ljl.www.dao;
 
 import com.ljl.www.po.Client;
 import com.ljl.www.po.*;
+import com.ljl.www.util.PostListControlPacket;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.Observable;
 import java.util.Properties;
 
 
@@ -43,9 +46,16 @@ public class DBServer {
             e.printStackTrace();
         }
     }
-    public long insertClient(Client client){
+    public Long insertClient(Client client){
         return  new RegisterSql().insert(client);
     }
+    public Client loginClient(Client client){
+        return  new LoginQuery().query(client);
+    }
+    public PostListControlPacket setPaginationList(PostListControlPacket postListControlPacket){
+        return PostListSql.createPaginationList(postListControlPacket);}
+    public PostListControlPacket getPostListView(PostListControlPacket postListControlPacket){
+        return  PostListSql.query(postListControlPacket);}
 
 
 

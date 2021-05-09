@@ -7,16 +7,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import com.ljl.www.po.*;
+import com.ljl.www.util.*;
 import com.ljl.www.dao.*;
-
+import com.ljl.www.view.MainView;
+import javafx.collections.ObservableList;
 
 
 public class MainOperation {
     public Socket ss;
-    public static DriverUtils db;
+    public static DBServer db;
 
     public MainOperation(Socket ss) {
         this.ss = ss;
@@ -33,30 +34,28 @@ public class MainOperation {
             //循环查询，看是否有请求
             while (true) {
                 String recv = in.readUTF();
-                if (recv.equals("zhuce")) {
+                if (recv.equals("enroll")) {
                     ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                     Object obj = ois.readObject();
 
-                    Client pp = (Client) obj;
-                    System.out.println(pp.getName());
-                    if (db.addUser(pp)) {                                            //如果添加用户成功
-                        out.write(1);
-                        out.flush();
-                    } else {                                                          //如果失败
-                        out.write(2);
-                        out.flush();
-                    }
-                } else if (recv.equals("denglu")) {
-                    String msg = in.readUTF();                                       //读出信息
+                    Client tempClient = (Client) obj;
+                    System.out.println(tempClient.getClientTel());
+                    Long tempId=db.insertClient(tempClient);
+                    out.writeLong(tempId);
 
-                    String[] items = msg.split("\\+");
+                } else if (recv.equals("enter")) {
 
-                    String name = items[0];
-                    String password = items[1];
+                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                    Object obj = ois.readObject();
 
-                    if (db.findUser(name, password)) {
-                        out.write(1);                                              //登陆成功，用户存在
-                        out.flush();
+                    Client tempClient = (Client) obj;
+                    Client r4return =db.loginClient(tempClient);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(r4return);
+                    oos.flush();
+                    if (tempClient.equals(r4return)) {
+                        //out.write(1);                                              //登陆成功，用户存在
+                        //out.flush();                                                //将用户信息发过去
 
                         while (true) {                                               //登陆成功之后，不停监视用户请求
                             recv = in.readUTF();
@@ -64,8 +63,8 @@ public class MainOperation {
                         }
 
                     } else {
-                        out.write(2);                                              //登陆失败，密码错误或用户不存在
-                        out.flush();
+                       // out.write(2);                                              //登陆失败，密码错误或用户不存在
+                        //out.flush();
                     }
                 }
             }
@@ -82,8 +81,36 @@ public class MainOperation {
             //读出
             DataOutputStream out = new DataOutputStream(ss.getOutputStream());
 
+            if(server_type.equals("postListControlPacket")){
+                System.out.println("postListControlPacket");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                PostListControlPacket ppcp= (PostListControlPacket) obj;
+                System.out.println("ppcp");
+                System.out.println("ppcp="+ppcp.operation);
 
-        } catch (IOException e) {
+
+                if(ppcp.operation.toString().equals("refresh")){
+                    //PostListSql.createPaginationList(ppcp);
+                    db.setPaginationList(ppcp);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(ppcp);                                  //将用户信息发过去
+                    oos.flush();
+                }
+                else if(ppcp.operation.toString().equals("getPost")){
+                    System.out.println("equals=getPost");
+                    db.getPostListView(ppcp);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(ppcp);                                  //将用户信息发过去
+                    oos.flush();
+                }
+            }
+            else if(server_type.equals("")){
+                    System.out.println("fuck u");
+            }
+
+
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

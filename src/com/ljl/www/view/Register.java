@@ -1,6 +1,7 @@
 package com.ljl.www.view;
 
 import com.ljl.www.dao.RegisterSql;
+import com.ljl.www.po.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class Register {
 
@@ -53,9 +57,9 @@ public class Register {
                 Hint.pop("两次输入不一致！");
                 System.out.println("match!!");
             }
-            else if(true){
-                Long r4return=new RegisterSql().insert(clientTelField.getText(),passWord1st.getText());
-               if(r4return!=0){
+            else {
+               /* Long r4return=new RegisterSql().insert(clientTelField.getText(),passWord1st.getText());
+               if(r4return>0){
                    Hint.pop(r4return);
                    System.out.println("success,"+r4return);//用手机号注册或者，用文本框显示注册的账号，
                }
@@ -63,6 +67,35 @@ public class Register {
                    Hint.pop("数据库错误或电话已被注册");
                    System.out.println("failed");
                }//提示数据库错误
+
+                */
+                try {
+                    //写数据
+                    DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
+                    //读数据
+                    DataInputStream in=new DataInputStream(MainView.ss.getInputStream());
+
+                    out.writeUTF("enroll");                                //给服务器端发送注册
+                    out.flush();
+
+                    ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
+                    oos.writeObject(new Client(-1L,clientTelField.getText(),passWord1st.getText()));                                  //将用户信息发过去
+                    oos.flush();
+
+                    Long flag=in.readLong();
+                    if(flag>0){
+                        Hint.pop(flag);
+                        System.out.println("success,"+flag);//用手机号注册或者，用文本框显示注册的账号，
+                    }
+                    else{
+                        Hint.pop("数据库错误或电话已被注册");
+                        System.out.println("failed");
+                    }//提示数据库错误
+                    //LoginControl.mystage.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }

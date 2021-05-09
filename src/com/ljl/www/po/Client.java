@@ -1,9 +1,10 @@
 package com.ljl.www.po;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Client {
+public class Client extends Object implements Serializable {
 
   private Long clientId;
   private String clientTel;
@@ -13,14 +14,14 @@ public class Client {
   private String clientAddress;
   private String clientDescription;
   private java.sql.Timestamp clientEnrollDate;
-  private long clientPrivilege;
+  private Long clientPrivilege;
 
   public Client() {
   }
 
-  public Client(long clientId, String clientTel, String clientPassword,
+  public Client(Long clientId, String clientTel, String clientPassword,
                 String clientNickname, String clientSex, String clientAddress,
-                String clientDescription, Timestamp clientEnrollDate, long clientPrivilege) {
+                String clientDescription, Timestamp clientEnrollDate, Long clientPrivilege) {
     this.clientId = clientId;
     this.clientTel = clientTel;
     this.clientPassword = clientPassword;
@@ -32,11 +33,28 @@ public class Client {
     this.clientPrivilege = clientPrivilege;
   }
 
-  public long getClientId() {
+  public Client(Long clientId, String clientTel, String clientPassword) {
+    this.clientId = clientId;
+    this.clientTel = clientTel;
+    this.clientPassword = clientPassword;
+  }
+  //@Override
+  public boolean equals(Client client){
+    if(client==null)return false;
+    else {
+      if (this.clientId != client.getClientId() || this.clientTel != client.getClientTel() |
+              this.clientNickname!=client.getClientNickname()|| this.clientPrivilege!=client.getClientPrivilege()
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+  public Long getClientId() {
     return clientId;
   }
 
-  public void setClientId(long clientId) {
+  public void setClientId(Long clientId) {
     this.clientId = clientId;
   }
 
@@ -104,11 +122,11 @@ public class Client {
   }
 
 
-  public long getClientPrivilege() {
+  public Long getClientPrivilege() {
     return clientPrivilege;
   }
 
-  public void setClientPrivilege(long clientPrivilege) {
+  public void setClientPrivilege(Long clientPrivilege) {
     this.clientPrivilege = clientPrivilege;
   }
 

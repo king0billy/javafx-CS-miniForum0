@@ -1,13 +1,14 @@
 package com.ljl.www.po;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Report {
+public class Report implements Serializable {
 
-  private long fatherId;
-  private long times;
-  private long clientId;
+  private Long fatherId;
+  private Long times;
+  private Long clientId;
   private java.sql.Timestamp postNewDate;
   private String reportArticle;
   private String tag;
@@ -15,7 +16,7 @@ public class Report {
   public Report() {
   }
 
-  public Report(long fatherId, long times, long clientId, Timestamp postNewDate, String reportArticle, String tag) {
+  public Report(Long fatherId, Long times, Long clientId, Timestamp postNewDate, String reportArticle, String tag) {
     this.fatherId = fatherId;
     this.times = times;
     this.clientId = clientId;
@@ -24,29 +25,29 @@ public class Report {
     this.tag = tag;
   }
 
-  public long getFatherId() {
+  public Long getFatherId() {
     return fatherId;
   }
 
-  public void setFatherId(long fatherId) {
+  public void setFatherId(Long fatherId) {
     this.fatherId = fatherId;
   }
 
 
-  public long getTimes() {
+  public Long getTimes() {
     return times;
   }
 
-  public void setTimes(long times) {
+  public void setTimes(Long times) {
     this.times = times;
   }
 
 
-  public long getClientId() {
+  public Long getClientId() {
     return clientId;
   }
 
-  public void setClientId(long clientId) {
+  public void setClientId(Long clientId) {
     this.clientId = clientId;
   }
 

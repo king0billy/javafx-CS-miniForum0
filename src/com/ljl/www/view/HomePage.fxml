@@ -11,19 +11,19 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.HomePage">
    <children>
-      <TabPane prefHeight="768.0" prefWidth="1506.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="allTabPane" prefHeight="768.0" prefWidth="1506.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="主页">
             <content>
               <AnchorPane fx:id="rootAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="458.0" prefWidth="1505.0">
                      <children>
                         <Pagination fx:id="postPagination" layoutX="224.0" layoutY="199.0" prefHeight="729.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="206.0" AnchorPane.topAnchor="0.0">
-                          <!--- <test pattern="SECAM" />
+                          <!--- <test pattern="SCAN" />
                           <fx:define>
                             <fx:include source="Login.fxml" fx:id="loginButton" />
                             <Button layoutX="84.0" layoutY="10.0" mnemonicParsing="false" text="发帖" />
                           </fx:define>
-                       <test pattern="NTSC" /> -->
+                       <test pattern="SHIT" /> -->
 
                         </Pagination>
                         <Button fx:id="refreshPost" layoutX="1300.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" text="刷新事件列表" />
@@ -31,7 +31,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="事件详情">
+            <Tab fx:id="postDetail" text="事件详情">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>

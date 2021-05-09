@@ -1,7 +1,7 @@
 package com.ljl.www.util;
 
 public  class MyID {
-    public static long bit13$1(){
+    public static Long bit13$1(){
         return Long.parseLong(System.currentTimeMillis()+""+(long)(Math.random()*10));
     }
 

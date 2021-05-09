@@ -1,36 +1,37 @@
 package com.ljl.www.po;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ThumbsUp {
+public class ThumbsUp implements Serializable {
 
-  private long postId;
-  private long clientId;
+  private Long postId;
+  private Long clientId;
   private java.sql.Timestamp thumbsUpNewDate;
 
   public ThumbsUp() {
   }
 
-  public ThumbsUp(long postId, long clientId, Timestamp thumbsUpNewDate) {
+  public ThumbsUp(Long postId, Long clientId, Timestamp thumbsUpNewDate) {
     this.postId = postId;
     this.clientId = clientId;
     this.thumbsUpNewDate = thumbsUpNewDate;
   }
 
-  public long getPostId() {
+  public Long getPostId() {
     return postId;
   }
 
-  public void setPostId(long postId) {
+  public void setPostId(Long postId) {
     this.postId = postId;
   }
 
 
-  public long getClientId() {
+  public Long getClientId() {
     return clientId;
   }
 
-  public void setClientId(long clientId) {
+  public void setClientId(Long clientId) {
     this.clientId = clientId;
   }
 

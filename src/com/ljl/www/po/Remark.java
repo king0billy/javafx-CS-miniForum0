@@ -1,22 +1,23 @@
 package com.ljl.www.po;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Remark {
+public class Remark implements Serializable {
 
-  private long fatherId;
-  private long floor;
-  private long clientId;
+  private Long fatherId;
+  private Long floor;
+  private Long clientId;
   private java.sql.Timestamp remarkNewDate;
   private String remarkArticle;
-  private long thumbsUpCount;
+  private Long thumbsUpCount;
 
   public Remark() {
   }
 
-  public Remark(long fatherId, long floor, long clientId, Timestamp remarkNewDate,
-                String remarkArticle, long thumbsUpCount) {
+  public Remark(Long fatherId, Long floor, Long clientId, Timestamp remarkNewDate,
+                String remarkArticle, Long thumbsUpCount) {
     this.fatherId = fatherId;
     this.floor = floor;
     this.clientId = clientId;
@@ -25,29 +26,29 @@ public class Remark {
     this.thumbsUpCount = thumbsUpCount;
   }
 
-  public long getFatherId() {
+  public Long getFatherId() {
     return fatherId;
   }
 
-  public void setFatherId(long fatherId) {
+  public void setFatherId(Long fatherId) {
     this.fatherId = fatherId;
   }
 
 
-  public long getFloor() {
+  public Long getFloor() {
     return floor;
   }
 
-  public void setFloor(long floor) {
+  public void setFloor(Long floor) {
     this.floor = floor;
   }
 
 
-  public long getClientId() {
+  public Long getClientId() {
     return clientId;
   }
 
-  public void setClientId(long clientId) {
+  public void setClientId(Long clientId) {
     this.clientId = clientId;
   }
 
@@ -70,11 +71,11 @@ public class Remark {
   }
 
 
-  public long getThumbsUpCount() {
+  public Long getThumbsUpCount() {
     return thumbsUpCount;
   }
 
-  public void setThumbsUpCount(long thumbsUpCount) {
+  public void setThumbsUpCount(Long thumbsUpCount) {
     this.thumbsUpCount = thumbsUpCount;
   }
 

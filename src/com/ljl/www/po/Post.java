@@ -1,24 +1,25 @@
 package com.ljl.www.po;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Post {
+public class Post implements Serializable {
 
-  private long postId;
-  private long clientId;
+  private Long postId;
+  private Long clientId;
   private java.sql.Timestamp postNewDate;
   private String postTitle;
   private String postArticle;
-  private long thumbsUpCount;
-  private long favoriteCount;
-  private long remarkCount;
+  private Long thumbsUpCount;
+  private Long favoriteCount;
+  private Long remarkCount;
 
   public Post() {
   }
 
-  public Post(long postId, long clientId, Timestamp postNewDate, String postTitle,
-              String postArticle, long thumbsUpCount, long favoriteCount, long remarkCount) {
+  public Post(Long postId, Long clientId, Timestamp postNewDate, String postTitle,
+              String postArticle, Long thumbsUpCount, Long favoriteCount, Long remarkCount) {
     this.postId = postId;
     this.clientId = clientId;
     this.postNewDate = postNewDate;
@@ -29,20 +30,20 @@ public class Post {
     this.remarkCount = remarkCount;
   }
 
-  public long getPostId() {
+  public Long getPostId() {
     return postId;
   }
 
-  public void setPostId(long postId) {
+  public void setPostId(Long postId) {
     this.postId = postId;
   }
 
 
-  public long getClientId() {
+  public Long getClientId() {
     return clientId;
   }
 
-  public void setClientId(long clientId) {
+  public void setClientId(Long clientId) {
     this.clientId = clientId;
   }
 
@@ -74,29 +75,29 @@ public class Post {
   }
 
 
-  public long getThumbsUpCount() {
+  public Long getThumbsUpCount() {
     return thumbsUpCount;
   }
 
-  public void setThumbsUpCount(long thumbsUpCount) {
+  public void setThumbsUpCount(Long thumbsUpCount) {
     this.thumbsUpCount = thumbsUpCount;
   }
 
 
-  public long getFavoriteCount() {
+  public Long getFavoriteCount() {
     return favoriteCount;
   }
 
-  public void setFavoriteCount(long favoriteCount) {
+  public void setFavoriteCount(Long favoriteCount) {
     this.favoriteCount = favoriteCount;
   }
 
 
-  public long getRemarkCount() {
+  public Long getRemarkCount() {
     return remarkCount;
   }
 
-  public void setRemarkCount(long remarkCount) {
+  public void setRemarkCount(Long remarkCount) {
     this.remarkCount = remarkCount;
   }
 
