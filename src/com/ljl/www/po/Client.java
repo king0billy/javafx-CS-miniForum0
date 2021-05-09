@@ -5,15 +5,15 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class Client extends Object implements Serializable {
-
-  private Long clientId;
-  private String clientTel;
-  private String clientPassword;
-  private String clientNickname;
-  private String clientSex;
-  private String clientAddress;
-  private String clientDescription;
-  private java.sql.Timestamp clientEnrollDate;
+//-9223372036854775808L
+  private Long clientId=-99L;
+  private String clientTel=new String("-99");
+  private String clientPassword=new String("-99");
+  private String clientNickname=new String("-99");
+  private String clientSex=new String("-99");
+  private String clientAddress=new String("shit");
+  private String clientDescription=new String("shit");
+  private java.sql.Timestamp clientEnrollDate=new Timestamp(System.currentTimeMillis());
   private Long clientPrivilege;
 
   public Client() {
@@ -37,13 +37,38 @@ public class Client extends Object implements Serializable {
     this.clientId = clientId;
     this.clientTel = clientTel;
     this.clientPassword = clientPassword;
+    this.clientNickname=new String("-99");
+    clientSex=new String("-99");
+    clientAddress=new String("shit");
+    clientDescription=new String("shit");
+    clientEnrollDate=new Timestamp(System.currentTimeMillis());
+    clientPrivilege=0L;//侧面说明构造方法后于属性赋值
+  }
+  public Client(String clientTel, String clientPassword) {
+    this.clientId = -99L;
+    this.clientTel = clientTel;
+    this.clientPassword = clientPassword;
+    this.clientNickname=new String("-99");
+    clientSex=new String("-99");
+    clientAddress=new String("shit");
+    clientDescription=new String("shit");
+    clientEnrollDate=new Timestamp(System.currentTimeMillis());
+    clientPrivilege=0L;//侧面说明构造方法后于属性赋值
   }
   //@Override
   public boolean equals(Client client){
     if(client==null)return false;
     else {
-      if (this.clientId != client.getClientId() || this.clientTel != client.getClientTel() |
-              this.clientNickname!=client.getClientNickname()|| this.clientPrivilege!=client.getClientPrivilege()
+      if (
+              this.clientId.equals( client.getClientId())==false||this.clientEnrollDate.equals(client.getClientEnrollDate())==false
+              ||this.clientNickname.equals(client.getClientNickname())==false|| this.clientTel.equals(client.getClientTel())==false
+                      || this.clientPrivilege.equals(client.getClientPrivilege())==false
+              //for正常登录
+              || this.clientPassword.equals(client.getClientPassword())==false|| this.clientSex.equals(client.getClientSex())==false
+                      ||(client.getClientAddress()==null||this.clientAddress.equals(client.getClientAddress())==false)
+                      ||(client.getClientDescription()==null||this.clientDescription.equals(client.getClientDescription())==false)
+/*                      ||(client.getClientAddress()==null||this.clientAddress.equals(client.getClientAddress())==false)
+                      ||(client.getClientDescription()==null||this.clientDescription.equals(client.getClientDescription())==false) */
       ) {
         return false;
       }
@@ -104,12 +129,12 @@ public class Client extends Object implements Serializable {
   }
 
 
-  public String getClientDescript() {
+  public String getClientDescription() {
     return clientDescription;
   }
 
-  public void setClientDescript(String clientDescript) {
-    this.clientDescription = clientDescript;
+  public void setClientDescription(String clientDescription) {
+    this.clientDescription = clientDescription;
   }
 
 

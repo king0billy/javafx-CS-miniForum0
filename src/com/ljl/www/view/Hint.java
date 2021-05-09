@@ -39,7 +39,7 @@ public class Hint {
         PopStage.setScene(creatingScene);
         PopStage.show();
     }
-    static void  pop(Long id) {
+    public static void  pop(Long id) {
         Label lbl = new Label("注册成功！请复制并保管你的id！");//创建面板
         TextField textField=new TextField(String.valueOf(id));
         lbl.setFont(Font.font("Cambria", 20));
@@ -54,10 +54,10 @@ public class Hint {
         PopStage.setScene(creatingScene);
         PopStage.show();
     }
-    public void sceneSwitch(String xml) throws IOException {
+    public  void sceneSwitch(String xml,ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource(xml));//只能加载同一包下的？
         Scene creatingScene = new Scene(parent);
-        ActionEvent event = null;
+
         Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
         reflectedStage.hide();
         reflectedStage.setScene(creatingScene);

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="729.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.MyInfo">
+    <children>
+        <Label layoutX="95.0" layoutY="63.0" text="个人唯一id：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="95.0" layoutY="137.0" text="个人电话：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="95.0" layoutY="217.0" text="密码：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="95.0" layoutY="298.0" text="昵称：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="95.0" layoutY="378.0" text="性别：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="95.0" layoutY="449.0" text="地址：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="95.0" layoutY="539.0" text="简介：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="563.0" layoutY="64.0" text="注册日期：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="575.0" layoutY="137.0" text="权限等级：">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label fx:id="IDLabel" layoutX="273.0" layoutY="63.0" text="Label">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <TextField fx:id="telField" layoutX="245.0" layoutY="142.0" prefHeight="30.0" prefWidth="222.0" />
+        <PasswordField fx:id="passwordField" layoutX="184.0" layoutY="222.0" prefHeight="30.0" prefWidth="259.0" />
+        <TextField fx:id="nicknameFiled" layoutX="184.0" layoutY="303.0" />
+        <TextArea fx:id="descriptionArea" layoutX="185.0" layoutY="539.0" prefHeight="164.0" prefWidth="677.0" />
+        <Label fx:id="enrollDateLabel" layoutX="725.0" layoutY="64.0" text="Label">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label fx:id="privilegeLabel" layoutX="725.0" layoutY="137.0" text="Label">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Button fx:id="logOutButton" layoutX="1044.0" layoutY="53.0" mnemonicParsing="false" onAction="#eventOnLogOut" prefHeight="62.0" prefWidth="110.0" text="注销登录" />
+        <Button fx:id="refreshButton" layoutX="1044.0" layoutY="148.0" mnemonicParsing="false" onAction="#eventOnRefresh" prefHeight="69.0" prefWidth="110.0" text="刷新个人信息" />
+        <Button fx:id="saveButton" layoutX="1044.0" layoutY="256.0" mnemonicParsing="false" onAction="#eventOnSave" prefHeight="62.0" prefWidth="110.0" text="保存修改" />
+        <ChoiceBox fx:id="sexChoiceBox" layoutX="185.0" layoutY="383.0" prefWidth="150.0" />
+        <TextField fx:id="addressField" layoutX="184.0" layoutY="454.0" prefHeight="30.0" prefWidth="516.0" />
+    </children>
+</AnchorPane>

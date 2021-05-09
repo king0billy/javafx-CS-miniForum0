@@ -19,7 +19,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="clientNameField" layoutX="235.0" layoutY="74.0" promptText="0" text="0" />
+      <TextField fx:id="clientNameField" layoutX="235.0" layoutY="74.0" text="0" />
       <TextField fx:id="clientPasswordField" layoutX="235.0" layoutY="176.0" text="123456" />
       <Button fx:id="loginButton" layoutX="423.0" layoutY="265.0" mnemonicParsing="false" onAction="#eventOnButtonLogin" text="登录" />
       <Button fx:id="registerButton" layoutX="181.0" layoutY="265.0" mnemonicParsing="false" onAction="#eventOnButtonRegister" text="注册" />

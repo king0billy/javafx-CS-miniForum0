@@ -79,7 +79,12 @@ public class Register {
                     out.flush();
 
                     ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-                    oos.writeObject(new Client(-1L,clientTelField.getText(),passWord1st.getText()));                                  //将用户信息发过去
+                    Client client=new Client(-99L,clientTelField.getText(),passWord1st.getText());
+                    //if(Long.parseLong(adminCodeField.getText()).equals(666))client.setClientPrivilege(8L);
+                    if(adminCodeField.getText().equals("666"))client.setClientPrivilege(8L);
+                    else {client.setClientPrivilege(4L);}
+
+                    oos.writeObject(client);                                  //将用户信息发过去
                     oos.flush();
 
                     Long flag=in.readLong();

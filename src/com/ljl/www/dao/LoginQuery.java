@@ -22,9 +22,17 @@ public class LoginQuery{
         //Client client=new Client();
         try{
             connection = DriverUtils.getConnection();
-            String sql="SELECT * FROM CLIENT WHERE client_id=? AND client_password=?";
-            statement=connection.prepareStatement(sql);
-            statement.setString(1,client.getClientId().toString());
+            if(client.getClientId()>-99L){
+                String sql="SELECT * FROM CLIENT WHERE client_id=? AND client_password=?";
+                statement=connection.prepareStatement(sql);
+                statement.setLong(1,client.getClientId());
+            }
+            else{
+                String sql="SELECT * FROM CLIENT WHERE client_tel=? AND client_password=?";
+                statement=connection.prepareStatement(sql);
+                statement.setString(1,client.getClientTel());
+            }
+
             statement.setString(2,client.getClientPassword());
             resultSets=statement.executeQuery();
             while(resultSets.next()){
@@ -35,11 +43,14 @@ public class LoginQuery{
                 client.setClientNickname(resultSets.getString("client_nickname"));
                 client.setClientSex(resultSets.getString("client_sex"));
                 client.setClientAddress(resultSets.getString("client_address"));
-                client.setClientDescript(resultSets.getString("client_description"));
+                client.setClientDescription(resultSets.getString("client_description"));
                 client.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
                 client.setClientPrivilege(resultSets.getLong("client_privilege"));
 
-                System.out.println(resultSets.getString("client_password"));
+/*              System.out.println("client.getClientAddress()==null"+(client.getClientAddress().equals(null)));
+                System.out.println("client.getClientAddress()==null"+(client.getClientAddress()==null)+"");
+                System.out.println("client.getClientDescription()==null"+(client.getClientDescription()==null)+"");*/
+                System.out.println("password="+resultSets.getString("client_password"));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -68,7 +79,7 @@ public class LoginQuery{
                 client.setClientNickname(resultSets.getString("client_nickname"));
                 client.setClientSex(resultSets.getString("client_sex"));
                 client.setClientAddress(resultSets.getString("client_address"));
-                client.setClientDescript(resultSets.getString("client_description"));
+                client.setClientDescription(resultSets.getString("client_description"));
                 client.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
                 client.setClientPrivilege(resultSets.getLong("client_privilege"));
 

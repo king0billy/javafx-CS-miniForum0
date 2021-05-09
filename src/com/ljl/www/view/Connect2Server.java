@@ -26,8 +26,8 @@ public class Connect2Server {
     void EventOnButtonConnect(ActionEvent event) {
         try {
             String ip=IPField.getText();
-            //ServerSocket serverSocket = new ServerSocket(6000);//【这一步已在server中先运行了！！！】
-            MainView.ss=new Socket(ip,6000);//ip输入框
+            //ServerSocket serverSocket = new ServerSocket(6666);//【这一步已在server中先运行了！！！】
+            MainView.ss=new Socket(ip,6666);//ip输入框
             //MainApp.ss=new Socket(ip,0);
             //MainApp.ss=new Socket(ip,51559);
             //根据ip和端口连接服务器

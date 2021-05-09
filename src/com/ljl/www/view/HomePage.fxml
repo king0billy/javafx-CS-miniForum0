@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
@@ -11,13 +12,13 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.HomePage">
    <children>
-      <TabPane fx:id="allTabPane" prefHeight="768.0" prefWidth="1506.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="allTabPane" prefHeight="768.0" prefWidth="1366.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="主页">
             <content>
-              <AnchorPane fx:id="rootAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="458.0" prefWidth="1505.0">
+              <AnchorPane fx:id="rootAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="729.0" prefWidth="1366.0">
                      <children>
-                        <Pagination fx:id="postPagination" layoutX="224.0" layoutY="199.0" prefHeight="729.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="206.0" AnchorPane.topAnchor="0.0">
+                        <Pagination fx:id="postPagination" layoutX="224.0" layoutY="199.0" prefHeight="729.0" prefWidth="1150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="216.0" AnchorPane.topAnchor="0.0">
                           <!--- <test pattern="SCAN" />
                           <fx:define>
                             <fx:include source="Login.fxml" fx:id="loginButton" />
@@ -26,15 +27,20 @@
                        <test pattern="SHIT" /> -->
 
                         </Pagination>
-                        <Button fx:id="refreshPost" layoutX="1300.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" text="刷新事件列表" />
+                        <Button fx:id="refreshPost" layoutX="1150.0" layoutY="65.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" prefHeight="30.0" prefWidth="216.0" text="设置每页展示数并刷新事件列表">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Button>
+                        <TextField fx:id="limitField" layoutX="1150.0" layoutY="23.0" prefHeight="30.0" prefWidth="203.0" promptText="2" text="4" />
+                        <ChoiceBox layoutX="1150.0" layoutY="122.0" prefWidth="150.0" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
             <Tab fx:id="postDetail" text="事件详情">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+                <content>
+                    <fx:include fx:id="postDetailPage" source="postDetailPage.fxml" />
+                </content>
             </Tab>
             <Tab text="发布事件">
               <content>
@@ -68,9 +74,7 @@
             </Tab>
             <Tab text="个人信息">
               <content>
-
-                      <fx:include fx:id="fx_user_pane" source="Login.fxml" />
-
+                      <fx:include fx:id="fx_user_pane" source="MyInfo.fxml" />
               </content>
             </Tab>
             <Tab text="他人信息">

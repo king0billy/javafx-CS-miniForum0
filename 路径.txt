@@ -6,3 +6,5 @@ C:/Users/22427/OneDrive - mail2.gdut.edu.cn/文档/Navicat/MySQL/Servers/android
 C:/Users/22427/"OneDrive - mail2.gdut.edu.cn"/文档/Navicat/MySQL/Servers/android
 feat(dao&util&view):用户注册与登录功能
 feat(all):首页空框架，假的分页功能，完全重构服务器端前备份
+feat（all）重构代码加入服务器端，使得登录注册和帖子分页功能先经过服务器端
+feat(all):修改登录相关的bug，完善注册功能，初步构造个人主页按键

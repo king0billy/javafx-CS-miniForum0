@@ -47,13 +47,13 @@ public class MainOperation {
 
                     ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                     Object obj = ois.readObject();
-
+// TODO: 2021/5/9 逻辑有错误！
                     Client tempClient = (Client) obj;
                     Client r4return =db.loginClient(tempClient);
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
                     oos.writeObject(r4return);
                     oos.flush();
-                    if (tempClient.equals(r4return)) {
+                    if (tempClient.equals(r4return)==false) {
                         //out.write(1);                                              //登陆成功，用户存在
                         //out.flush();                                                //将用户信息发过去
 
@@ -105,7 +105,7 @@ public class MainOperation {
                     oos.flush();
                 }
             }
-            else if(server_type.equals("")){
+            else if(server_type.equals("editMyInfo")){
                     System.out.println("fuck u");
             }
 

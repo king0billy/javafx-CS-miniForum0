@@ -111,8 +111,10 @@ public class Login {
             out.writeUTF("enter");                                        //向服务器说是登陆
             out.flush();
 
-            Client client=new Client(Long.parseLong(id),tel,password);
-            //String msg=name+"+"+password;                                  //用户信息
+            Client client;
+            if(id.equals("")){client=new Client(tel,password);}
+            else{client=new Client(Long.parseLong(id),tel,password);}
+                                              //用户信息
             ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
             oos.writeObject(client);                                  //将用户信息发过去
             oos.flush();
@@ -121,19 +123,22 @@ public class Login {
             Object obj = ois.readObject();
             Client replyClient = (Client) obj;
 
+
             if(replyClient.equals(client)==false){
                 //Hint.pop("登陆成功!");
                 clientLocal=replyClient;
+                new Hint().sceneSwitch("HomePage.fxml",event);
                 // PostListSql.setLimit(3);new PostListSql.createPaginationList();
-                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+
+/*                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
                 Scene creatingScene = new Scene(parent);
                 Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
                 reflectedStage.hide();
                 reflectedStage.setScene(creatingScene);
-                reflectedStage.show();
+                reflectedStage.show();*/
             }
             else{
-                Hint.pop("失败!");
+                Hint.pop("登录失败!");
             }
 
             /*int flag=in.read();
@@ -164,13 +169,13 @@ public class Login {
         CreateOperation_Stage.hide();
         CreateOperation_Stage.setScene(Operation_Creating_Scene);
         CreateOperation_Stage.show();
- */
-        Parent parent = FXMLLoader.load(getClass().getResource("Register.fxml"));
+ */     new Hint().sceneSwitch("Register.fxml",event);
+/*        Parent parent = FXMLLoader.load(getClass().getResource("Register.fxml"));
         Scene creatingScene = new Scene(parent);
         Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
         reflectedStage.hide();
         reflectedStage.setScene(creatingScene);
-        reflectedStage.show();
+        reflectedStage.show();*/
     }
     public void eventOnCheckBoxKeepON(ActionEvent event) throws IOException {
 

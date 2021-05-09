@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="729.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.postDetailPage">
+   <children>
+      <TextField layoutX="94.0" layoutY="28.0" prefHeight="30.0" prefWidth="567.0" />
+      <TextArea layoutX="31.0" layoutY="96.0" prefHeight="438.0" prefWidth="997.0" />
+      <TextArea layoutX="31.0" layoutY="573.0" prefHeight="122.0" prefWidth="997.0" />
+      <Button layoutX="1167.0" layoutY="96.0" mnemonicParsing="false" text="更改or发布" />
+      <Button layoutX="1042.0" layoutY="96.0" mnemonicParsing="false" text="查看作者信息" />
+      <Label layoutX="683.0" layoutY="33.0" text="作者昵称：" />
+      <Label layoutX="959.0" layoutY="33.0" text="发布or打开本页面日期：" />
+      <Label layoutX="758.0" layoutY="33.0" prefHeight="20.0" prefWidth="197.0" text="Label" />
+      <Label layoutX="1128.0" layoutY="33.0" text="Label" />
+      <Label layoutX="31.0" layoutY="28.0" prefHeight="30.0" prefWidth="54.0" text="标题：" />
+      <Label layoutX="31.0" layoutY="67.0" text="正文：" />
+      <Label layoutX="31.0" layoutY="546.0" text="评论：" />
+   </children>
+</AnchorPane>

@@ -14,6 +14,7 @@ public class PostListControlPacket implements Serializable {
     //public ObservableList<Post> postList=FXCollections.observableArrayList();
     public ArrayList<Long> paginationList=new ArrayList<>();
     public ArrayList<Post> postList=new ArrayList<>();
+    public  int postListSelectedIndex=4;
     public  int firstLogin=0;
     public  int pageParam=0;
     public  int postCount=4;

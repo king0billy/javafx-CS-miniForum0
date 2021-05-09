@@ -35,6 +35,7 @@ public class PostListSql {
             }while(resultSets.next());*/
                     System.out.println("done createPaginationList query here");
             int i=0;
+            postListControlPacket.paginationList=new ArrayList<>();
             for(;resultSets.next();i++){
                 if(i%postListControlPacket.limit==0){
                     postListControlPacket.paginationList.add(resultSets.getLong("post_id"));
