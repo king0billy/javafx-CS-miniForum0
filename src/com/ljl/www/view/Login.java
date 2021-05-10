@@ -127,7 +127,9 @@ public class Login {
             if(replyClient.equals(client)==false){
                 //Hint.pop("登陆成功!");
                 clientLocal=replyClient;
+
                 new Hint().sceneSwitch("HomePage.fxml",event);
+
                 // PostListSql.setLimit(3);new PostListSql.createPaginationList();
 
 /*                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
@@ -136,6 +138,7 @@ public class Login {
                 reflectedStage.hide();
                 reflectedStage.setScene(creatingScene);
                 reflectedStage.show();*/
+                System.out.println(" new Hint().sceneSwitch(\"HomePage.fxml\",event)");
             }
             else{
                 Hint.pop("登录失败!");

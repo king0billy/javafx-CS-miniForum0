@@ -39,7 +39,7 @@
           </Tab>
             <Tab fx:id="postDetail" text="事件详情">
                 <content>
-                    <fx:include fx:id="postDetailPage" source="postDetailPage.fxml" />
+                    <fx:include fx:id="postDetailPage" source="PostDetailPage.fxml" />
                 </content>
             </Tab>
             <Tab text="发布事件">

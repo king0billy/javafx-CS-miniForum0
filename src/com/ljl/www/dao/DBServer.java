@@ -56,6 +56,9 @@ public class DBServer {
         return PostListSql.createPaginationList(postListControlPacket);}
     public PostListControlPacket getPostListView(PostListControlPacket postListControlPacket){
         return  PostListSql.query(postListControlPacket);}
+    public Client updateMyInfo(Client client){
+        return new UpdateMyInfo().update(client);
+    }
 
 
 

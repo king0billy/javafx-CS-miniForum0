@@ -43,10 +43,19 @@ public class MyInfo {
     private TextField addressField;
 
     @FXML
+    //private ChoiceBox<?> sexChoiceBox;
     private ChoiceBox sexChoiceBox;
 
-    public void initialize() {
-        IDLabel.setText(Login.clientLocal.getClientId().toString());
+    @FXML
+    private Label sexLabel;
+
+    @FXML
+    private Label preSexLabel;
+    
+    String sex="man";
+
+   public void initialize() {
+       IDLabel.setText(Login.clientLocal.getClientId().toString());
         telField.setText(Login.clientLocal.getClientTel());
         nicknameFiled.setText(Login.clientLocal.getClientNickname());
         descriptionArea.setText(Login.clientLocal.getClientDescription());
@@ -54,12 +63,21 @@ public class MyInfo {
         enrollDateLabel.setText(Login.clientLocal.getClientEnrollDate().toString());
         addressField.setText(Login.clientLocal.getClientAddress());
         passwordField.setText(Login.clientLocal.getClientPassword());
-        sexChoiceBox.getItems().addAll("男", "女","保密","LGBTQ");
+        if(sexChoiceBox.getItems().size()==0) {
+            sexChoiceBox.getItems().addAll("男", "女","保密","LGBTQ");
+        }
+        sexChoiceBox.getSelectionModel().selectedIndexProperty().addListener(
+                (ov, value, new_value) -> sex = (String) sexChoiceBox.getItems().get((new_value.intValue()))
+        );
+        preSexLabel.setText(Login.clientLocal.getClientSex());
+        sexLabel.textProperty().bind(sexChoiceBox.getSelectionModel().selectedItemProperty());
+
         //label.textProperty().bind(sexChoiceBox.getSelectionModel().selectedItemProperty());
     }
     @FXML
     void eventOnLogOut(ActionEvent event) throws IOException {
         Login.clientLocal=null;
+        // TODO: 2021/5/10 不正规 
         MainView.ss.shutdownInput();
         MainView.ss.shutdownOutput();
         MainView.ss.close();
@@ -68,7 +86,7 @@ public class MyInfo {
 
     @FXML
     void eventOnRefresh(ActionEvent event) {
-        // TODO: 2021/5/9 login
+
         initialize();
         Hint.pop("刷新成功");
     }
@@ -87,7 +105,8 @@ public class MyInfo {
             Login.clientLocal.setClientTel(telField.getText());
 
             Login.clientLocal.setClientNickname(nicknameFiled.getText());
-            // TODO: 2021/5/9  //Login.clientLocal.setClientSex(sexChoiceBox.ge);
+
+            Login.clientLocal.setClientSex(sex);
             Login.clientLocal.setClientAddress(addressField.getText());
             Login.clientLocal.setClientDescription(descriptionArea.getText());
             //Login.clientLocal.setClientEnrollDate(enrollDateLabel.getText());
@@ -101,11 +120,11 @@ public class MyInfo {
             Object obj = ois.readObject();
             Client replyClient = (Client) obj;
 
-            if(replyClient.equals(Login.clientLocal)==false){
-                Hint.pop("保存成功");
+            if(replyClient.equals(Login.clientLocal)==true){
+                Hint.pop("修改成功");
             }
             else{
-                Hint.pop("服务器繁忙或是毫无改变!");
+                Hint.pop("电话号码已被占用or服务器繁忙or毫无改变!");
             }
         }catch (Exception e){
             e.printStackTrace();

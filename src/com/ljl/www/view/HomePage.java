@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -24,15 +26,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class HomePage {
-    public static boolean isFocus=false;
+
     @FXML
-     private TabPane allTabPane;
+    private TabPane allTabPane;
 
     @FXML
     private Button refreshPost;
@@ -79,26 +80,7 @@ public class HomePage {
     @FXML
     private TextField limitField;
 
-    PostListControlPacket clientPacket=new PostListControlPacket();
-
-    //private Object XCell;
-
-        /*private class myEventHandler implements EventHandler<ActionEvent>{
-                @Override
-                public void handle(ActionEvent event) {
-
-                }
-            }*/
-
-/*        public void postListOnMoseClick(ActionEvent event)throws Exception{
-            if(isFocus){
-                allTabPane.getSelectionModel().select(postDetail);
-
-            }else{
-
-            }
-            isFocus=false;
-        }*/
+    public static PostListControlPacket clientPacket=new PostListControlPacket();
 
 
     public void eventOnButtonRefreshPost(ActionEvent event)throws Exception{
@@ -150,20 +132,6 @@ public class HomePage {
                     buttonComment,buttonReport*/
             );
             HBox.setHgrow(pane, Priority.ALWAYS);
-/*            buttonDetail.disableProperty()
-                    .bind(getListView().getSelectionModel().selectedItemProperty().isNull());
-            buttonDetail.disableProperty()
-                    .bind(Bindings.isEmpty(getListView().getSelectionModel().getSelectedItems()));*/
-
-/*            buttonDetail.setOnAction(event -> {
-                //tabPane.getTabs().add(new Tab("New Tab")); // Adding new tab at the end, so behind all the other tabs
-                allTabPane.getSelectionModel().select(postDetail);//allTabPane.getSelectionModel().selectLast(); // Selecting the last tab, which is the newly created one
-            });
-            buttonComment.setOnAction(event -> {
-                //getListView().getSelectionModel().selectionModeProperty().addListener();
-                allTabPane.getSelectionModel().select(postDetail);
-            });*/
-           // buttonDetail.setOnAction(event -> getListView().getItems().remove(getItem()));
         }
 
         protected void updateItem(Post item, boolean empty) {//(String item, boolean empty)
@@ -189,6 +157,14 @@ public class HomePage {
         postPagination.setMaxPageIndicatorCount(10);
         postPagination.setCurrentPageIndex(0);
         postPagination.getStyleClass().add(Pagination.STYLE_CLASS_BULLET);
+/*
+        if(sexChoiceBox.getItems().size()==0) {
+            sexChoiceBox.getItems().addAll("男", "女","保密","LGBTQ");
+        }
+        sexChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> sex = new_value.toString());
+        preSexLabel.setText(Login.clientLocal.getClientSex());
+        sexLabel.textProperty().bind(sexChoiceBox.getSelectionModel().selectedItemProperty());
+*/
 
         postPagination.setPageFactory(new Callback<Integer, Node>() {
             //ObservableList<Post> postList = new PostListSql().query();
@@ -196,35 +172,27 @@ public class HomePage {
 
             @Override
             public Node call(Integer param) {
-                ////PostListSql.setLimit(4);//每次都要setLimit不合理
-
                 //ObservableList<Post> postList = new PostListSql().query(param);//发送第几页过去，传回list
                 try{
                     DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
                     out.writeUTF("postListControlPacket");
                     out.flush();
-                    System.out.println("postListControlPacket");
+
 
                     clientPacket.pageParam=param;
                     clientPacket.operation.delete(0,clientPacket.operation.length());//??这样很啰嗦？
                     clientPacket.operation.append("getPost");
-                    System.out.println(clientPacket.operation);
-                    System.out.println("clientPacket.pageParam "+clientPacket.pageParam);
-                    System.out.println("clientPacket.paginationList.size "+clientPacket.paginationList.size());
-                    System.out.println("clientPacket.postList.size"+clientPacket.postList.size());
 
                     ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
                     oos.writeObject(clientPacket);
                     oos.flush();
-                    System.out.println("clientPacket.operation "+clientPacket.operation);
+
 
                     ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
                     Object obj = ois.readObject();
                     clientPacket = (PostListControlPacket) obj;
 
-                    System.out.println("shit ");
-                    System.out.println("clientPacket.paginationList.size "+clientPacket.paginationList.size());
-                    System.out.println("clientPacket.postList.size "+clientPacket.postList.size());
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -249,9 +217,43 @@ public class HomePage {
                 lv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
                 lv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    allTabPane.getSelectionModel().select(postDetail);
                     //lv.getSelectionModel().getSelectedItem();
                     clientPacket.postListSelectedIndex=lv.getSelectionModel().getSelectedIndex();
+
+                    //new PostDetailPage().initialize();
+/*                    try {
+                        new Hint().sceneSwitch("PostDetailPage.fxml");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
+
+                    allTabPane.getSelectionModel().select(postDetail);
+/*                    try {
+
+                        //FXMLLoader.load(getClass().getClassLoader().getResource("PostDetailPage.fxml"));
+                        //FXMLLoader.load(getClass().getResource("/PostDetailPage.fxml"));
+
+                        URL url = Paths.get("./src/com/ljl/www/view/PostDetailPage.fxml").toUri().toURL();
+                        //FXMLLoader.load(url);
+                        FXMLLoader fxmlLoader1=new FXMLLoader();
+                        fxmlLoader1.load(url);
+                        ((PostDetailPage)fxmlLoader1.getController()).sshow();
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    PostDetailPage.sshow();*/
+
+/*                    postDetail.setOnSelectionChanged(new EventHandler<Event>() {
+                        @Override
+                        public void handle(Event event) {
+                            Tab t = (Tab)event.getSource();
+                            System.out.println("tab1被改变了 - " + t.getText());
+                        }
+                    });*/
+
+
 /*                    try{
                         ColumnAndAnalogControl columnAndAnalogControl=new ColumnAndAnalogControl();
                         try {
@@ -265,7 +267,6 @@ public class HomePage {
                         e.printStackTrace();
                     }*/
                 });
-
                 return lv;
             }
         });

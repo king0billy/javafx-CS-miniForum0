@@ -63,4 +63,13 @@ public class Hint {
         reflectedStage.setScene(creatingScene);
         reflectedStage.show();
     }
+/*    public  void sceneSwitch(String xml) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource(xml));//只能加载同一包下的？
+        Scene creatingScene = new Scene(parent);
+
+        Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
+        //reflectedStage.hide();
+        reflectedStage.setScene(creatingScene);
+        reflectedStage.show();
+    }*/
 }

@@ -44,10 +44,10 @@ public class MainOperation {
                     out.writeLong(tempId);
 
                 } else if (recv.equals("enter")) {
-
+                    System.out.println("equals=enter");
                     ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                     Object obj = ois.readObject();
-// TODO: 2021/5/9 逻辑有错误！
+
                     Client tempClient = (Client) obj;
                     Client r4return =db.loginClient(tempClient);
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
@@ -56,7 +56,7 @@ public class MainOperation {
                     if (tempClient.equals(r4return)==false) {
                         //out.write(1);                                              //登陆成功，用户存在
                         //out.flush();                                                //将用户信息发过去
-
+                        System.out.println("equals=enterSuccess");
                         while (true) {                                               //登陆成功之后，不停监视用户请求
                             recv = in.readUTF();
                             mainService(recv);
@@ -103,10 +103,19 @@ public class MainOperation {
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
                     oos.writeObject(ppcp);                                  //将用户信息发过去
                     oos.flush();
+
                 }
             }
             else if(server_type.equals("editMyInfo")){
                     System.out.println("fuck u");
+                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                    Object obj = ois.readObject();
+                    Client client = (Client) obj;
+
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(db.updateMyInfo(client));
+                    oos.flush();
+
             }
 
 

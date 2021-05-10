@@ -76,7 +76,22 @@
         <Button fx:id="logOutButton" layoutX="1044.0" layoutY="53.0" mnemonicParsing="false" onAction="#eventOnLogOut" prefHeight="62.0" prefWidth="110.0" text="注销登录" />
         <Button fx:id="refreshButton" layoutX="1044.0" layoutY="148.0" mnemonicParsing="false" onAction="#eventOnRefresh" prefHeight="69.0" prefWidth="110.0" text="刷新个人信息" />
         <Button fx:id="saveButton" layoutX="1044.0" layoutY="256.0" mnemonicParsing="false" onAction="#eventOnSave" prefHeight="62.0" prefWidth="110.0" text="保存修改" />
-        <ChoiceBox fx:id="sexChoiceBox" layoutX="185.0" layoutY="383.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="sexChoiceBox" layoutX="524.0" layoutY="383.0" prefWidth="150.0" />
         <TextField fx:id="addressField" layoutX="184.0" layoutY="454.0" prefHeight="30.0" prefWidth="516.0" />
+      <Label fx:id="sexLabel" layoutX="422.0" layoutY="378.0" text="Label">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="preSexLabel" layoutX="185.0" layoutY="378.0" text="Label">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="305.0" layoutY="378.0" text="改为：">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

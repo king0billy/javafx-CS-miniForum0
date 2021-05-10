@@ -18,8 +18,14 @@ public class LoginQuery{
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
+        
+        
+        Client newClient=new Client();
+        newClient.setClientId(client.getClientId());
+        newClient.setClientTel(client.getClientTel());
+        newClient.setClientPassword(client.getClientPassword());
+        newClient.setClientEnrollDate(client.getClientEnrollDate());
 
-        //Client client=new Client();
         try{
             connection = DriverUtils.getConnection();
             if(client.getClientId()>-99L){
@@ -37,15 +43,15 @@ public class LoginQuery{
             resultSets=statement.executeQuery();
             while(resultSets.next()){
 
-                client.setClientId(resultSets.getLong("client_id"));
-                client.setClientTel(resultSets.getString("client_tel"));
+                newClient.setClientId(resultSets.getLong("client_id"));
+                newClient.setClientTel(resultSets.getString("client_tel"));
 
-                client.setClientNickname(resultSets.getString("client_nickname"));
-                client.setClientSex(resultSets.getString("client_sex"));
-                client.setClientAddress(resultSets.getString("client_address"));
-                client.setClientDescription(resultSets.getString("client_description"));
-                client.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
-                client.setClientPrivilege(resultSets.getLong("client_privilege"));
+                newClient.setClientNickname(resultSets.getString("client_nickname"));
+                newClient.setClientSex(resultSets.getString("client_sex"));
+                newClient.setClientAddress(resultSets.getString("client_address"));
+                newClient.setClientDescription(resultSets.getString("client_description"));
+                newClient.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
+                newClient.setClientPrivilege(resultSets.getLong("client_privilege"));
 
 /*              System.out.println("client.getClientAddress()==null"+(client.getClientAddress().equals(null)));
                 System.out.println("client.getClientAddress()==null"+(client.getClientAddress()==null)+"");
@@ -57,7 +63,7 @@ public class LoginQuery{
         }finally {
             DriverUtils.release(connection,statement,resultSets);
         }
-        return client;
+        return newClient;
     }
     /*public Client queryTel(String tel,String password){
         Connection connection=null;

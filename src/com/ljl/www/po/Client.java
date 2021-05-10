@@ -14,7 +14,7 @@ public class Client extends Object implements Serializable {
   private String clientAddress=new String("shit");
   private String clientDescription=new String("shit");
   private java.sql.Timestamp clientEnrollDate=new Timestamp(System.currentTimeMillis());
-  private Long clientPrivilege;
+  private Long clientPrivilege=-99L;
 
   public Client() {
   }
@@ -42,7 +42,7 @@ public class Client extends Object implements Serializable {
     clientAddress=new String("shit");
     clientDescription=new String("shit");
     clientEnrollDate=new Timestamp(System.currentTimeMillis());
-    clientPrivilege=0L;//侧面说明构造方法后于属性赋值
+    clientPrivilege=-99L;//侧面说明构造方法后于属性赋值
   }
   public Client(String clientTel, String clientPassword) {
     this.clientId = -99L;
@@ -53,7 +53,7 @@ public class Client extends Object implements Serializable {
     clientAddress=new String("shit");
     clientDescription=new String("shit");
     clientEnrollDate=new Timestamp(System.currentTimeMillis());
-    clientPrivilege=0L;//侧面说明构造方法后于属性赋值
+    clientPrivilege=-99L;//侧面说明构造方法后于属性赋值
   }
   //@Override
   public boolean equals(Client client){
