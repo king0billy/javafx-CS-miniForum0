@@ -55,7 +55,7 @@ public class MyInfo {
     String sex="man";
 
    public void initialize() {
-       IDLabel.setText(Login.clientLocal.getClientId().toString());
+        IDLabel.setText(Login.clientLocal.getClientId().toString());
         telField.setText(Login.clientLocal.getClientTel());
         nicknameFiled.setText(Login.clientLocal.getClientNickname());
         descriptionArea.setText(Login.clientLocal.getClientDescription());

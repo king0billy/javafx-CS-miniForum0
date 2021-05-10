@@ -48,7 +48,7 @@ public class Hint {
         pane1.setHgap(20);//set background color of each Pane
         pane1.setStyle("-fx-background-color:tan;-fx-padding:10px;");//组件加入面板
         pane1.getChildren().addAll(lbl,textField);//make 2 scenes from 2 panes
-        Scene creatingScene = new Scene(pane1, 300, 100);
+        Scene creatingScene = new Scene(pane1, 600, 100);
         Stage PopStage = new Stage();
         PopStage.initModality(Modality.APPLICATION_MODAL);
         PopStage.setScene(creatingScene);

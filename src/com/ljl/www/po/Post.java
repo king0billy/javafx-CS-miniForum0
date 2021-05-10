@@ -3,6 +3,7 @@ package com.ljl.www.po;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Post implements Serializable {
 
@@ -28,6 +29,19 @@ public class Post implements Serializable {
     this.thumbsUpCount = thumbsUpCount;
     this.favoriteCount = favoriteCount;
     this.remarkCount = remarkCount;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Post post = (Post) o;
+    return Objects.equals(postId, post.postId) && Objects.equals(clientId, post.clientId) && Objects.equals(postNewDate, post.postNewDate) && Objects.equals(postTitle, post.postTitle) && Objects.equals(postArticle, post.postArticle) && Objects.equals(thumbsUpCount, post.thumbsUpCount) && Objects.equals(favoriteCount, post.favoriteCount) && Objects.equals(remarkCount, post.remarkCount);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(postId, clientId, postNewDate, postTitle, postArticle, thumbsUpCount, favoriteCount, remarkCount);
   }
 
   public Long getPostId() {

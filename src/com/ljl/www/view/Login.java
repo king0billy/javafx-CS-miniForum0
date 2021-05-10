@@ -16,6 +16,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class Login {
     public static Client clientLocal;
@@ -76,6 +80,21 @@ public class Login {
         String id=clientNameField.getText();
         String tel=clientTelField.getText();
         String password=clientPasswordField.getText();
+        if (keepPassword.isSelected()) {
+            // 记住密码 持久化到文件中
+            System.out.println("记住密码");
+            if (!id.isEmpty() && !password.isEmpty()) {
+                Properties prop = new Properties();
+                try {
+                    FileOutputStream oFile = new FileOutputStream("user.properties", false);
+                    prop.setProperty(id, password);
+                    prop.store(oFile, null);
+                    oFile.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         /*if(id!=null){
             if(new LoginQuery().query(id,password)){
                 Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
@@ -179,6 +198,27 @@ public class Login {
         reflectedStage.hide();
         reflectedStage.setScene(creatingScene);
         reflectedStage.show();*/
+    }
+/*    @Override
+    public void initialize(URL location, ResourceBundle resources)*/
+
+    public void initialize(){
+        Properties prop = new Properties();
+        try {
+            if (new File("user.properties").exists()) {
+                InputStream in = new BufferedInputStream(new FileInputStream("user.properties"));
+                prop.load(in);
+                Iterator<String> it = prop.stringPropertyNames().iterator();
+                while (it.hasNext()) {
+                    String key = it.next();
+                    clientNameField.setText(key);
+                    clientPasswordField.setText(prop.getProperty(key));
+                }
+                in.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void eventOnCheckBoxKeepON(ActionEvent event) throws IOException {
 

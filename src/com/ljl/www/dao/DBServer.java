@@ -59,6 +59,12 @@ public class DBServer {
     public Client updateMyInfo(Client client){
         return new UpdateMyInfo().update(client);
     }
+    public Client authorQuery(Client client){
+        return new AuthorQuery().query(client);
+    }
+    public Post updateMyInfo(Post post){
+        return new UpdatePost().update(post);
+    }
 
 
 

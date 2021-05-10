@@ -117,6 +117,29 @@ public class MainOperation {
                     oos.flush();
 
             }
+            else if(server_type.equals("searchAuthor")){
+                System.out.println("searchAuthor");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Client client = (Client) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.authorQuery(client));
+                oos.flush();
+
+            }
+            else if(server_type.equals("editPost")){
+                System.out.println("editPost");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Client client = (Client) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                //oos.writeObject(db.authorQuery(client));
+                oos.flush();
+
+            }
+
 
 
         } catch (IOException | ClassNotFoundException e) {

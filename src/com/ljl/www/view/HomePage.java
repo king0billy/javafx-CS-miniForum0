@@ -152,6 +152,9 @@ public class HomePage {
 
     //ObservableList<Post> postList = new PostListSql().query();
     public void initialize() {
+
+        //postDetail.setV
+
         //postPagination.setPageCount(20);
         //postPagination.setPageCount(PostListSql.postCount/PostListSql.getLimit());
         postPagination.setMaxPageIndicatorCount(10);
@@ -228,6 +231,9 @@ public class HomePage {
                     }*/
 
                     allTabPane.getSelectionModel().select(postDetail);
+                    //postDetail.getContent().getId()//.getScene().getRoot().getChildrenUnmodifiable()
+                            //postDetail.get
+
 /*                    try {
 
                         //FXMLLoader.load(getClass().getClassLoader().getResource("PostDetailPage.fxml"));

@@ -41,6 +41,10 @@
                 <content>
                     <fx:include fx:id="postDetailPage" source="PostDetailPage.fxml" />
                 </content>
+<!--            <Tab fx:id="postDetail" text="事件详情">
+                <children>
+                    <fx:include fx:id="postDetailPage" source="PostDetailPage.fxml" />
+                </children>-->
             </Tab>
             <Tab text="发布事件">
               <content>
@@ -78,9 +82,9 @@
               </content>
             </Tab>
             <Tab text="他人信息">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+                <content>
+                    <fx:include fx:id="anotherClient" source="AnotherClient.fxml" />
+                </content>
             </Tab>
             <Tab fx:id="reserveTab" text="保留页">
                <content>
