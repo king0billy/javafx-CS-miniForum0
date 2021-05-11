@@ -1,6 +1,6 @@
 package com.ljl.www.view;
 
-import com.ljl.www.dao.RegisterSql;
+
 import com.ljl.www.po.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -98,7 +98,7 @@ public class Register {
                     }//提示数据库错误
                     //LoginControl.mystage.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 }
             }

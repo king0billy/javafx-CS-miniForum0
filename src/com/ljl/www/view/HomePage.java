@@ -1,34 +1,23 @@
 package com.ljl.www.view;
 
-import com.ljl.www.dao.PostListSql;
-import com.ljl.www.po.Client;
 import com.ljl.www.po.Post;
 import com.ljl.www.util.PostListControlPacket;
-import javafx.beans.binding.Bindings;
+import com.sun.glass.ui.Screen;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Paths;
 
 public class HomePage {
 
@@ -54,10 +43,10 @@ public class HomePage {
     private Button HomePageButton;
 
     @FXML
-    private Tab pullPost;
+    private Tab pullPostTab;
 
     @FXML
-    private Tab pulledComment;
+    private Tab pulledCommentTab;
 
     @FXML
     private Tab thumbsUpPage;
@@ -68,8 +57,6 @@ public class HomePage {
     @FXML
     private Pagination postPagination;
 
-    @FXML
-    private Tab pulledPost;
 
     @FXML
     private Tab homePage;
@@ -90,7 +77,7 @@ public class HomePage {
 // TODO: 2021/5/9 输入非数字会不安全 ，应该用性别的选择栏
         clientPacket.limit=Integer.parseInt(limitField.getText());
         clientPacket.operation.delete(0,clientPacket.operation.length());//??这样很啰嗦？
-        clientPacket.operation.append("refresh");
+        clientPacket.operation.append("refreshPostList");
        // clientPacket.operation=new StringBuffer("refresh");
 
         ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
@@ -101,6 +88,7 @@ public class HomePage {
         Object obj = ois.readObject();
         clientPacket = (PostListControlPacket) obj;
 
+        //initialize();
         Hint.pop("刷新成功");
         //PostListSql.createPaginationList();//发送一个符号过去要求刷新
     }
@@ -144,7 +132,7 @@ public class HomePage {
                 if(item.getPostTitle().length()<=20){labelArticle.setText("文章摘要："+item.getPostArticle());}
                 else{labelArticle.setText("文章摘要："+item.getPostArticle().substring(0,20));}
                 labelClientId.setText("作者id："+item.getClientId().toString());
-                labelPostNewDate.setText("日期："+item.getPostNewDate().toString());
+                labelPostNewDate.setText("创建or最后修改日期："+item.getPostNewDate().toString());
                 setGraphic(hbox);
             }
         }
@@ -231,6 +219,42 @@ public class HomePage {
                     }*/
 
                     allTabPane.getSelectionModel().select(postDetail);
+
+                    //Screen screenCoords;
+/*                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
+                            allTabPane.getX(), sceneCoords.getY(), screenCoords.getX(), screenCoords.getY(), MouseButton.PRIMARY, 1,
+                            true, true, true, true, true, true, true, true, true, true, null));*/
+
+/*                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED));*/
+
+                    //postDetail.getContent().lookup("#refreshPostDetail").getOnMouseClicked();
+                    //postDetail.getContent().lookup("#refreshPostDetail").getClass().;
+                    Node shit=postDetail.getContent().lookup("#refreshPostDetail");
+                    // TODO: 2021/5/11 还是没能实现自动跳转＋刷新。。。。。。 
+                    System.out.println(shit);
+                    System.out.println(shit.localToScene(shit.getLayoutBounds()).getMinX());
+                    System.out.println(shit.localToScreen(shit.getLayoutBounds()).getMinX());
+
+                    double sceneX=(shit.localToScene(shit.getLayoutBounds()).getMaxX()+shit.localToScene(shit.getLayoutBounds()).getMinX())/2;
+                    double sceneY=(shit.localToScene(shit.getLayoutBounds()).getMaxY()+shit.localToScene(shit.getLayoutBounds()).getMinY())/2;
+                    double screenX=(shit.localToScreen(shit.getLayoutBounds()).getMaxX()+shit.localToScreen(shit.getLayoutBounds()).getMinX())/2;
+                    double screenY=(shit.localToScreen(shit.getLayoutBounds()).getMaxY()+shit.localToScreen(shit.getLayoutBounds()).getMinY())/2;
+
+                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
+                            sceneX, sceneY,
+                            screenX, screenY,
+                            MouseButton.PRIMARY, 2,
+                            true, true, true, true, true, true,
+                            true, true, true, true, null));
+
+/*                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
+                            shit.localToScene(shit.getLayoutBounds()).getMaxX(), shit.localToScene(shit.getLayoutBounds()).getMaxY(),
+                            shit.localToScreen(shit.getLayoutBounds()).getMaxX(), shit.localToScreen(shit.getLayoutBounds()).getMaxY(),
+                            MouseButton.PRIMARY, 2,
+                            true, true, true, true, true, true,
+                            true, true, true, true, null));*/
+
+
                     //postDetail.getContent().getId()//.getScene().getRoot().getChildrenUnmodifiable()
                             //postDetail.get
 

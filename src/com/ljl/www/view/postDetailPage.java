@@ -2,6 +2,7 @@ package com.ljl.www.view;
 
 
 import com.ljl.www.po.Client;
+import com.ljl.www.po.Post;
 import com.ljl.www.util.PostListControlPacket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,11 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.*;
+import java.sql.Timestamp;
 
 
 public class PostDetailPage {
 
-    public static Client author=new Client();;
+    public static Client author=new Client();
+
+    public static Post selectedPost=new Post();
 
     @FXML
     private TextArea commentArea;
@@ -78,7 +82,7 @@ public class PostDetailPage {
                 }
 
             } catch (Exception e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             }
 
@@ -86,7 +90,8 @@ public class PostDetailPage {
     }
     @FXML
     void editButton(ActionEvent event) {
-        if(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getClientId().equals(Login.clientLocal.getClientId())){
+        if(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).
+                getClientId().equals(Login.clientLocal.getClientId())){
             //childAnchor.getParent().allTabPane.getSelectionModel().select(postDetail);
             try {
                 //写数据
@@ -97,29 +102,31 @@ public class PostDetailPage {
                 out.writeUTF("editPost");                                        //向服务器说是登陆
                 out.flush();
 
-                //用户信息
+                selectedPost=HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex);
+                selectedPost.setPostTitle(titleField.getText());
+                selectedPost.setPostArticle(articleArea.getText());
+                selectedPost.setPostNewDate(Timestamp.valueOf(dateField.getText()));
                 ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-                oos.writeObject(author);                                  //将用户信息发过去
+                oos.writeObject(selectedPost);                                  //将用户信息发过去
                 oos.flush();
 
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
                 Object obj = ois.readObject();
-                Client replyClient = (Client) obj;
+                Post replyPost = (Post) obj;
                 // TODO: 2021/5/11 修改应该设置一个static post吗，和首页传来的index改变了怎么办 
 
-                if(replyClient.equals(author)==false){
-                    author=replyClient;
-                    Hint.pop("查找此人成功！请自己点tab页跳转，，");
+                if(replyPost.equals(selectedPost)){
+                    selectedPost=replyPost;
+                    Hint.pop("是你自己的帖子，已修改");
                 }
                 else{
-                    Hint.pop("查找失败!");
+                    Hint.pop("未知错误!");
                 }
-
             } catch (Exception e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             }
-            Hint.pop("是你自己的帖子，已修改");
+
         }
         else{
             Hint.pop("不是你的帖子不能修改！");
@@ -130,6 +137,9 @@ public class PostDetailPage {
     void refreshButton(ActionEvent event) {
         System.out.println("HomePage.clientPacket.postListSelectedIndex=" + HomePage.clientPacket.postListSelectedIndex);
         if (HomePage.clientPacket.postListSelectedIndex > -9999) {
+/*            System.out.println( "???=" +childAnchor.getContentBias());
+            System.out.println( "???=" +childAnchor.getAccessibleRole());
+            System.out.println( "???=" +childAnchor.get());*/
             HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostTitle();
             titleField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostTitle());
             articleArea.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostArticle());
@@ -143,7 +153,10 @@ public class PostDetailPage {
 
         //if(HomePage.clientPacket.postListSelectedIndex<=-9999)childAnchor.setVisible(false);
 
+        //childAnchor.getParent();
+
         if(HomePage.clientPacket.postListSelectedIndex>-9999){
+
             titleField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostTitle());
             articleArea.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostArticle());
             dateField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostNewDate().toString());

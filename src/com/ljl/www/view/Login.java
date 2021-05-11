@@ -1,25 +1,16 @@
 package com.ljl.www.view;
 
 
-import com.ljl.www.dao.LoginQuery;
-import com.ljl.www.dao.PostListSql;
 import com.ljl.www.po.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class Login {
     public static Client clientLocal;
@@ -87,12 +78,25 @@ public class Login {
                 Properties prop = new Properties();
                 try {
                     FileOutputStream oFile = new FileOutputStream("user.properties", false);
-                    prop.setProperty(id, password);
+                    prop.setProperty("id", id);
+                    prop.setProperty("password",password);
+                    prop.setProperty("isSelected",keepPassword.isSelected()+"");
                     prop.store(oFile, null);
                     oFile.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }
+        else{
+            try {
+                Properties prop = new Properties();
+                FileOutputStream oFile = new FileOutputStream("user.properties", false);
+                prop.setProperty("isSelected",keepPassword.isSelected()+"");
+                prop.store(oFile, null);
+                oFile.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         /*if(id!=null){
@@ -157,7 +161,8 @@ public class Login {
                 reflectedStage.hide();
                 reflectedStage.setScene(creatingScene);
                 reflectedStage.show();*/
-                System.out.println(" new Hint().sceneSwitch(\"HomePage.fxml\",event)");
+
+                //System.out.println(" new Hint().sceneSwitch(\"HomePage.fxml\",event)");
             }
             else{
                 Hint.pop("登录失败!");
@@ -208,12 +213,19 @@ public class Login {
             if (new File("user.properties").exists()) {
                 InputStream in = new BufferedInputStream(new FileInputStream("user.properties"));
                 prop.load(in);
-                Iterator<String> it = prop.stringPropertyNames().iterator();
+/*                Iterator<String> it = prop.stringPropertyNames().iterator();
                 while (it.hasNext()) {
                     String key = it.next();
                     clientNameField.setText(key);
                     clientPasswordField.setText(prop.getProperty(key));
-                }
+                }*/
+                clientNameField.setText( prop.getProperty("id"));
+                clientPasswordField.setText( prop.getProperty("password"));
+                //keepPassword.selectedProperty();
+
+                keepPassword.setSelected(Boolean.getBoolean("true"));
+                keepPassword.setSelected(Boolean.parseBoolean(prop.getProperty("isSelected")));
+                //keepPassword.setSelected(true);
                 in.close();
             }
         } catch (Exception e) {

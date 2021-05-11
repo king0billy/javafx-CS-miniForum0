@@ -1,0 +1,16 @@
+【把父文件夹和子文件夹在idea下当两个窗口打开】C:\[D]\Software_Engeenering\GIT\android
+C\[D]\Software_Engeenering\GIT\android
+C:/[D]/Software_Engeenering/GIT/android
+C:/Users/22427/Documents/Navicat/MySQL/Servers/android
+C:/Users/22427/OneDrive - mail2.gdut.edu.cn/文档/Navicat/MySQL/Servers/android
+C:/Users/22427/"OneDrive - mail2.gdut.edu.cn"/文档/Navicat/MySQL/Servers/android
+feat(dao&util&view):用户注册与登录功能
+feat(all):首页空框架，假的分页功能，完全重构服务器端前备份
+feat（all）重构代码加入服务器端，使得登录注册和帖子分页功能先经过服务器端
+feat(all):修改登录相关的bug，完善注册功能，初步构造个人主页按键
+feat(all):
+新增新建事件，查看已发布事件功能。
+新增记住密码功能。
+新增一些空的按键待以后实现。
+
+剔除冗余失败尝试的注释和添加类和功能说明前的备份。

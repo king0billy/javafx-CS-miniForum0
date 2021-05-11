@@ -14,7 +14,7 @@
    <children>
       <TabPane fx:id="allTabPane" prefHeight="768.0" prefWidth="1366.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="主页">
+          <Tab fx:id="homePage" text="主页">
             <content>
               <AnchorPane fx:id="rootAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="729.0" prefWidth="1366.0">
                      <children>
@@ -46,42 +46,42 @@
                     <fx:include fx:id="postDetailPage" source="PostDetailPage.fxml" />
                 </children>-->
             </Tab>
-            <Tab text="发布事件">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+            <Tab fx:id="pullPostTab" text="发布事件">
+                <content>
+                    <fx:include fx:id="newPost" source="NewPost.fxml" />
+                </content>
             </Tab>
-            <Tab text="已发布事件">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+            <Tab fx:id="pulledPostTab" text="已发布事件">
+                <content>
+                    <fx:include fx:id="pulledPost" source="PulledPost.fxml" />
+                </content>
             </Tab>
-            <Tab text="已发布评论">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+            <Tab fx:id="pulledCommentTab" text="已发布评论">
+                <content>
+                    <fx:include fx:id="pulledComment" source="PulledPost.fxml" />
+                </content>
             </Tab>
-          <Tab text="点赞合集">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
+          <Tab fx:id="thumbsUpPage" text="点赞合集">
+              <content>
+                  <fx:include fx:id="pulledThumbsUp" source="PulledPost.fxml" />
+              </content>
           </Tab>
-            <Tab text="收藏合集">
+            <Tab fx:id="favouritePage" text="收藏合集">
+                <content>
+                    <fx:include fx:id="pulledFavourite" source="PulledPost.fxml" />
+                </content>
+            </Tab>
+            <Tab fx:id="reportPage" text="举办与私信合集">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="举办与私信合集">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="个人信息">
+            <Tab fx:id="personalInfo" text="个人信息">
               <content>
                       <fx:include fx:id="fx_user_pane" source="MyInfo.fxml" />
               </content>
             </Tab>
-            <Tab text="他人信息">
+            <Tab fx:id="otherInfo" text="他人信息">
                 <content>
                     <fx:include fx:id="anotherClient" source="AnotherClient.fxml" />
                 </content>

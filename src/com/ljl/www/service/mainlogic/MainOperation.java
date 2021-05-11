@@ -86,11 +86,11 @@ public class MainOperation {
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                 Object obj = ois.readObject();
                 PostListControlPacket ppcp= (PostListControlPacket) obj;
-                System.out.println("ppcp");
+
                 System.out.println("ppcp="+ppcp.operation);
 
 
-                if(ppcp.operation.toString().equals("refresh")){
+                if(ppcp.operation.toString().equals("refreshPostList")){
                     //PostListSql.createPaginationList(ppcp);
                     db.setPaginationList(ppcp);
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
@@ -105,9 +105,17 @@ public class MainOperation {
                     oos.flush();
 
                 }
+                else if(ppcp.operation.toString().equals("getPulledPostList")){
+                    System.out.println("equals=getPulledPostList");
+                    db.getPulledList(ppcp);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(ppcp);                                  //将用户信息发过去
+                    oos.flush();
+
+                }
             }
             else if(server_type.equals("editMyInfo")){
-                    System.out.println("fuck u");
+                    System.out.println("editMyInfo");
                     ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                     Object obj = ois.readObject();
                     Client client = (Client) obj;
@@ -132,13 +140,24 @@ public class MainOperation {
                 System.out.println("editPost");
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                 Object obj = ois.readObject();
-                Client client = (Client) obj;
+                Post post = (Post) obj;
 
                 ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
-                //oos.writeObject(db.authorQuery(client));
+                oos.writeObject(db.updateMyPostInfo(post));
                 oos.flush();
 
             }
+            else if(server_type.equals("pullNewPost")){
+                System.out.println("pullNewPost");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Post post = (Post) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.newPost(post));
+                oos.flush();
+            }
+
 
 
 

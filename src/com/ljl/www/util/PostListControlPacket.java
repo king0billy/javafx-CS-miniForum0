@@ -8,15 +8,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PostListControlPacket implements Serializable {
-    public StringBuffer operation=new StringBuffer();//昨天老师才讲完，stringBuffer没有重新写buffer。。。
+    public StringBuffer operation=new StringBuffer();//昨天老师才讲完，stringBuffer没有重新写equals。。。
     public Integer limit=2;
     //public ObservableList<Long> paginationList= FXCollections.observableArrayList();
     //public ObservableList<Post> postList=FXCollections.observableArrayList();
     public ArrayList<Long> paginationList=new ArrayList<>();
     public ArrayList<Post> postList=new ArrayList<>();
-    public  int postListSelectedIndex=-9999;
-    public  int firstLogin=0;
-    public  int pageParam=0;
-    public  int postCount=4;
+    public  Integer postListSelectedIndex=-9999;
+    public  Integer firstLogin=0;
+    public  Integer pageParam=0;
+    public  Integer postCount=4;
+    public  Long clientId=-99L;
     public PostListControlPacket(){}
 }

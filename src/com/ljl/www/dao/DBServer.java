@@ -6,12 +6,9 @@ package com.ljl.www.dao;
 import com.ljl.www.po.Client;
 import com.ljl.www.po.*;
 import com.ljl.www.util.PostListControlPacket;
-import javafx.collections.ObservableList;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.Observable;
 import java.util.Properties;
 
 
@@ -47,26 +44,32 @@ public class DBServer {
         }
     }
     public Long insertClient(Client client){
-        return  new RegisterSql().insert(client);
+        return  new ClientSql().registerInsert(client);
     }
     public Client loginClient(Client client){
-        return  new LoginQuery().query(client);
+        return  new ClientSql().loginQuery(client);
     }
     public PostListControlPacket setPaginationList(PostListControlPacket postListControlPacket){
-        return PostListSql.createPaginationList(postListControlPacket);}
+        return PostSql.createPaginationList(postListControlPacket);
+    }
     public PostListControlPacket getPostListView(PostListControlPacket postListControlPacket){
-        return  PostListSql.query(postListControlPacket);}
+        return  PostSql.setPaginationList(postListControlPacket);
+    }
     public Client updateMyInfo(Client client){
-        return new UpdateMyInfo().update(client);
+        return new ClientSql().myInfoUpdate(client);
     }
     public Client authorQuery(Client client){
-        return new AuthorQuery().query(client);
+        return new ClientSql().authorQuery(client);
     }
-    public Post updateMyInfo(Post post){
-        return new UpdatePost().update(post);
+    public Post updateMyPostInfo(Post post){
+        return new PostSql().updateMyPost(post);
     }
-
-
+    public Post newPost(Post post){
+        return new PostSql().newPost(post);
+    }
+    public PostListControlPacket getPulledList(PostListControlPacket postListControlPacket){
+        return  PostSql.pulledPostList(postListControlPacket);
+    }
 
     public static void release(Connection connection, Statement statement, ResultSet resultSet){
         if(resultSet!=null){
