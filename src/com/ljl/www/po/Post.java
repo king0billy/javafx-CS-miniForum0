@@ -1,5 +1,12 @@
 package com.ljl.www.po;
-
+/**
+ * @className Post
+ * @description idea根据数据库表自动生成的Post的实体类，自动生成equals方法以进行查询结果成功与否的比较
+ * @author  22427(king0liam)
+ * @date 2021/5/12 15:05
+ * @version 1.0
+ * @since version-0.0
+ */
 
 import java.io.Serializable;
 import java.sql.Timestamp;

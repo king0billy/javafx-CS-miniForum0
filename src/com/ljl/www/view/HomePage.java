@@ -18,7 +18,14 @@ import javafx.scene.layout.Priority;
 import javafx.util.Callback;
 
 import java.io.*;
-
+/**
+ * @className HomePage
+ * @description 为实现分页listView而写的非常复杂的控制类
+ * @author  22427(king0liam)
+ * @date 2021/5/12 15:39
+ * @version 1.0
+ * @since version-0.0
+ */
 public class HomePage {
 
     @FXML
@@ -71,43 +78,56 @@ public class HomePage {
 
 
     public void eventOnButtonRefreshPost(ActionEvent event)throws Exception{
-        DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
-        out.writeUTF("postListControlPacket");
-        out.flush();
-// TODO: 2021/5/9 输入非数字会不安全 ，应该用性别的选择栏
+        /**
+         * @description 按下刷新键的事件函数
+         * @exception
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 15:43
+         */
         clientPacket.limit=Integer.parseInt(limitField.getText());
-        clientPacket.operation.delete(0,clientPacket.operation.length());//??这样很啰嗦？
+        //??这样很啰嗦？clientPacket.operation=new StringBuffer("refresh");
+        clientPacket.operation.delete(0,clientPacket.operation.length());
         clientPacket.operation.append("refreshPostList");
-       // clientPacket.operation=new StringBuffer("refresh");
-
-        ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-        oos.writeObject(clientPacket);                                  //将用户信息发过去
-        oos.flush();
-
-        ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
-        Object obj = ois.readObject();
-        clientPacket = (PostListControlPacket) obj;
-
-        //initialize();
+        clientPacket = (PostListControlPacket)Hint.send$Receive("postListControlPacket",clientPacket);
         Hint.pop("刷新成功");
-        //PostListSql.createPaginationList();//发送一个符号过去要求刷新
     }
 
-     class XCell extends ListCell<Post> {//static class XCell extends ListCell<Post>
-        //ListCell<String>
+     class XCell extends ListCell<Post> {
+        /**
+         * @className XCell
+         * @description 内部类,为了实现listView的pageFactory而设
+         * @author  22427(king0liam)
+         * @date 2021/5/12 15:45
+         * @version 1.0
+         * @since version-0.0
+         */
         HBox hbox = new HBox();
         Label labelTitle = new Label("");
         Label labelClientId = new Label("shit");
         Label labelPostNewDate = new Label("shit");
         Label labelArticle = new Label("shit");
         Pane pane = new Pane();
+        //弃用,必须选中listView中的一条才能得到事件的信息,这些按键就啰嗦无用了
+        /*
         CheckBox checkBoxThumbsUP=new CheckBox("点赞");
         CheckBox checkBoxFavorite=new CheckBox("收藏");
         Button buttonDetail = new Button("查看详细");
         Button buttonComment = new Button("评论");
         Button buttonReport = new Button("举报");
-
+*/
         public XCell() {
+            /**
+             * @description 设置listView每条记录的元素
+             * @exception
+             * @param [] []
+             * @return []
+             * @since version-1.0
+             * @author 22427(king0liam)
+             * @date 2021/5/12 15:54
+             */
             super();
             hbox.setSpacing(10);
             hbox.setMargin(labelTitle, new Insets(0, 10, 0, 10));
@@ -122,13 +142,22 @@ public class HomePage {
             HBox.setHgrow(pane, Priority.ALWAYS);
         }
 
-        protected void updateItem(Post item, boolean empty) {//(String item, boolean empty)
+        protected void updateItem(Post item, boolean empty) {
+            /**
+             * @description xCell类会自动调用这个更新
+             * @exception 
+             * @param [com.ljl.www.po.Post, boolean] [item, empty]
+             * @return [com.ljl.www.po.Post, boolean]
+             * @since version-1.0
+             * @author 22427(king0liam)
+             * @date 2021/5/12 16:03
+             */
             super.updateItem(item, empty);
             setText(null);
             setGraphic(null);
 
             if (item != null && !empty) {
-                labelTitle.setText("标题："+item.getPostTitle());// label.setText(item);
+                labelTitle.setText("标题："+item.getPostTitle());
                 if(item.getPostTitle().length()<=20){labelArticle.setText("文章摘要："+item.getPostArticle());}
                 else{labelArticle.setText("文章摘要："+item.getPostArticle().substring(0,20));}
                 labelClientId.setText("作者id："+item.getClientId().toString());
@@ -138,19 +167,27 @@ public class HomePage {
         }
     }
 
-    //ObservableList<Post> postList = new PostListSql().query();
     public void initialize() {
+        /**
+         * @description 首页的初始化函数
+         * @exception 
+         * @param [] []
+         * @return []
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 16:08
+         */
 
-        //postDetail.setV
-
-        //postPagination.setPageCount(20);
         //postPagination.setPageCount(PostListSql.postCount/PostListSql.getLimit());
         postPagination.setMaxPageIndicatorCount(10);
         postPagination.setCurrentPageIndex(0);
         postPagination.getStyleClass().add(Pagination.STYLE_CLASS_BULLET);
-/*
+
+
+/* // TODO: 2021/5/9 输入非数字会不安全 ，应该用类似性别的choiceBox
+// TODO: 2021/5/12 没实现的每页选择栏
         if(sexChoiceBox.getItems().size()==0) {
-            sexChoiceBox.getItems().addAll("男", "女","保密","LGBTQ");
+            sexChoiceBox.getItems().addAll("1", "2","3","4","5","6","7","8","9","10","11");
         }
         sexChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> sex = new_value.toString());
         preSexLabel.setText(Login.clientLocal.getClientSex());
@@ -158,80 +195,67 @@ public class HomePage {
 */
 
         postPagination.setPageFactory(new Callback<Integer, Node>() {
-            //ObservableList<Post> postList = new PostListSql().query();
-            //////ObservableList<String> tempShit=FXCollections.observableArrayList();
-
+            /**
+             * @className Callback<Integer, Node>
+             * @description 匿名对象
+             * @author  22427(king0liam)
+             * @date 2021/5/12 16:44
+             * @version 1.0
+             * @since version-0.0
+             */
             @Override
             public Node call(Integer param) {
-                //ObservableList<Post> postList = new PostListSql().query(param);//发送第几页过去，传回list
+                /**
+                 * @description 重写匿名对象的方法,每次切换分页(页码改变)的时候被调用
+                 * @exception Exception
+                 * @param [java.lang.Integer] [param]
+                 * @return [java.lang.Integer]
+                 * @since version-1.0
+                 * @author 22427(king0liam)
+                 * @date 2021/5/12 16:42
+                 */
                 try{
-                    DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
-                    out.writeUTF("postListControlPacket");
-                    out.flush();
-
-
                     clientPacket.pageParam=param;
                     clientPacket.operation.delete(0,clientPacket.operation.length());//??这样很啰嗦？
                     clientPacket.operation.append("getPost");
-
-                    ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-                    oos.writeObject(clientPacket);
-                    oos.flush();
-
-
-                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
-                    Object obj = ois.readObject();
-                    clientPacket = (PostListControlPacket) obj;
-
-
+                    clientPacket = (PostListControlPacket)Hint.send$Receive("postListControlPacket",clientPacket);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
 
-                //if()刷新键被按下
-                /*if(PostListSql.firstLogin++==1){
-                    for(int i=0;i<postList.size();i++){
-                        tempShit.add(postList.get(i).getPostTitle());
-                    }
-                }
-                for(int i=0;i<postList.size();i++){tempShit.set(i,postList.get(i).getPostTitle());}
-                 */
-
-                //ListView<String> lv = new ListView<>();
-                //lv.setItems(tempShit);
-
                 ListView<Post> lv = new ListView<>();
-                //lv.setItems(clientPacket.postList);
                 lv.setItems(FXCollections.observableList(clientPacket.postList));
                 lv.setCellFactory(params -> new XCell());
-
                 lv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+                //添加监视器
                 lv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    //lv.getSelectionModel().getSelectedItem();
-                    clientPacket.postListSelectedIndex=lv.getSelectionModel().getSelectedIndex();
 
+                    clientPacket.postListSelectedIndex=lv.getSelectionModel().getSelectedIndex();
+                    allTabPane.getSelectionModel().select(postDetail);
+                   //弃用的代码,尝试了无法实现
+/*                    //lv.getSelectionModel().getSelectedItem();
                     //new PostDetailPage().initialize();
-/*                    try {
+                    try {
                         new Hint().sceneSwitch("PostDetailPage.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }*/
-
-                    allTabPane.getSelectionModel().select(postDetail);
-
-                    //Screen screenCoords;
+                    }
+*/
+                    //弃用的代码,尝试了无法实现
 /*                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
                             allTabPane.getX(), sceneCoords.getY(), screenCoords.getX(), screenCoords.getY(), MouseButton.PRIMARY, 1,
-                            true, true, true, true, true, true, true, true, true, true, null));*/
-
-/*                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED));*/
-
+                            true, true, true, true, true, true, true, true, true, true, null));
                     //postDetail.getContent().lookup("#refreshPostDetail").getOnMouseClicked();
                     //postDetail.getContent().lookup("#refreshPostDetail").getClass().;
+                                        //postDetail.getContent().getId()//.getScene().getRoot().getChildrenUnmodifiable()
+                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED));*/
+
+
                     Node shit=postDetail.getContent().lookup("#refreshPostDetail");
-                    // TODO: 2021/5/11 还是没能实现自动跳转＋刷新。。。。。。 
+                    // TODO: 2021/5/11 还是没能实现自动跳转＋刷新。。。。。。
                     System.out.println(shit);
+
                     System.out.println(shit.localToScene(shit.getLayoutBounds()).getMinX());
                     System.out.println(shit.localToScreen(shit.getLayoutBounds()).getMinX());
 
@@ -246,20 +270,8 @@ public class HomePage {
                             MouseButton.PRIMARY, 2,
                             true, true, true, true, true, true,
                             true, true, true, true, null));
-
-/*                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
-                            shit.localToScene(shit.getLayoutBounds()).getMaxX(), shit.localToScene(shit.getLayoutBounds()).getMaxY(),
-                            shit.localToScreen(shit.getLayoutBounds()).getMaxX(), shit.localToScreen(shit.getLayoutBounds()).getMaxY(),
-                            MouseButton.PRIMARY, 2,
-                            true, true, true, true, true, true,
-                            true, true, true, true, null));*/
-
-
-                    //postDetail.getContent().getId()//.getScene().getRoot().getChildrenUnmodifiable()
-                            //postDetail.get
-
+                    //弃用的代码,尝试了无法实现
 /*                    try {
-
                         //FXMLLoader.load(getClass().getClassLoader().getResource("PostDetailPage.fxml"));
                         //FXMLLoader.load(getClass().getResource("/PostDetailPage.fxml"));
 
@@ -267,13 +279,11 @@ public class HomePage {
                         //FXMLLoader.load(url);
                         FXMLLoader fxmlLoader1=new FXMLLoader();
                         fxmlLoader1.load(url);
-                        ((PostDetailPage)fxmlLoader1.getController()).sshow();
-
-
+                        ((PostDetailPage)fxmlLoader1.getController()).sShow();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    PostDetailPage.sshow();*/
+                    PostDetailPage.sShow();*/
 
 /*                    postDetail.setOnSelectionChanged(new EventHandler<Event>() {
                         @Override
@@ -282,26 +292,10 @@ public class HomePage {
                             System.out.println("tab1被改变了 - " + t.getText());
                         }
                     });*/
-
-
-/*                    try{
-                        ColumnAndAnalogControl columnAndAnalogControl=new ColumnAndAnalogControl();
-                        try {
-                            columnAndAnalogControl.choiceAnalog();
-                        } catch (Exception e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                        }
-                    }
-                    catch(Exception e){
-                        e.printStackTrace();
-                    }*/
                 });
                 return lv;
             }
         });
-        //postPagination.setPageFactory(new Callback<0,postListView>);
-
     }
 
 }

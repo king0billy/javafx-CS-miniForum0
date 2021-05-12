@@ -6,12 +6,17 @@ import javafx.collections.ObservableList;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * @className PostListControlPacket
+ * @description 封装好的传输控制包,以便传输各种Post相关的信息
+ * @author  22427(king0liam)
+ * @date 2021/5/12 15:21
+ * @version 1.0
+ * @since version-0.0
+ */
 public class PostListControlPacket implements Serializable {
     public StringBuffer operation=new StringBuffer();//昨天老师才讲完，stringBuffer没有重新写equals。。。
     public Integer limit=2;
-    //public ObservableList<Long> paginationList= FXCollections.observableArrayList();
-    //public ObservableList<Post> postList=FXCollections.observableArrayList();
     public ArrayList<Long> paginationList=new ArrayList<>();
     public ArrayList<Post> postList=new ArrayList<>();
     public  Integer postListSelectedIndex=-9999;

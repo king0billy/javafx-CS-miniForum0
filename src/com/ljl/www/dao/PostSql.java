@@ -9,17 +9,28 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Observable;
+/**
+ * @className PostSql
+ * @description 和用户有关的数据库语句，内部方法接受的参数统一为数据库实体类po下的Post,
+ * @author  22427(king0liam)
+ * @date 2021/5/12 14:36
+ * @version 1.0
+ * @since version-0.0
+ */
 
 public class PostSql {
     public PostSql(){}
 
-    /*static{
-         createPaginationList();
-    }*/
-
-    static public PostListControlPacket createPaginationList(PostListControlPacket postListControlPacket){  //static public ObservableList createPaginationList()
-        //ObservableList<Long> PaginationList= FXCollections.observableArrayList();
+    static public PostListControlPacket createPaginationList(PostListControlPacket postListControlPacket){
+        /**
+         * @description 查询一次事件全表，并根据每页限制和降序为事件id建立一个索引数组
+         * @exception SQLException
+         * @param [postListControlPacket]
+         * @return [com.ljl.www.util.PostListControlPacket]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:38
+         */
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
@@ -28,19 +39,15 @@ public class PostSql {
             String sql="SELECT * FROM post ORDER BY post_id DESC";
             statement=connection.prepareStatement(sql);
             resultSets=statement.executeQuery();//这里不用参数
-            /*int index=0;
-            do{
-                PaginationList.add(resultSets.getLong("post_id"));
-                System.out.println(PaginationList.get(index++));
-                for(int i=0;i<limit;i++){resultSets.next();}
-            }while(resultSets.next());*/
+
                     System.out.println("done createPaginationList query here");
             int index=0;
             postListControlPacket.paginationList=new ArrayList<>();
             for(;resultSets.next();index++){
                 if(index%postListControlPacket.limit==0){
                     postListControlPacket.paginationList.add(resultSets.getLong("post_id"));
-                    System.out.println("PaginationList.get(i/limit)= "+postListControlPacket.paginationList.get(index/postListControlPacket.limit)+"i="+index);
+                    System.out.println("PaginationList.get(i/limit)= "
+                            +postListControlPacket.paginationList.get(index/postListControlPacket.limit)+" i="+index);
                 }
             }
             postListControlPacket.postCount=index;
@@ -51,17 +58,24 @@ public class PostSql {
         }finally {
             DriverUtils.release(connection,statement,resultSets);
         }
-        //return PaginationList;
         return  postListControlPacket;
     }
 
-    static public PostListControlPacket setPaginationList(PostListControlPacket postListControlPacket){ //public ObservableList query(PostListControlPacket postListControlPacket)
+    static public PostListControlPacket setPaginationList(PostListControlPacket postListControlPacket){ 
+        /**
+         * @description 每次切换分页都要调用这个，根据扫描出来的索引数组不用查询整张表而是部分
+         * @exception SQLException       
+         * @param [postListControlPacket]
+         * @return [com.ljl.www.util.PostListControlPacket]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:44
+         */
         System.out.println("postListControlPacket.firstLogin= "+postListControlPacket.firstLogin);
         if(postListControlPacket.firstLogin==0){
             postListControlPacket.firstLogin++;
             postListControlPacket.paginationList=createPaginationList(postListControlPacket).paginationList;
         }
-        //ObservableList<Post> postArrayList= FXCollections.observableArrayList();
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
@@ -76,16 +90,6 @@ public class PostSql {
             int index=0;
             postListControlPacket.postList=new ArrayList<>();//666
             while(resultSets.next()){
-/*                postArrayList.add(new Post());
-                postArrayList.get(index).setPostId(resultSets.getLong("post_id"));
-                postArrayList.get(index).setClientId(resultSets.getLong("client_id"));
-                postArrayList.get(index).setPostNewDate(resultSets.getTimestamp("post_new_date"));
-                postArrayList.get(index).setPostTitle(resultSets.getString("post_title"));
-                postArrayList.get(index).setPostArticle(resultSets.getString("post_article"));
-                postArrayList.get(index).setThumbsUpCount(resultSets.getLong("thumbs_up_count"));
-                postArrayList.get(index).setFavoriteCount(resultSets.getLong("favorite_count"));
-                postArrayList.get(index).setRemarkCount(resultSets.getLong("remark_count"));*/
-
                 postListControlPacket.postList.add(new Post());
                 postListControlPacket.postList.get(index).setPostId(resultSets.getLong("post_id"));
                 postListControlPacket.postList.get(index).setClientId(resultSets.getLong("client_id"));
@@ -98,7 +102,6 @@ public class PostSql {
                 index++;
             }
         }catch (SQLException e){
-            //Hint.pop("空事件表！");
             System.out.println("Hint.pop(\"空事件表！\")");
             e.printStackTrace();
         }catch (Exception e){
@@ -107,10 +110,18 @@ public class PostSql {
         }finally {
             DriverUtils.release(connection,statement,resultSets);
         }
-        //return postArrayList;
         return postListControlPacket;
     }
     public Post updateMyPost(Post post){
+        /**
+         * @description 更新已有事件
+         * @exception SQLException       
+         * @param [post]
+         * @return [com.ljl.www.po.Post]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:45
+         */
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
@@ -139,6 +150,15 @@ public class PostSql {
         return r4return;
     }
     public Post newPost(Post post){
+        /**
+         * @description 新建事件并插入
+         * @exception SQLException       
+         * @param [post]
+         * @return [com.ljl.www.po.Post]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:46
+         */
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
@@ -155,11 +175,8 @@ public class PostSql {
             statement.setString(3,post.getPostTitle());
             statement.setString(4,post.getPostArticle());
             do{
-                    //r4return =String.valueOf(MyID.bit13$1());
-                    //statement.setLong(3,Long.getLong(r4return));
                     tag= MyID.postID13$1BIT();
                     statement.setLong(5,tag);
-                    //statement.setLong(3,MyID.bit13$1());
             }
             while(statement.executeUpdate()<=0);
             r4return=post;
@@ -172,14 +189,23 @@ public class PostSql {
         }
         return r4return;
     }
-    static public PostListControlPacket pulledPostList(PostListControlPacket postListControlPacket){  //static public ObservableList createPaginationList()
-        //ObservableList<Long> PaginationList= FXCollections.observableArrayList();
+    static public PostListControlPacket pulledPostList(PostListControlPacket postListControlPacket){
+
+        /**
+         * @description 查询登录此账号用户发过的所有帖子
+         * @exception
+         * @param [com.ljl.www.util.PostListControlPacket] [postListControlPacket]
+         * @return [com.ljl.www.util.PostListControlPacket]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:49
+         */
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
         try{
             connection = DriverUtils.getConnection();
-            String sql="SELECT * FROM post WHERE client_id=?";
+            String sql="SELECT * FROM post WHERE client_id=? ORDER BY post_id DESC" ;
             statement=connection.prepareStatement(sql);
             statement.setLong(1,postListControlPacket.clientId);
             resultSets=statement.executeQuery();//这里不用参数
@@ -206,7 +232,6 @@ public class PostSql {
         }finally {
             DriverUtils.release(connection,statement,resultSets);
         }
-        //return PaginationList;
         return  postListControlPacket;
     }
 

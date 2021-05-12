@@ -7,6 +7,16 @@ import com.ljl.www.po.Client;
 import com.ljl.www.util.MyID;
 
 import java.sql.*;
+/**
+ * @className ClientSql
+ * @description 和用户有关的数据库语句，内部方法接受的参数统一为数据库实体类po下的Client,
+ * @author  22427(king0liam)
+ * @date 2021/5/12 14:03
+ * @version 1.0
+ * @since version-0.0
+ * @see Client
+ * @see DriverUtils
+ */
 
 public class ClientSql {
     /*public Client query(Client client){//优先电话登录
@@ -16,6 +26,17 @@ public class ClientSql {
         else return queryTel(client.getClientTel(),client.getClientPassword());
     }*/
     public Client myInfoUpdate(Client client){
+        /**
+         * @description 数据库插入语句，更新个人信息（主要在个人信息页的初始化和更新）
+         * @exception SQLException
+         * @param [client]
+         * @return [com.ljl.www.po.Client]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:15
+         * @see Client
+         * @see DriverUtils
+         */
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
@@ -46,11 +67,22 @@ public class ClientSql {
         }
         return r4return;
     }
-    public Client authorQuery(Client client) {//public Client query(String id,String password)
+    public Client authorQuery(Client client) {
+        /**
+         * @description 根据选中的帖子的帖子详情页的刷新键调用，查询发帖人的信息
+         * @exception   SQLException
+         * @param [client]
+         * @return [com.ljl.www.po.Client]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:13
+         * @see Client
+         * @see DriverUtils
+         */
+
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSets = null;
-
 
         Client newClient = new Client();
         newClient.setClientId(client.getClientId());
@@ -67,17 +99,14 @@ public class ClientSql {
 
             resultSets = statement.executeQuery();
             while (resultSets.next()) {
-
                 newClient.setClientId(resultSets.getLong("client_id"));
                 newClient.setClientTel(resultSets.getString("client_tel"));
-
                 newClient.setClientNickname(resultSets.getString("client_nickname"));
                 newClient.setClientSex(resultSets.getString("client_sex"));
                 newClient.setClientAddress(resultSets.getString("client_address"));
                 newClient.setClientDescription(resultSets.getString("client_description"));
                 newClient.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
                 newClient.setClientPrivilege(resultSets.getLong("client_privilege"));
-
 
                 System.out.println("password=" + resultSets.getString("client_password"));
             }
@@ -88,7 +117,19 @@ public class ClientSql {
         }
         return newClient;
     }
-    public Client loginQuery(Client client){//public Client query(String id,String password)
+    public Client loginQuery(Client client){
+        /**
+         * @description 根据输入的账号或者电话，以及密码进行登录查询
+         * @exception  SQLException
+         * @param [client]
+         * @return [com.ljl.www.po.Client]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:16
+         * @see Client
+         * @see DriverUtils
+         */
+
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
@@ -116,7 +157,6 @@ public class ClientSql {
             statement.setString(2,client.getClientPassword());
             resultSets=statement.executeQuery();
             while(resultSets.next()){
-
                 newClient.setClientId(resultSets.getLong("client_id"));
                 newClient.setClientTel(resultSets.getString("client_tel"));
 
@@ -126,10 +166,6 @@ public class ClientSql {
                 newClient.setClientDescription(resultSets.getString("client_description"));
                 newClient.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
                 newClient.setClientPrivilege(resultSets.getLong("client_privilege"));
-
-/*              System.out.println("client.getClientAddress()==null"+(client.getClientAddress().equals(null)));
-                System.out.println("client.getClientAddress()==null"+(client.getClientAddress()==null)+"");
-                System.out.println("client.getClientDescription()==null"+(client.getClientDescription()==null)+"");*/
                 System.out.println("password="+resultSets.getString("client_password"));
             }
         }catch (SQLException e){
@@ -140,6 +176,19 @@ public class ClientSql {
         return newClient;
     }
     public Long registerInsert(Client client){
+        /**
+         * @description 注册的插入语句 在服务器端根据系统时间生成用户id
+         * @exception   SQLException
+         * @param [client]
+         * @return [com.ljl.www.po.Client]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:17
+         * @see Client
+         * @see DriverUtils
+         * @see MyID
+         */
+
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
@@ -151,18 +200,17 @@ public class ClientSql {
             statement.setString(1,client.getClientTel());
             resultSets=statement.executeQuery();//括号里面不能有语句
             if(!resultSets.next()){
-                String sql="INSERT INTO client(client_tel,client_password,client_id,client_enroll_date,client_privilege) VALUES(?,?,?,?,?);";
+                String sql="INSERT INTO " +
+                        "client(client_tel,client_password,client_id,client_enroll_date,client_privilege) " +
+                        "VALUES(?,?,?,?,?);";
                 statement=connection.prepareStatement(sql);
                 statement.setString(1,client.getClientTel());
                 statement.setString(2,client.getClientPassword());
                 statement.setTimestamp(4,new Timestamp(System.currentTimeMillis()));
                 statement.setLong(5,client.getClientPrivilege());
                 do{
-                    //r4return =String.valueOf(MyID.bit13$1());
-                    //statement.setLong(3,Long.getLong(r4return));
                     tag= MyID.clientID13$1BIT();
                     statement.setLong(3,tag);
-                    //statement.setLong(3,MyID.bit13$1());
                 }
                 while(statement.executeUpdate()<=0);
             }
@@ -174,39 +222,4 @@ public class ClientSql {
         }
         return tag;
     }
-
-
-    /*public Client queryTel(String tel,String password){
-        Connection connection=null;
-        PreparedStatement statement=null;
-        ResultSet resultSets=null;
-        Client client=new Client();
-        try{
-
-            connection = DriverUtils.getConnection();
-            String sql="SELECT * FROM CLIENT WHERE client_tel=? AND client_password=?";
-            statement=connection.prepareStatement(sql);
-            statement.setString(1,tel);
-            statement.setString(2,password);
-            resultSets=statement.executeQuery();
-            while(resultSets.next()){
-                client.setClientId(resultSets.getLong("client_id"));
-                client.setClientTel(resultSets.getString("client_tel"));
-
-                client.setClientNickname(resultSets.getString("client_nickname"));
-                client.setClientSex(resultSets.getString("client_sex"));
-                client.setClientAddress(resultSets.getString("client_address"));
-                client.setClientDescription(resultSets.getString("client_description"));
-                client.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
-                client.setClientPrivilege(resultSets.getLong("client_privilege"));
-
-                System.out.println(resultSets.getString("client_password"));
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            DriverUtils.release(connection,statement,resultSets);
-        }
-        return client;
-    }*/
 }

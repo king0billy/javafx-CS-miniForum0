@@ -19,7 +19,14 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class Register {
-
+/**
+ * @className Register
+ * @description 注册页面控制器
+ * @author  22427(king0liam)
+ * @date 2021/5/12 17:52
+ * @version 1.0
+ * @since version-0.0
+ */
 
     @FXML
     private PasswordField passWord1st;
@@ -41,14 +48,27 @@ public class Register {
 
 
     public void eventOnButtonBackToLogin(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        Scene creatingScene = new Scene(parent);
-        Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-        reflectedStage.hide();
-        reflectedStage.setScene(creatingScene);
-        reflectedStage.show();
+        /**
+         * @description 返回登录界面键,页面跳转
+         * @exception IOException
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 18:00
+         */
+        new Hint().sceneSwitch("Login.fxml",event);
     }
     public void eventOnButtonRegister(ActionEvent event) throws IOException {
+        /**
+         * @description 组测键
+         * @exception IOException
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 18:00
+         */
         if(passWord1st.getLength()<6||passWord1st.getLength()>20||passWord2nd.getLength()<6||passWord2nd.getLength()>20){
             Hint.pop("密码长度应为6到20个字符！");
             System.out.println("length!!");
@@ -58,47 +78,24 @@ public class Register {
                 System.out.println("match!!");
             }
             else {
-               /* Long r4return=new RegisterSql().insert(clientTelField.getText(),passWord1st.getText());
-               if(r4return>0){
-                   Hint.pop(r4return);
-                   System.out.println("success,"+r4return);//用手机号注册或者，用文本框显示注册的账号，
-               }
-               else{
-                   Hint.pop("数据库错误或电话已被注册");
-                   System.out.println("failed");
-               }//提示数据库错误
-
-                */
                 try {
-                    //写数据
-                    DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
-                    //读数据
-                    DataInputStream in=new DataInputStream(MainView.ss.getInputStream());
-
-                    out.writeUTF("enroll");                                //给服务器端发送注册
-                    out.flush();
-
-                    ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
                     Client client=new Client(-99L,clientTelField.getText(),passWord1st.getText());
                     //if(Long.parseLong(adminCodeField.getText()).equals(666))client.setClientPrivilege(8L);
                     if(adminCodeField.getText().equals("666"))client.setClientPrivilege(8L);
                     else {client.setClientPrivilege(4L);}
 
-                    oos.writeObject(client);                                  //将用户信息发过去
-                    oos.flush();
+                    Long flag=(Long)Hint.send$Receive("enroll",client);
 
-                    Long flag=in.readLong();
                     if(flag>0){
+                        //用手机号注册,用文本框显示注册的账号
                         Hint.pop(flag);
-                        System.out.println("success,"+flag);//用手机号注册或者，用文本框显示注册的账号，
+                        System.out.println("register success,"+flag);
                     }
                     else{
                         Hint.pop("数据库错误或电话已被注册");
-                        System.out.println("failed");
-                    }//提示数据库错误
-                    //LoginControl.mystage.close();
-                } catch (IOException e) {
-
+                        System.out.println("register failed");
+                    }
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }

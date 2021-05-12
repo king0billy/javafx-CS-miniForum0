@@ -8,7 +8,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
+/**
+ * @className AnotherClient
+ * @description 当帖子作者不是本账号登陆者时显示的他人信息页面
+ * @author  22427(king0liam)
+ * @date 2021/5/12 15:22
+ * @version 1.0
+ * @since version-0.0
+ */
 public class AnotherClient {
     @FXML
     private Label sexLabel;

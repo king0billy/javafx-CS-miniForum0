@@ -13,7 +13,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.Socket;
-
+import java.util.Objects;
+/**
+ * @className Connect2Server
+ * @description 客户端见到的第一个页面,先与服务端建立socket连接
+ * @author  22427(king0liam)
+ * @date 2021/5/12 15:30
+ * @version 1.0
+ * @since version-0.0
+ */
 public class Connect2Server {
 
     @FXML
@@ -24,36 +32,27 @@ public class Connect2Server {
 
     @FXML
     void EventOnButtonConnect(ActionEvent event) {
+        /**
+         * @description 连接键绑定的事件
+         * @exception IOException
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 15:31
+         */
         try {
             String ip=IPField.getText();
             //ServerSocket serverSocket = new ServerSocket(6666);//【这一步已在server中先运行了！！！】
             MainView.ss=new Socket(ip,6666);//ip输入框
-            //MainApp.ss=new Socket(ip,0);
-            //MainApp.ss=new Socket(ip,51559);
             //根据ip和端口连接服务器
-            if(MainView.ss.isConnected()){                     //如何连接成功
-
-                /*FXMLLoader loader=new FXMLLoader();
-                //loader.setLocation(MainView.class.getResource("/view/Login.fxml"));
-                loader.setLocation(MainView.class.getResource("Login.fxml"));
-                AnchorPane myPane=(AnchorPane)loader.load();
-
-                Scene scene=new Scene(myPane);
-                MainView.primaryStage.setScene(scene);
-                MainView.primaryStage.show();*/
-
-                Parent parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
-                Scene creatingScene = new Scene(parent);
-                Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-                reflectedStage.hide();
-                reflectedStage.setScene(creatingScene);
-                reflectedStage.show();
+            if(MainView.ss.isConnected()){
+                new Hint().sceneSwitch("Login.fxml",event);
             }
             else{
                     Hint.pop("连接失败");
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             Hint.pop("连接失败，服务器未开启或ip及端口号错误!!");
         }

@@ -11,9 +11,15 @@ import java.net.Socket;
 import com.ljl.www.po.*;
 import com.ljl.www.util.*;
 import com.ljl.www.dao.*;
-import com.ljl.www.view.MainView;
-import javafx.collections.ObservableList;
 
+/**
+ * @className MainOperation
+ * @description 服务器主逻辑
+ * @author  22427(king0liam)
+ * @date 2021/5/12 15:15
+ * @version 1.0
+ * @since version-0.0
+ */
 
 public class MainOperation {
     public Socket ss;
@@ -24,7 +30,16 @@ public class MainOperation {
         db = new DBServer();
     }
 
-    public void service() {                                                           //主服务处理函数
+    public void service() {
+        /**
+         * @description 主服务处理登录和注册请求的函数,登录成功了就一直等待客户端发来其他请求
+         * @exception IOException,ClassNotFoundException
+         * @param [] []
+         * @return []
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 15:17
+         */
         try {
             //写入
             DataInputStream in = new DataInputStream(ss.getInputStream());
@@ -35,13 +50,17 @@ public class MainOperation {
             while (true) {
                 String recv = in.readUTF();
                 if (recv.equals("enroll")) {
+                    System.out.println("equals=enroll");
                     ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                     Object obj = ois.readObject();
 
                     Client tempClient = (Client) obj;
                     System.out.println(tempClient.getClientTel());
                     Long tempId=db.insertClient(tempClient);
-                    out.writeLong(tempId);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(tempId);
+                    oos.flush();
+                    //out.writeLong(tempId);
 
                 } else if (recv.equals("enter")) {
                     System.out.println("equals=enter");
@@ -50,37 +69,39 @@ public class MainOperation {
 
                     Client tempClient = (Client) obj;
                     Client r4return =db.loginClient(tempClient);
+                    //将用户信息发回去
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
                     oos.writeObject(r4return);
                     oos.flush();
                     if (tempClient.equals(r4return)==false) {
-                        //out.write(1);                                              //登陆成功，用户存在
-                        //out.flush();                                                //将用户信息发过去
+                        //登陆成功，用户存在
                         System.out.println("equals=enterSuccess");
-                        while (true) {                                               //登陆成功之后，不停监视用户请求
+                        //登陆成功之后，不停监视用户请求
+                        while (true) {
                             recv = in.readUTF();
+                            //调用下一个函数
                             mainService(recv);
                         }
 
-                    } else {
-                       // out.write(2);                                              //登陆失败，密码错误或用户不存在
-                        //out.flush();
                     }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     public void mainService(String server_type) {
+        /**
+         * @description 登录成功以后接收的服务信息和处理逻辑
+         * @exception IOException,ClassNotFoundException
+         * @param [java.lang.String] [server_type]
+         * @return [java.lang.String]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 15:19
+         */
         try {
-            //写入
-            DataInputStream in = new DataInputStream(ss.getInputStream());
-            //读出
-            DataOutputStream out = new DataOutputStream(ss.getOutputStream());
-
             if(server_type.equals("postListControlPacket")){
                 System.out.println("postListControlPacket");
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
@@ -91,17 +112,16 @@ public class MainOperation {
 
 
                 if(ppcp.operation.toString().equals("refreshPostList")){
-                    //PostListSql.createPaginationList(ppcp);
                     db.setPaginationList(ppcp);
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
-                    oos.writeObject(ppcp);                                  //将用户信息发过去
+                    oos.writeObject(ppcp);
                     oos.flush();
                 }
                 else if(ppcp.operation.toString().equals("getPost")){
                     System.out.println("equals=getPost");
                     db.getPostListView(ppcp);
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
-                    oos.writeObject(ppcp);                                  //将用户信息发过去
+                    oos.writeObject(ppcp);
                     oos.flush();
 
                 }
@@ -109,7 +129,7 @@ public class MainOperation {
                     System.out.println("equals=getPulledPostList");
                     db.getPulledList(ppcp);
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
-                    oos.writeObject(ppcp);                                  //将用户信息发过去
+                    oos.writeObject(ppcp);
                     oos.flush();
 
                 }
@@ -157,8 +177,6 @@ public class MainOperation {
                 oos.writeObject(db.newPost(post));
                 oos.flush();
             }
-
-
 
 
         } catch (IOException | ClassNotFoundException e) {

@@ -3,7 +3,14 @@ package com.ljl.www.po;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-
+/**
+ * @className Client
+ * @description idea根据数据库表自动生成的Client实体类，自己重写了一个equals方法（这里踩了坑，，忘了用自动生成又忘了Long是一个引用类型）
+ * @author  22427(king0liam)
+ * @date 2021/5/12 14:58
+ * @version 1.0
+ * @since version-0.0
+ */
 public class Client extends Object implements Serializable {
 //-9223372036854775808L
   private Long clientId=-99L;
@@ -59,18 +66,17 @@ public class Client extends Object implements Serializable {
   public boolean equals(Client client){
     if(client==null)return false;
     else {
-      if (
+      if(client==this)return true;
+      else if (
               this.clientId.equals( client.getClientId())==false||this.clientEnrollDate.equals(client.getClientEnrollDate())==false
               ||this.clientNickname.equals(client.getClientNickname())==false|| this.clientTel.equals(client.getClientTel())==false
                       || this.clientPrivilege.equals(client.getClientPrivilege())==false
-              //for正常登录
+              //以上is for正常登录
               || this.clientPassword.equals(client.getClientPassword())==false|| this.clientSex.equals(client.getClientSex())==false
                       ||(client.getClientAddress()==null||this.clientAddress.equals(client.getClientAddress())==false)
                       ||(client.getClientDescription()==null||this.clientDescription.equals(client.getClientDescription())==false)
-/*                      ||(client.getClientAddress()==null||this.clientAddress.equals(client.getClientAddress())==false)
-                      ||(client.getClientDescription()==null||this.clientDescription.equals(client.getClientDescription())==false) */
       ) {
-        return false;
+          return false;
       }
     }
     return true;

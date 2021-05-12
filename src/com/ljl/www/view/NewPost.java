@@ -1,7 +1,5 @@
 package com.ljl.www.view;
 
-
-import com.ljl.www.po.Client;
 import com.ljl.www.po.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,10 +7,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
 import java.io.*;
 import java.sql.Timestamp;
 
+/**
+ * @className NewPost
+ * @description 发布新事件页面
+ * @author  22427(king0liam)
+ * @date 2021/5/12 17:16
+ * @version 1.0
+ * @since version-0.0
+ */
 public class NewPost{
     Post postToPull=new Post();
 
@@ -33,27 +38,22 @@ public class NewPost{
 
     @FXML
     void pullNewPost(ActionEvent event) {
+        /**
+         * @description 发布新事件按钮
+         * @exception
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 17:17
+         */
         try {
-
             postToPull.setClientId(Long.parseLong(nicknameField.getText()));
             postToPull.setPostTitle(titleField.getText());
             postToPull.setPostArticle(articleArea.getText());
             //postToPull.setPostNewDate(new Timestamp(System.currentTimeMillis()));
-            //写数据
-            DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
-            //读数据
-            DataInputStream in=new DataInputStream(MainView.ss.getInputStream());
 
-            out.writeUTF("pullNewPost");                                //给服务器端发送注册
-            out.flush();
-
-            ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-            oos.writeObject(postToPull);                                  //将用户信息发过去
-            oos.flush();
-
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
-            Object obj = ois.readObject();
-            Post replyPost = (Post) obj;
+            Post replyPost = (Post) Hint.send$Receive("pullNewPost",postToPull);
 
             if(replyPost.equals(postToPull)){
                 HomePage.clientPacket.firstLogin=0;
@@ -61,8 +61,8 @@ public class NewPost{
                 System.out.println("请回首页刷新查看或是去已发布栏查看");//用手机号注册或者，用文本框显示注册的账号，
             }
             else{
-                Hint.pop("数据库错误");
-                System.out.println("failed");
+                Hint.pop("新建事件失败,数据库错误");
+                System.out.println("新建事件失败,数据库错误");
             }
         } catch (IOException | ClassNotFoundException e) {
 
@@ -71,6 +71,15 @@ public class NewPost{
 
     }
     public  void initialize(){
+        /**
+         * @description 页面初始化
+         * @exception
+         * @param [] []
+         * @return []
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 17:17
+         */
         dateField.setText(new Timestamp(System.currentTimeMillis()).toString());
         nicknameField.setText(Login.clientLocal.getClientId().toString());
 

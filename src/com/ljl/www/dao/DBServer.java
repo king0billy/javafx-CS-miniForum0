@@ -11,6 +11,14 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
+/**
+ * @className DBServer
+ * @description 进一步封装查询类
+ * @author  22427(king0liam)
+ * @date 2021/5/12 14:19
+ * @version 1.0
+ * @since version-0.0
+ */
 
 public class DBServer {
     private static String driver=null;
@@ -18,15 +26,8 @@ public class DBServer {
     private static String username=null;
     private static String password=null;
 
-    public static Client client;
-    public static Favorite favorite;
-    public static Post post;
-    public static Remark remark;
-    public static Report report;
-    public static ThumbsUp thumbsUp;
-
-
     public DBServer(){
+        //注册驱动（但是最新的mysql驱动似乎不需要这一步）
         try{
             InputStream input =DriverUtils.class.getClassLoader().getResourceAsStream("db.properties");
             Properties properties=new Properties();
@@ -69,29 +70,5 @@ public class DBServer {
     }
     public PostListControlPacket getPulledList(PostListControlPacket postListControlPacket){
         return  PostSql.pulledPostList(postListControlPacket);
-    }
-
-    public static void release(Connection connection, Statement statement, ResultSet resultSet){
-        if(resultSet!=null){
-            try {
-                resultSet.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
-        if(statement!=null){
-            try {
-                statement.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
-        if(connection!=null){
-            try {
-                connection.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
     }
 }

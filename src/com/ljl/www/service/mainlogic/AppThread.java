@@ -2,7 +2,14 @@ package com.ljl.www.service.mainlogic;
 
 import java.net.Socket;
 
-//import com.ljl.www.service.mainlogic.MainOperation;
+/**
+ * @className AppThread
+ * @description 线程,调用主逻辑类
+ * @author  22427(king0liam)
+ * @date 2021/5/12 15:14
+ * @version 1.0
+ * @since version-0.0
+ */
 
 public class AppThread extends Thread{
     public Socket ss;

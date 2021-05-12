@@ -2,6 +2,7 @@ package com.ljl.www.view;
 
 
 import com.ljl.www.po.Client;
+import com.ljl.www.util.PostListControlPacket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +12,14 @@ import javafx.scene.control.TextField;
 import java.io.*;
 import java.util.Iterator;
 import java.util.Properties;
-
+/**
+ * @className Login
+ * @description 登录页面的控制器
+ * @author  22427(king0liam)
+ * @date 2021/5/12 17:01
+ * @version 1.0
+ * @since version-0.0
+ */
 public class Login {
     public static Client clientLocal;
     @FXML
@@ -32,42 +40,16 @@ public class Login {
     @FXML
     private CheckBox keepPassword;
 
-    public Button getRegisterField() {
-        return registerButton;
-    }
-    public void setClientTelField(TextField clientTelField) {
-        this.clientTelField = clientTelField;
-    }
-    public void setRegisterField(Button registerField) {
-        this.registerButton = registerField;
-    }
-
-    public TextField getClientNameField() {
-        return clientNameField;
-    }
-
-    public void setClientNameField(TextField clientNameField) {
-        this.clientNameField = clientNameField;
-    }
-
-    public TextField getClientPasswordField() {
-        return clientPasswordField;
-    }
-
-    public void setClientPasswordField(TextField clientPasswordField) {
-        this.clientPasswordField = clientPasswordField;
-    }
-
-    public Button getLoginButton() {
-        return loginButton;
-    }
-
-    public void setLoginButton(Button loginButton) {
-        this.loginButton = loginButton;
-    }
-
-
     public void eventOnButtonLogin(ActionEvent event)throws Exception{
+        /**
+         * @description 记住密码，登录
+         * @exception IOException
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 16:59
+         */
         String id=clientNameField.getText();
         String tel=clientTelField.getText();
         String password=clientPasswordField.getText();
@@ -99,110 +81,35 @@ public class Login {
                 e.printStackTrace();
             }
         }
-        /*if(id!=null){
-            if(new LoginQuery().query(id,password)){
-                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-                Scene creatingScene = new Scene(parent);
-                Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-                reflectedStage.hide();
-                reflectedStage.setScene(creatingScene);
-                reflectedStage.show();
-            }
-            else{
-                Hint.pop("账号密码输入错误");
-            }
-        }
-        else{
-            if(new LoginQuery().queryTel(tel,password)){
-                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-                Scene creatingScene = new Scene(parent);
-                Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-                reflectedStage.hide();
-                reflectedStage.setScene(creatingScene);
-                reflectedStage.show();
-            }
-            else{
-                Hint.pop("账号密码输入错误");
-            }
-        }*/
         try {
-            //写数据
-            DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
-            //读数据
-            DataInputStream in=new DataInputStream(MainView.ss.getInputStream());
-
-            out.writeUTF("enter");                                        //向服务器说是登陆
-            out.flush();
-
             Client client;
             if(id.equals("")){client=new Client(tel,password);}
             else{client=new Client(Long.parseLong(id),tel,password);}
-                                              //用户信息
-            ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-            oos.writeObject(client);                                  //将用户信息发过去
-            oos.flush();
 
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
-            Object obj = ois.readObject();
-            Client replyClient = (Client) obj;
-
+            Client replyClient=(Client)Hint.send$Receive("enter",client);
 
             if(replyClient.equals(client)==false){
-                //Hint.pop("登陆成功!");
                 clientLocal=replyClient;
-
                 new Hint().sceneSwitch("HomePage.fxml",event);
-
-                // PostListSql.setLimit(3);new PostListSql.createPaginationList();
-
-/*                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-                Scene creatingScene = new Scene(parent);
-                Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-                reflectedStage.hide();
-                reflectedStage.setScene(creatingScene);
-                reflectedStage.show();*/
-
-                //System.out.println(" new Hint().sceneSwitch(\"HomePage.fxml\",event)");
             }
             else{
                 Hint.pop("登录失败!");
             }
-
-            /*int flag=in.read();
-            if(flag==1){
-                //Hint.pop("登陆成功!");
-                clientLocal=client;
-                // PostListSql.setLimit(3);new PostListSql.createPaginationList();
-                Parent parent = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-                Scene creatingScene = new Scene(parent);
-                Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-                reflectedStage.hide();
-                reflectedStage.setScene(creatingScene);
-                reflectedStage.show();
-            }
-            else{
-                Hint.pop("失败!");
-            }*/
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
     public void eventOnButtonRegister(ActionEvent event) throws IOException {
-    /*
-        Parent Operation_Parent = FXMLLoader.load(getClass().getResource("CreateString.fxml"));
-        Scene Operation_Creating_Scene = new Scene(Operation_Parent);
-        Stage CreateOperation_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-        CreateOperation_Stage.hide();
-        CreateOperation_Stage.setScene(Operation_Creating_Scene);
-        CreateOperation_Stage.show();
- */     new Hint().sceneSwitch("Register.fxml",event);
-/*        Parent parent = FXMLLoader.load(getClass().getResource("Register.fxml"));
-        Scene creatingScene = new Scene(parent);
-        Stage reflectedStage = (Stage) ((Node) event.getSource()).getScene().getWindow();//【反射？】event转node然后一路get window
-        reflectedStage.hide();
-        reflectedStage.setScene(creatingScene);
-        reflectedStage.show();*/
+        /**
+         * @description 切换到注册页面
+         * @exception IOException
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 17:03
+         */
+          new Hint().sceneSwitch("Register.fxml",event);
     }
 /*    @Override
     public void initialize(URL location, ResourceBundle resources)*/
@@ -213,6 +120,7 @@ public class Login {
             if (new File("user.properties").exists()) {
                 InputStream in = new BufferedInputStream(new FileInputStream("user.properties"));
                 prop.load(in);
+                //参考的代码
 /*                Iterator<String> it = prop.stringPropertyNames().iterator();
                 while (it.hasNext()) {
                     String key = it.next();
@@ -221,22 +129,12 @@ public class Login {
                 }*/
                 clientNameField.setText( prop.getProperty("id"));
                 clientPasswordField.setText( prop.getProperty("password"));
-                //keepPassword.selectedProperty();
-
-                keepPassword.setSelected(Boolean.getBoolean("true"));
                 keepPassword.setSelected(Boolean.parseBoolean(prop.getProperty("isSelected")));
-                //keepPassword.setSelected(true);
                 in.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public void eventOnCheckBoxKeepON(ActionEvent event) throws IOException {
-
-    }
-    public void eventOnCheckBoxKeepOff(ActionEvent event) throws IOException {
-
     }
 
 }

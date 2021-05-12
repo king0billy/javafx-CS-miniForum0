@@ -4,9 +4,15 @@ import com.ljl.www.po.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.io.*;
-
+/**
+ * @className MyInfo
+ * @description 本人信息的展示页
+ * @author  22427(king0liam)
+ * @date 2021/5/12 17:13
+ * @version 1.0
+ * @since version-0.0
+ */
 public class MyInfo {
 
     @FXML
@@ -55,6 +61,15 @@ public class MyInfo {
     String sex="man";
 
    public void initialize() {
+       /**
+        * @description 初始化此页面
+        * @exception
+        * @param [] []
+        * @return []
+        * @since version-1.0
+        * @author 22427(king0liam)
+        * @date 2021/5/12 17:13
+        */
         IDLabel.setText(Login.clientLocal.getClientId().toString());
         telField.setText(Login.clientLocal.getClientTel());
         nicknameFiled.setText(Login.clientLocal.getClientNickname());
@@ -63,6 +78,7 @@ public class MyInfo {
         enrollDateLabel.setText(Login.clientLocal.getClientEnrollDate().toString());
         addressField.setText(Login.clientLocal.getClientAddress());
         passwordField.setText(Login.clientLocal.getClientPassword());
+        //第一次加载此页面
         if(sexChoiceBox.getItems().size()==0) {
             sexChoiceBox.getItems().addAll("男", "女","保密","LGBTQ");
         }
@@ -71,13 +87,11 @@ public class MyInfo {
         );
         preSexLabel.setText(Login.clientLocal.getClientSex());
         sexLabel.textProperty().bind(sexChoiceBox.getSelectionModel().selectedItemProperty());
-
-        //label.textProperty().bind(sexChoiceBox.getSelectionModel().selectedItemProperty());
     }
     @FXML
     void eventOnLogOut(ActionEvent event) throws IOException {
         Login.clientLocal=null;
-        // TODO: 2021/5/10 不正规 
+        // TODO: 2021/5/10 不正规的断连方式
         MainView.ss.shutdownInput();
         MainView.ss.shutdownOutput();
         MainView.ss.close();
@@ -86,39 +100,41 @@ public class MyInfo {
 
     @FXML
     void eventOnRefresh(ActionEvent event) {
-
+        /**
+         * @description 绑定刷新键
+         * @exception
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 17:14
+         */
         initialize();
         Hint.pop("刷新成功");
     }
 
     @FXML
     void eventOnSave(ActionEvent event) {
+       /**
+        * @description 保存修改
+        * @exception
+        * @param [javafx.event.ActionEvent] [event]
+        * @return [javafx.event.ActionEvent]
+        * @since version-1.0
+        * @author 22427(king0liam)
+        * @date 2021/5/12 17:14
+        */
         try {
-            //写数据
-            DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
-            //读数据
-            DataInputStream in=new DataInputStream(MainView.ss.getInputStream());
-
-            out.writeUTF("editMyInfo");                                        //向服务器说是登陆
-            out.flush();
-
             Login.clientLocal.setClientTel(telField.getText());
-
             Login.clientLocal.setClientNickname(nicknameFiled.getText());
-
+            Login.clientLocal.setClientPassword(passwordField.getText());
             Login.clientLocal.setClientSex(sex);
             Login.clientLocal.setClientAddress(addressField.getText());
             Login.clientLocal.setClientDescription(descriptionArea.getText());
             //Login.clientLocal.setClientEnrollDate(enrollDateLabel.getText());
             Login.clientLocal.setClientPrivilege(Long.parseLong(privilegeLabel.getText()));
 
-            ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-            oos.writeObject(Login.clientLocal);                                  //将用户信息发过去
-            oos.flush();
-
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
-            Object obj = ois.readObject();
-            Client replyClient = (Client) obj;
+            Client replyClient = (Client) Hint.send$Receive("editMyInfo",Login.clientLocal);
 
             if(replyClient.equals(Login.clientLocal)==true){
                 Hint.pop("修改成功");

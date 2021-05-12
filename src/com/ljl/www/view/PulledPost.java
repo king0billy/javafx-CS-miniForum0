@@ -6,17 +6,20 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-
 import java.io.*;
-import java.util.ArrayList;
 
+/**
+ * @className PulledPost
+ * @description 个人已发布的事件,按发布时间倒序
+ * @author  22427(king0liam)
+ * @date 2021/5/12 17:28
+ * @version 1.0
+ * @since version-0.0
+ */
 public class PulledPost {
 
     @FXML
@@ -27,75 +30,63 @@ public class PulledPost {
     @FXML
     private ListView<Post> pulledListView;
 
-    //public  static ArrayList<Post> pulledPostList=new ArrayList<>();
     public  static PostListControlPacket pulledPostList=new PostListControlPacket();
 
     @FXML
     public  void initialize() throws IOException, ClassNotFoundException {
-        DataOutputStream out=new DataOutputStream(MainView.ss.getOutputStream());
-        out.writeUTF("postListControlPacket");
-        out.flush();
+        /**
+         * @description 初始化方法
+         * @exception IOException, ClassNotFoundException
+         * @param [] []
+         * @return []
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 17:30
+         */
         if(HomePage.clientPacket.firstLogin>0){
             pulledPostList.clientId=Login.clientLocal.getClientId();
             pulledPostList.operation.delete(0,pulledPostList.operation.length());//??这样很啰嗦？
             pulledPostList.operation.append("getPulledPostList");
-
-            ObjectOutputStream oos=new ObjectOutputStream(MainView.ss.getOutputStream());
-            oos.writeObject(pulledPostList);                                  //将用户信息发过去
-            oos.flush();
-
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(MainView.ss.getInputStream()));
-            Object obj = ois.readObject();
-            pulledPostList = (PostListControlPacket) obj;
-            pulledListView.setItems(FXCollections.observableList(pulledPostList.postList));
+            pulledPostList = (PostListControlPacket) Hint.send$Receive("postListControlPacket",pulledPostList);
             //pulledListView.setCellFactory(
 
 // TODO: 2021/5/11
-
             pulledListView.setItems(FXCollections.observableList(pulledPostList.postList));
+            //根据xCell setCellFactory
             pulledListView.setCellFactory(params -> new PulledPost.XCell());
-
             pulledListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
             pulledListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 //pulledListView.getSelectionModel().getSelectedItem();
                 pulledPostList.postListSelectedIndex=pulledListView.getSelectionModel().getSelectedIndex();
-
-                /*allTabPane.getSelectionModel().select(postDetail);
-                Node shit=postDetail.getContent().lookup("#refreshPostDetail");
-
-                System.out.println(shit);
-                System.out.println(shit.localToScene(shit.getLayoutBounds()).getMinX());
-                System.out.println(shit.localToScreen(shit.getLayoutBounds()).getMinX());
-
-                double sceneX=(shit.localToScene(shit.getLayoutBounds()).getMaxX()+shit.localToScene(shit.getLayoutBounds()).getMinX())/2;
-                double sceneY=(shit.localToScene(shit.getLayoutBounds()).getMaxY()+shit.localToScene(shit.getLayoutBounds()).getMinY())/2;
-                double screenX=(shit.localToScreen(shit.getLayoutBounds()).getMaxX()+shit.localToScreen(shit.getLayoutBounds()).getMinX())/2;
-                double screenY=(shit.localToScreen(shit.getLayoutBounds()).getMaxY()+shit.localToScreen(shit.getLayoutBounds()).getMinY())/2;
-
-                postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
-                        sceneX, sceneY,
-                        screenX, screenY,
-                        MouseButton.PRIMARY, 2,
-                        true, true, true, true, true, true,
-                        true, true, true, true, null));*/
             });
         }
     }
-    class XCell extends ListCell<Post> {//static class XCell extends ListCell<Post>
+    class XCell extends ListCell<Post> {
+        /**
+         * @className XCell
+         * @description 内部类
+         * @author  22427(king0liam)
+         * @date 2021/5/12 17:36
+         * @version 1.0
+         * @since version-0.0
+         */
         HBox hbox = new HBox();
         Label labelTitle = new Label("");
         Label labelClientId = new Label("shit");
         Label labelPostNewDate = new Label("shit");
         Label labelArticle = new Label("shit");
         Pane pane = new Pane();
-        CheckBox checkBoxThumbsUP=new CheckBox("点赞");
-        CheckBox checkBoxFavorite=new CheckBox("收藏");
-        Button buttonDetail = new Button("查看详细");
-        Button buttonComment = new Button("评论");
-        Button buttonReport = new Button("举报");
 
         public XCell() {
+            /**
+             * @description 默认构造方法
+             * @exception
+             * @param [] []
+             * @return []
+             * @since version-1.0
+             * @author 22427(king0liam)
+             * @date 2021/5/12 17:40
+             */
             super();
             hbox.setSpacing(10);
             hbox.setMargin(labelTitle, new Insets(0, 10, 0, 10));
@@ -103,14 +94,20 @@ public class PulledPost {
             hbox.setMargin(labelClientId, new Insets(0, 10, 0, 50));
             hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate
                     ,pane
-/*                    , buttonDetail
-                  ,checkBoxThumbsUP,checkBoxFavorite,
-                    buttonComment,buttonReport*/
             );
             HBox.setHgrow(pane, Priority.ALWAYS);
         }
 
-        protected void updateItem(Post item, boolean empty) {//(String item, boolean empty)
+        protected void updateItem(Post item, boolean empty) {
+            /**
+             * @description 自动调用的更新方法
+             * @exception
+             * @param [com.ljl.www.po.Post, boolean] [item, empty]
+             * @return [com.ljl.www.po.Post, boolean]
+             * @since version-1.0
+             * @author 22427(king0liam)
+             * @date 2021/5/12 17:44
+             */
             super.updateItem(item, empty);
             setText(null);
             setGraphic(null);
@@ -126,6 +123,15 @@ public class PulledPost {
         }
     }
     public void eventOnButtonRefreshPost(ActionEvent event)throws Exception{
+        /**
+         * @description 刷新键调用初始化方法
+         * @exception
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 17:35
+         */
             initialize();
             Hint.pop("刷新成功");
     }
