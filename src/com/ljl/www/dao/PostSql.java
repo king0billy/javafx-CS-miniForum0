@@ -102,10 +102,10 @@ public class PostSql {
                 index++;
             }
         }catch (SQLException e){
-            System.out.println("Hint.pop(\"空事件表！\")");
+            System.out.println("Hint.pop(空事件表)");
             e.printStackTrace();
         }catch (Exception e){
-            System.out.println("Hint.pop(\"事件列表索引越界！\")");
+            System.out.println("Hint.pop(\"事件列表索引越界\")");
             e.printStackTrace();
         }finally {
             DriverUtils.release(connection,statement,resultSets);
