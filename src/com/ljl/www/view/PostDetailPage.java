@@ -5,10 +5,10 @@ import com.ljl.www.po.Client;
 import com.ljl.www.po.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import java.io.*;
 import java.sql.Timestamp;
@@ -74,6 +74,14 @@ public class PostDetailPage {
                 if(replyClient.equals(author)==false){
                     author=replyClient;
                     Hint.pop("查找此人成功！请自己点tab页跳转，，,");
+                    //todo 这样是可以但是TabPane无了
+                    //new Hint().sceneSwitch("AnotherClient.fxml",event);
+
+                    Parent root= FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+
+                    TabPane shit= (TabPane) (root.lookup("#allTabPane"));
+                    shit.getSelectionModel().select(9);///8或者9，10
+                    root.lookup("#otherInfo").lookup("#refreshButton").fireEvent(new ActionEvent());
                 }
                 else{
                     Hint.pop("查找此人失败!");
