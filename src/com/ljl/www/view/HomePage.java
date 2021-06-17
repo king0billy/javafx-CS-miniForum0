@@ -27,6 +27,7 @@ import java.io.*;
  * @since version-0.0
  */
 public class HomePage {
+    @FXML private PostDetailPage PostDetailPage;
 
     @FXML
     private TabPane allTabPane;
@@ -232,7 +233,7 @@ public class HomePage {
                 lv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                     clientPacket.postListSelectedIndex=lv.getSelectionModel().getSelectedIndex();
                     allTabPane.getSelectionModel().select(1);
-                    allTabPane.getSelectionModel().select(postDetail);
+                    //allTabPane.getSelectionModel().select(postDetail);
                     postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new ActionEvent());
                 });
                 return lv;

@@ -6,6 +6,7 @@ import com.ljl.www.po.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -77,11 +78,20 @@ public class PostDetailPage {
                     //todo 这样是可以但是TabPane无了
                     //new Hint().sceneSwitch("AnotherClient.fxml",event);
 
-                    Parent root= FXMLLoader.load(getClass().getResource("HomePage.fxml"));
 
-                    TabPane shit= (TabPane) (root.lookup("#allTabPane"));
-                    shit.getSelectionModel().select(9);///8或者9，10
-                    root.lookup("#otherInfo").lookup("#refreshButton").fireEvent(new ActionEvent());
+//                    Parent root= FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+//                    //TabPane shit= (TabPane) (root.lookup("#allTabPane"));
+
+                    Parent root= childAnchor.getParent();
+                    Parent root2= root.getParent();
+                    TabPane tabPane=(TabPane) root2;
+                    tabPane.getSelectionModel().select(9);
+                    //Node node=root.lookup("#allTabPane");//NULL
+//                    TabPane shit=(TabPane) (childAnchor.getParent().lookup("#allTabPane"));
+//                    shit.getSelectionModel().select(9);///从0数起9
+                    //shit.getSelectionModel().select(root.lookup("#otherInfo"));
+
+//                    root.lookup("#otherInfo").lookup("#refreshButton").fireEvent(new ActionEvent());
                 }
                 else{
                     Hint.pop("查找此人失败!");
