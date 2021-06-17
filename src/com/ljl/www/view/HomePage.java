@@ -38,7 +38,7 @@ public class HomePage {
     private Tab favouritePage;
 
     @FXML
-     private Tab postDetail;
+    private Tab postDetail;
 
     @FXML
     private Tab personalInfo;
@@ -95,7 +95,7 @@ public class HomePage {
         Hint.pop("刷新成功");
     }
 
-     class XCell extends ListCell<Post> {
+    class XCell extends ListCell<Post> {
         /**
          * @className XCell
          * @description 内部类,为了实现listView的pageFactory而设
@@ -145,7 +145,7 @@ public class HomePage {
         protected void updateItem(Post item, boolean empty) {
             /**
              * @description xCell类会自动调用这个更新
-             * @exception 
+             * @exception
              * @param [com.ljl.www.po.Post, boolean] [item, empty]
              * @return [com.ljl.www.po.Post, boolean]
              * @since version-1.0
@@ -170,7 +170,7 @@ public class HomePage {
     public void initialize() {
         /**
          * @description 首页的初始化函数
-         * @exception 
+         * @exception
          * @param [] []
          * @return []
          * @since version-1.0
@@ -230,68 +230,10 @@ public class HomePage {
 
                 //添加监视器
                 lv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
                     clientPacket.postListSelectedIndex=lv.getSelectionModel().getSelectedIndex();
+                    allTabPane.getSelectionModel().select(1);
                     allTabPane.getSelectionModel().select(postDetail);
-                   //弃用的代码,尝试了无法实现
-/*                    //lv.getSelectionModel().getSelectedItem();
-                    //new PostDetailPage().initialize();
-                    try {
-                        new Hint().sceneSwitch("PostDetailPage.fxml");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-*/
-                    //弃用的代码,尝试了无法实现
-/*                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
-                            allTabPane.getX(), sceneCoords.getY(), screenCoords.getX(), screenCoords.getY(), MouseButton.PRIMARY, 1,
-                            true, true, true, true, true, true, true, true, true, true, null));
-                    //postDetail.getContent().lookup("#refreshPostDetail").getOnMouseClicked();
-                    //postDetail.getContent().lookup("#refreshPostDetail").getClass().;
-                                        //postDetail.getContent().getId()//.getScene().getRoot().getChildrenUnmodifiable()
-                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED));*/
-
-
-                    Node shit=postDetail.getContent().lookup("#refreshPostDetail");
-                    // TODO: 2021/5/11 还是没能实现自动跳转＋刷新。。。。。。
-                    System.out.println(shit);
-
-                    System.out.println(shit.localToScene(shit.getLayoutBounds()).getMinX());
-                    System.out.println(shit.localToScreen(shit.getLayoutBounds()).getMinX());
-
-                    double sceneX=(shit.localToScene(shit.getLayoutBounds()).getMaxX()+shit.localToScene(shit.getLayoutBounds()).getMinX())/2;
-                    double sceneY=(shit.localToScene(shit.getLayoutBounds()).getMaxY()+shit.localToScene(shit.getLayoutBounds()).getMinY())/2;
-                    double screenX=(shit.localToScreen(shit.getLayoutBounds()).getMaxX()+shit.localToScreen(shit.getLayoutBounds()).getMinX())/2;
-                    double screenY=(shit.localToScreen(shit.getLayoutBounds()).getMaxY()+shit.localToScreen(shit.getLayoutBounds()).getMinY())/2;
-
-                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
-                            sceneX, sceneY,
-                            screenX, screenY,
-                            MouseButton.PRIMARY, 2,
-                            true, true, true, true, true, true,
-                            true, true, true, true, null));
-                    //弃用的代码,尝试了无法实现
-/*                    try {
-                        //FXMLLoader.load(getClass().getClassLoader().getResource("PostDetailPage.fxml"));
-                        //FXMLLoader.load(getClass().getResource("/PostDetailPage.fxml"));
-
-                        URL url = Paths.get("./src/com/ljl/www/view/PostDetailPage.fxml").toUri().toURL();
-                        //FXMLLoader.load(url);
-                        FXMLLoader fxmlLoader1=new FXMLLoader();
-                        fxmlLoader1.load(url);
-                        ((PostDetailPage)fxmlLoader1.getController()).sShow();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    PostDetailPage.sShow();*/
-
-/*                    postDetail.setOnSelectionChanged(new EventHandler<Event>() {
-                        @Override
-                        public void handle(Event event) {
-                            Tab t = (Tab)event.getSource();
-                            System.out.println("tab1被改变了 - " + t.getText());
-                        }
-                    });*/
+                    postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new ActionEvent());
                 });
                 return lv;
             }
