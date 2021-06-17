@@ -66,6 +66,7 @@ public class PostDetailPage {
         if(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getClientId()
                 .equals(Login.clientLocal.getClientId())){
             //childAnchor.getParent().allTabPane.getSelectionModel().select(postDetail);
+
             Hint.pop("是你自己！请自己点tab页跳转，,，");
         }
         else{
@@ -74,24 +75,18 @@ public class PostDetailPage {
                 Client replyClient = (Client) Hint.send$Receive("searchAuthor",author);
                 if(replyClient.equals(author)==false){
                     author=replyClient;
-                    Hint.pop("查找此人成功！请自己点tab页跳转，，,");
-                    //todo 这样是可以但是TabPane无了
-                    //new Hint().sceneSwitch("AnotherClient.fxml",event);
-
-
-//                    Parent root= FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-//                    //TabPane shit= (TabPane) (root.lookup("#allTabPane"));
+                    //Hint.pop("查找此人成功！请自己点tab页跳转，，,");
 
                     Parent root= childAnchor.getParent();
                     Parent root2= root.getParent();
                     TabPane tabPane=(TabPane) root2;
                     tabPane.getSelectionModel().select(9);
-                    //Node node=root.lookup("#allTabPane");//NULL
-//                    TabPane shit=(TabPane) (childAnchor.getParent().lookup("#allTabPane"));
-//                    shit.getSelectionModel().select(9);///从0数起9
-                    //shit.getSelectionModel().select(root.lookup("#otherInfo"));
 
-//                    root.lookup("#otherInfo").lookup("#refreshButton").fireEvent(new ActionEvent());
+                    //Node test1=tabPane.lookup("#otherInfo");
+                    Node test1=tabPane.lookup("#anotherClient");
+                    Node test2=test1.lookup("#refreshButton");
+                            test2.fireEvent(new ActionEvent());
+
                 }
                 else{
                     Hint.pop("查找此人失败!");

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="childanchor" prefHeight="729.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.PostDetailPage">
+<AnchorPane fx:id="childAnchor" prefHeight="729.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.PostDetailPage">
    <children>
       <TextField fx:id="titleField" layoutX="94.0" layoutY="28.0" prefHeight="30.0" prefWidth="567.0" />
       <TextArea fx:id="articleArea" layoutX="31.0" layoutY="96.0" prefHeight="316.0" prefWidth="997.0" />
