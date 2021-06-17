@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class PostListControlPacket implements Serializable {
     public StringBuffer operation=new StringBuffer();//昨天老师才讲完，stringBuffer没有重新写equals。。。
-    public Integer limit=2;
+    public Integer limit=5;//5要和NumberChoice默认值配合好
     public ArrayList<Long> paginationList=new ArrayList<>();
     public ArrayList<Post> postList=new ArrayList<>();
     public  Integer postListSelectedIndex=-9999;

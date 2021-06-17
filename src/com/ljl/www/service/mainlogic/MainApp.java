@@ -35,7 +35,7 @@ public class MainApp {
                 new AppThread(ss).start();
             }
         } catch (IOException e) {
-            /// TODO Auto-generated catch block
+            /// TODO 注销登录和意外退出需要关闭线程!
             e.printStackTrace();
         }
     }

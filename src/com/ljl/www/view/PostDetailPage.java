@@ -67,7 +67,14 @@ public class PostDetailPage {
                 .equals(Login.clientLocal.getClientId())){
             //childAnchor.getParent().allTabPane.getSelectionModel().select(postDetail);
 
-            Hint.pop("是你自己！请自己点tab页跳转，,，");
+            Hint.pop("是你自己！");
+            Parent root= childAnchor.getParent().getParent();
+            TabPane tabPane=(TabPane) root;
+            tabPane.getSelectionModel().select(8);
+
+            Node test1=tabPane.lookup("#fx_user_pane");
+            Node test2=test1.lookup("#refreshButton");
+            test2.fireEvent(new ActionEvent());
         }
         else{
             author.setClientId(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getClientId());
@@ -108,11 +115,12 @@ public class PostDetailPage {
          * @author 22427(king0liam)
          * @date 2021/5/12 17:20
          */
-        if(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).
-                getClientId().equals(Login.clientLocal.getClientId())){
+/*        if(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).
+                getClientId().equals(Login.clientLocal.getClientId())){*/
                 //childAnchor.getParent().allTabPane.getSelectionModel().select(postDetail);
+        if(selectedPost.getClientId().equals(Login.clientLocal.getClientId())){
             try {
-                selectedPost=HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex);
+                //selectedPost=HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex);
                 selectedPost.setPostTitle(titleField.getText());
                 selectedPost.setPostArticle(articleArea.getText());
                 selectedPost.setPostNewDate(Timestamp.valueOf(dateField.getText()));
@@ -144,17 +152,18 @@ public class PostDetailPage {
          * @author 22427(king0liam)
          * @date 2021/5/12 17:22
          */
-        System.out.println("HomePage.clientPacket.postListSelectedIndex=" + HomePage.clientPacket.postListSelectedIndex);
-        if (HomePage.clientPacket.postListSelectedIndex > -9999) {
-/*            System.out.println( "???=" +childAnchor.getContentBias());
-            System.out.println( "???=" +childAnchor.getAccessibleRole());
-            System.out.println( "???=" +childAnchor.get());*/
-            HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostTitle();
+        //System.out.println("HomePage.clientPacket.postListSelectedIndex=" + HomePage.clientPacket.postListSelectedIndex);
+/*        if (HomePage.clientPacket.postListSelectedIndex > -9999) {
+            //HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostTitle();
             titleField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostTitle());
             articleArea.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostArticle());
             dateField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostNewDate().toString());
             nicknameField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getClientId().toString());
-        }
+        }*/
+        titleField.setText(selectedPost.getPostTitle());
+        articleArea.setText(selectedPost.getPostArticle());
+        dateField.setText(selectedPost.getPostNewDate().toString());
+        nicknameField.setText(selectedPost.getClientId().toString());
     }
 
     public  void initialize(){
@@ -167,13 +176,17 @@ public class PostDetailPage {
          * @author 22427(king0liam)
          * @date 2021/5/12 17:22
          */
-        System.out.println("HomePage.clientPacket.postListSelectedIndex="+HomePage.clientPacket.postListSelectedIndex);
+/*        System.out.println("HomePage.clientPacket.postListSelectedIndex="+HomePage.clientPacket.postListSelectedIndex);
         if(HomePage.clientPacket.postListSelectedIndex>-9999){
             titleField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostTitle());
             articleArea.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostArticle());
             dateField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getPostNewDate().toString());
             nicknameField.setText(HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex).getClientId().toString());
-        }
+        }*/
+/*        titleField.setText(selectedPost.getPostTitle());
+        articleArea.setText(selectedPost.getPostArticle());
+        dateField.setText(selectedPost.getPostNewDate().toString());
+        nicknameField.setText(selectedPost.getClientId().toString());*/
     }
         //没用的方法,原本想通过此控制器外的按键触发此函数
 /*    public static  void sShow(){

@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -50,7 +52,7 @@ public class PulledPost {
             pulledPostList = (PostListControlPacket) Hint.send$Receive("postListControlPacket",pulledPostList);
             //pulledListView.setCellFactory(
 
-// TODO: 2021/5/11
+// TODO: 2021/5/11 跳转到事件详情,删除等等
             pulledListView.setItems(FXCollections.observableList(pulledPostList.postList));
             //根据xCell setCellFactory
             pulledListView.setCellFactory(params -> new PulledPost.XCell());
@@ -58,6 +60,15 @@ public class PulledPost {
             pulledListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 //pulledListView.getSelectionModel().getSelectedItem();
                 pulledPostList.postListSelectedIndex=pulledListView.getSelectionModel().getSelectedIndex();
+                PostDetailPage.selectedPost=pulledPostList.postList.get(pulledPostList.postListSelectedIndex);
+                Parent root1= refreshList.getParent();
+                Parent root2= root1.getParent();
+                Parent root3= root2.getParent();
+                TabPane tabPane=(TabPane) root3;
+                tabPane.getSelectionModel().select(1);
+
+                Node test2=tabPane.lookup("#refreshPostDetail");
+                test2.fireEvent(new ActionEvent());
             });
         }
     }
@@ -114,7 +125,7 @@ public class PulledPost {
 
             if (item != null && !empty) {
                 labelTitle.setText("标题："+item.getPostTitle());// label.setText(item);
-                if(item.getPostTitle().length()<=20){labelArticle.setText("文章摘要："+item.getPostArticle());}
+                if(item.getPostArticle().length()<=20){labelArticle.setText("文章摘要："+item.getPostArticle());}
                 else{labelArticle.setText("文章摘要："+item.getPostArticle().substring(0,20));}
                 labelClientId.setText("作者id："+item.getClientId().toString());
                 labelPostNewDate.setText("创建or最后修改日期："+item.getPostNewDate().toString());
@@ -133,7 +144,7 @@ public class PulledPost {
          * @date 2021/5/12 17:35
          */
             initialize();
-            Hint.pop("刷新成功");
+            Hint.pop("pulledPost刷新成功");
     }
 
 

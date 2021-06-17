@@ -72,6 +72,7 @@ public class PostSql {
          * @date 2021/5/12 14:44
          */
         System.out.println("postListControlPacket.firstLogin= "+postListControlPacket.firstLogin);
+        //postListControlPacket.firstLogin++;
         if(postListControlPacket.firstLogin==0){
             postListControlPacket.firstLogin++;
             postListControlPacket.paginationList=createPaginationList(postListControlPacket).paginationList;

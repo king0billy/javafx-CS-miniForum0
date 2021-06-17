@@ -5,9 +5,12 @@ import com.ljl.www.po.Client;
 import com.ljl.www.util.PostListControlPacket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.Iterator;
@@ -91,6 +94,12 @@ public class Login {
             if(replyClient.equals(client)==false){
                 clientLocal=replyClient;
                 new Hint().sceneSwitch("HomePage.fxml",event);
+                //Stage reflectedStage = (Stage) ((Node) getClass().getResource("HomePage.fxml")).getScene().getWindow();//null 了
+                //Node test1=reflectedStage.getScene().getRoot().lookup("#pulledPost");
+
+//                Node test1=(Node)(FXMLLoader.load(getClass().getResource("HomePage.fxml"))).lookup("#pulledPost");
+//                test1.lookup("#refreshList").fireEvent(new ActionEvent());
+
             }
             else{
                 Hint.pop("登录失败!");

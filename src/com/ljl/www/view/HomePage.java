@@ -34,6 +34,14 @@ public class HomePage {
 
     @FXML
     private Button refreshPost;
+    @FXML
+    private ChoiceBox numberChoice;
+/*    @FXML
+    private Button HomePageButton;
+    @FXML
+    private Button BackButton;*/
+    @FXML
+    private Pagination postPagination;
 
     @FXML
     private Tab favouritePage;
@@ -48,23 +56,16 @@ public class HomePage {
     private Tab otherInfo;
 
     @FXML
-    private Button HomePageButton;
+    private Tab pullPostTab;
 
     @FXML
-    private Tab pullPostTab;
+    private Tab pulledPostTab;
 
     @FXML
     private Tab pulledCommentTab;
 
     @FXML
     private Tab thumbsUpPage;
-
-    @FXML
-    private Button BackButton;
-
-    @FXML
-    private Pagination postPagination;
-
 
     @FXML
     private Tab homePage;
@@ -77,7 +78,6 @@ public class HomePage {
 
     public static PostListControlPacket clientPacket=new PostListControlPacket();
 
-
     public void eventOnButtonRefreshPost(ActionEvent event)throws Exception{
         /**
          * @description 按下刷新键的事件函数
@@ -88,11 +88,13 @@ public class HomePage {
          * @author 22427(king0liam)
          * @date 2021/5/12 15:43
          */
-        clientPacket.limit=Integer.parseInt(limitField.getText());
+        //clientPacket.limit=Integer.parseInt(limitField.getText());
+        //clientPacket.limit=Integer.parseInt(numberChoice.get());
         //??这样很啰嗦？clientPacket.operation=new StringBuffer("refresh");
         clientPacket.operation.delete(0,clientPacket.operation.length());
         clientPacket.operation.append("refreshPostList");
         clientPacket = (PostListControlPacket)Hint.send$Receive("postListControlPacket",clientPacket);
+        initialize();
         Hint.pop("刷新成功");
     }
 
@@ -159,7 +161,7 @@ public class HomePage {
 
             if (item != null && !empty) {
                 labelTitle.setText("标题："+item.getPostTitle());
-                if(item.getPostTitle().length()<=20){labelArticle.setText("文章摘要："+item.getPostArticle());}
+                if(item.getPostArticle().length()<=20){labelArticle.setText("文章摘要："+item.getPostArticle());}
                 else{labelArticle.setText("文章摘要："+item.getPostArticle().substring(0,20));}
                 labelClientId.setText("作者id："+item.getClientId().toString());
                 labelPostNewDate.setText("创建or最后修改日期："+item.getPostNewDate().toString());
@@ -184,16 +186,17 @@ public class HomePage {
         postPagination.setCurrentPageIndex(0);
         postPagination.getStyleClass().add(Pagination.STYLE_CLASS_BULLET);
 
-
-/* // TODO: 2021/5/9 输入非数字会不安全 ，应该用类似性别的choiceBox
-// TODO: 2021/5/12 没实现的每页选择栏
-        if(sexChoiceBox.getItems().size()==0) {
-            sexChoiceBox.getItems().addAll("1", "2","3","4","5","6","7","8","9","10","11");
+    // TODO: 2021/5/9 输入非数字会不安全 ，应该用类似性别的choiceBox
+    // TODO: 2021/5/12 没实现的每页选择栏
+        if(numberChoice.getItems().size()==0) {
+            //limit=0有bug
+            numberChoice.getItems().addAll("1","2","3","4","5","6","7","8","9","10","11");
         }
-        sexChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> sex = new_value.toString());
-        preSexLabel.setText(Login.clientLocal.getClientSex());
-        sexLabel.textProperty().bind(sexChoiceBox.getSelectionModel().selectedItemProperty());
-*/
+        numberChoice.getSelectionModel().selectedIndexProperty().addListener(
+                //我怀疑从0开始是索引!
+                (ov, value, new_value) -> clientPacket.limit = Integer.parseInt(new_value.toString())+1
+        );
+
 
         postPagination.setPageFactory(new Callback<Integer, Node>() {
             /**
@@ -220,6 +223,14 @@ public class HomePage {
                     clientPacket.operation.delete(0,clientPacket.operation.length());//??这样很啰嗦？
                     clientPacket.operation.append("getPost");
                     clientPacket = (PostListControlPacket)Hint.send$Receive("postListControlPacket",clientPacket);
+
+                    //System.out.println("HomePage.clientPacket.firstLogin= "+HomePage.clientPacket.firstLogin);
+                    if(HomePage.clientPacket.firstLogin==1){
+                        //耦合程度比较高
+                        pulledPostTab.getContent().lookup("#refreshList").fireEvent(new ActionEvent());
+                        HomePage.clientPacket.firstLogin++;
+                    }
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -234,6 +245,7 @@ public class HomePage {
                     clientPacket.postListSelectedIndex=lv.getSelectionModel().getSelectedIndex();
                     allTabPane.getSelectionModel().select(1);
                     //allTabPane.getSelectionModel().select(postDetail);
+                    PostDetailPage.selectedPost=HomePage.clientPacket.postList.get(HomePage.clientPacket.postListSelectedIndex);
                     postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new ActionEvent());
                 });
                 return lv;
