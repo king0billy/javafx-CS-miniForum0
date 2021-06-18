@@ -3,6 +3,10 @@ package com.ljl.www.view;
 
 import com.ljl.www.po.Client;
 import com.ljl.www.po.Post;
+import com.ljl.www.po.ThumbsUp;
+import com.ljl.www.util.PostListControlPacket;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +32,9 @@ public class PostDetailPage {
 
     public static Post selectedPost=new Post();
 
+    public static ThumbsUp thumbsUpSelected=new ThumbsUp();
+
+    //public static PostListControlPacket clientPacket=new PostListControlPacket();
     @FXML
     private CheckBox FavouriteCheckBox;
 
@@ -153,7 +160,7 @@ public class PostDetailPage {
     }
 
     @FXML
-    void refreshButton(ActionEvent event) {
+    void refreshButton(ActionEvent event) throws IOException, ClassNotFoundException {
         /**
          * @description 刷新键
          * @exception
@@ -163,13 +170,10 @@ public class PostDetailPage {
          * @author 22427(king0liam)
          * @date 2021/5/12 17:22
          */
-        titleField.setText(selectedPost.getPostTitle());
-        articleArea.setText(selectedPost.getPostArticle());
-        dateField.setText(selectedPost.getPostNewDate().toString());
-        nicknameField.setText(selectedPost.getClientId().toString());
+        initialize();
     }
 
-    public  void initialize(){
+    public  void initialize() throws IOException, ClassNotFoundException {
         /**
          * @description 没用的初始化页,原本想通过此控制器外的按键触发此动作
          * @exception
@@ -179,6 +183,36 @@ public class PostDetailPage {
          * @author 22427(king0liam)
          * @date 2021/5/12 17:22
          */
+        thumbsUpSelected.setPostId(Login.clientLocal.getClientId());
+        thumbsUpSelected.setPostId(selectedPost.getPostId());
+
+        ThumbsUp returnThumbsUp=thumbsUpSelected;
+        returnThumbsUp= (ThumbsUp) Hint.send$Receive("showThumbsUp",thumbsUpSelected);
+
+        if(thumbsUpSelected.equals(returnThumbsUp)){
+            thumbsUpCheckBox.setSelected(false);
+        }
+        else {
+            thumbsUpCheckBox.setSelected(true);
+        }
+
+        thumbsUpCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                // TODO sql
+                if(newValue){//0 to 1 发生点赞
+                        Hint.pop("点赞成功");
+                }else{
+                        Hint.pop("取消点赞成功");
+                }
+            }
+        });
+        if(HomePage.clientPacket.firstLogin>=2){
+            titleField.setText(selectedPost.getPostTitle());
+            articleArea.setText(selectedPost.getPostArticle());
+            dateField.setText(selectedPost.getPostNewDate().toString());
+            nicknameField.setText(selectedPost.getClientId().toString());
+        }
     }
 
 }

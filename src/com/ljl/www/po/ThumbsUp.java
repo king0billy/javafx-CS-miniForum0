@@ -7,38 +7,30 @@ package com.ljl.www.po;
  * @version 1.0
  * @since version-0.0
  */
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class ThumbsUp implements Serializable {
+public class ThumbsUp {
 
-  private Long postId;
-  private Long clientId;
+  private long postId;
+  private long clientId;
   private java.sql.Timestamp thumbsUpNewDate;
+  private java.sql.Timestamp thumbsUpDropDate;
+  private boolean visible;
 
-  public ThumbsUp() {
-  }
 
-  public ThumbsUp(Long postId, Long clientId, Timestamp thumbsUpNewDate) {
-    this.postId = postId;
-    this.clientId = clientId;
-    this.thumbsUpNewDate = thumbsUpNewDate;
-  }
-
-  public Long getPostId() {
+  public long getPostId() {
     return postId;
   }
 
-  public void setPostId(Long postId) {
+  public void setPostId(long postId) {
     this.postId = postId;
   }
 
 
-  public Long getClientId() {
+  public long getClientId() {
     return clientId;
   }
 
-  public void setClientId(Long clientId) {
+  public void setClientId(long clientId) {
     this.clientId = clientId;
   }
 
@@ -49,6 +41,24 @@ public class ThumbsUp implements Serializable {
 
   public void setThumbsUpNewDate(java.sql.Timestamp thumbsUpNewDate) {
     this.thumbsUpNewDate = thumbsUpNewDate;
+  }
+
+
+  public java.sql.Timestamp getThumbsUpDropDate() {
+    return thumbsUpDropDate;
+  }
+
+  public void setThumbsUpDropDate(java.sql.Timestamp thumbsUpDropDate) {
+    this.thumbsUpDropDate = thumbsUpDropDate;
+  }
+
+
+  public boolean getVisible() {
+    return visible;
+  }
+
+  public void setVisible(boolean visible) {
+    this.visible = visible;
   }
 
 }

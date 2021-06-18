@@ -1,6 +1,7 @@
 package com.ljl.www.dao;
 
 import com.ljl.www.po.Client;
+import com.ljl.www.po.ThumbsUp;
 import com.ljl.www.util.*;
 import com.ljl.www.po.Post;
 import com.ljl.www.view.Hint;
@@ -191,7 +192,6 @@ public class PostSql {
         return r4return;
     }
     static public PostListControlPacket pulledPostList(PostListControlPacket postListControlPacket){
-
         /**
          * @description 查询登录此账号用户发过的所有帖子
          * @exception
@@ -235,5 +235,8 @@ public class PostSql {
         }
         return  postListControlPacket;
     }
+    static public ThumbsUp showThumbsUp(ThumbsUp  thumbsUp) {
 
+        return  thumbsUp ;
+    }
 }
