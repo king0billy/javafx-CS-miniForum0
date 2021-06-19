@@ -102,6 +102,7 @@ public class MainOperation {
          * @date 2021/5/12 15:19
          */
         try {
+            //todo 可以利用正则表达式实现log(n)查找?
             if(server_type.equals("postListControlPacket")){
                 System.out.println("postListControlPacket");
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
@@ -177,7 +178,36 @@ public class MainOperation {
                 oos.writeObject(db.newPost(post));
                 oos.flush();
             }
+            else if(server_type.equals("showThumbsUp")){
+                System.out.println("showThumbsUp");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                ThumbsUp thumbsUp = (ThumbsUp) obj;
 
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.showThumbsUp(thumbsUp));
+                oos.flush();
+            }
+            else if(server_type.equals("addThumbsUp")){
+                System.out.println("addThumbsUp");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                ThumbsUp thumbsUp = (ThumbsUp) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.addThumbsUp(thumbsUp));
+                oos.flush();
+            }
+            else if(server_type.equals("deleteThumbsUp")){
+                System.out.println("deleteThumbsUp");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                ThumbsUp thumbsUp = (ThumbsUp) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.deleteThumbsUp(thumbsUp));
+                oos.flush();
+            }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

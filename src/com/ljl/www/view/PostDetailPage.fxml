@@ -20,7 +20,7 @@
       <Label layoutX="31.0" layoutY="28.0" prefHeight="30.0" prefWidth="54.0" text="标题：" />
       <Label layoutX="31.0" layoutY="67.0" text="正文：" />
       <Label layoutX="31.0" layoutY="430.0" prefHeight="177.0" prefWidth="27.0" text="评论区" wrapText="true" />
-      <Button fx:id="refreshPostDetail" layoutX="1040.0" layoutY="160.0" mnemonicParsing="false" onAction="#refreshButton" text="【首页跳转来的】点此刷新！" />
+      <Button fx:id="refreshPostDetail" layoutX="1040.0" layoutY="160.0" mnemonicParsing="false" onAction="#refreshButton" text="刷新！" />
       <ListView fx:id="commentListView" layoutX="76.0" layoutY="420.0" prefHeight="272.0" prefWidth="555.0" />
       <Button layoutX="1048.0" layoutY="420.0" mnemonicParsing="false" text="发布评论" />
       <CheckBox fx:id="thumbsUpCheckBox" layoutX="1048.0" layoutY="244.0" mnemonicParsing="false" text="点赞" />

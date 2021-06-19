@@ -21,8 +21,8 @@ public class PostListControlPacket implements Serializable {
     public ArrayList<Post> postList=new ArrayList<>();
     public  Integer postListSelectedIndex=-9999;
     public  Integer firstLogin=0;
-    public  Integer pageParam=0;
-    public  Integer postCount=4;
+    public  Integer pageParam=0;//第几页of Pagination
+    public  Integer postCount=4;//和limit不一样,库里总共多少个帖子
     public  Long clientId=-99L;
     public PostListControlPacket(){}
 }

@@ -71,4 +71,13 @@ public class DBServer {
     public PostListControlPacket getPulledList(PostListControlPacket postListControlPacket){
         return  PostSql.pulledPostList(postListControlPacket);
     }
+    public ThumbsUp showThumbsUp(ThumbsUp thumbsUp){
+        return new ThumbsUpSql().showThumbsUp(thumbsUp);
+    }
+    public ThumbsUp addThumbsUp(ThumbsUp thumbsUp){
+        return new ThumbsUpSql().addThumbsUp(thumbsUp);
+    }
+    public ThumbsUp deleteThumbsUp(ThumbsUp thumbsUp){
+        return new ThumbsUpSql().deleteThumbsUp(thumbsUp);
+    }
 }

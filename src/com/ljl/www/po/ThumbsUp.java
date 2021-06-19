@@ -1,4 +1,8 @@
 package com.ljl.www.po;
+
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  * @className ThumbsUp
  * @description idea根据数据库表自动生成的ThumbsUp实体类
@@ -8,7 +12,7 @@ package com.ljl.www.po;
  * @since version-0.0
  */
 
-public class ThumbsUp {
+public class ThumbsUp implements Serializable {
 
   private long postId;
   private long clientId;
@@ -61,4 +65,16 @@ public class ThumbsUp {
     this.visible = visible;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ThumbsUp thumbsUp = (ThumbsUp) o;
+    return getPostId() == thumbsUp.getPostId() && getClientId() == thumbsUp.getClientId() && getVisible() == thumbsUp.getVisible() && Objects.equals(getThumbsUpNewDate(), thumbsUp.getThumbsUpNewDate()) && Objects.equals(getThumbsUpDropDate(), thumbsUp.getThumbsUpDropDate());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getPostId(), getClientId(), getThumbsUpNewDate(), getThumbsUpDropDate(), getVisible());
+  }
 }

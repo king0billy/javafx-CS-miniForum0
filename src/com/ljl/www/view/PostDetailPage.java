@@ -33,6 +33,44 @@ public class PostDetailPage {
     public static Post selectedPost=new Post();
 
     public static ThumbsUp thumbsUpSelected=new ThumbsUp();
+    public static ChangeListener changeListener=new ChangeListener<Boolean>() {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            // TODO sql
+            ThumbsUp returnThumbsUp;
+            if (newValue) {//0 to 1 发生点赞
+                thumbsUpSelected.setThumbsUpNewDate(new Timestamp(System.currentTimeMillis()));
+                try {
+                    returnThumbsUp = (ThumbsUp) Hint.send$Receive("addThumbsUp", thumbsUpSelected);
+                    if (thumbsUpSelected.equals(returnThumbsUp)) {
+                        Hint.pop("点赞失败");
+                    } else {
+                        thumbsUpSelected = returnThumbsUp;
+                        Hint.pop("点赞成功");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                thumbsUpSelected.setThumbsUpDropDate(new Timestamp(System.currentTimeMillis()));
+                try {
+                    returnThumbsUp = (ThumbsUp) Hint.send$Receive("deleteThumbsUp", thumbsUpSelected);
+                    if (thumbsUpSelected.equals(returnThumbsUp)==false) {
+                        Hint.pop("取消点赞成功");
+                    }
+                    else{
+                        Hint.pop("取消点赞失败");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     //public static PostListControlPacket clientPacket=new PostListControlPacket();
     @FXML
@@ -183,31 +221,26 @@ public class PostDetailPage {
          * @author 22427(king0liam)
          * @date 2021/5/12 17:22
          */
-        thumbsUpSelected.setPostId(Login.clientLocal.getClientId());
-        thumbsUpSelected.setPostId(selectedPost.getPostId());
 
-        ThumbsUp returnThumbsUp=thumbsUpSelected;
-        returnThumbsUp= (ThumbsUp) Hint.send$Receive("showThumbsUp",thumbsUpSelected);
-
-        if(thumbsUpSelected.equals(returnThumbsUp)){
-            thumbsUpCheckBox.setSelected(false);
-        }
-        else {
-            thumbsUpCheckBox.setSelected(true);
-        }
-
-        thumbsUpCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                // TODO sql
-                if(newValue){//0 to 1 发生点赞
-                        Hint.pop("点赞成功");
-                }else{
-                        Hint.pop("取消点赞成功");
-                }
-            }
-        });
         if(HomePage.clientPacket.firstLogin>=2){
+            thumbsUpCheckBox.selectedProperty().removeListener(changeListener);
+
+            thumbsUpSelected.setClientId(Login.clientLocal.getClientId());
+            thumbsUpSelected.setPostId(selectedPost.getPostId());
+
+            ThumbsUp returnThumbsUp=thumbsUpSelected;
+            returnThumbsUp= (ThumbsUp) Hint.send$Receive("showThumbsUp",thumbsUpSelected);
+
+            if(thumbsUpSelected.equals(returnThumbsUp)){
+                thumbsUpCheckBox.setSelected(true);
+            }
+            else {
+                thumbsUpCheckBox.setSelected(false);
+                //thumbsUpCheckBox.setSelected(true);
+            }
+
+            thumbsUpCheckBox.selectedProperty().addListener(changeListener);
+
             titleField.setText(selectedPost.getPostTitle());
             articleArea.setText(selectedPost.getPostArticle());
             dateField.setText(selectedPost.getPostNewDate().toString());

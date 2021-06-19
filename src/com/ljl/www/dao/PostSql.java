@@ -128,6 +128,7 @@ public class PostSql {
         PreparedStatement statement=null;
         ResultSet resultSets=null;
         Post r4return=new Post();
+        r4return.setClientId(-99L);
         try{
             connection = DriverUtils.getConnection();
             if(post.getPostId()>-99L) {
@@ -228,15 +229,12 @@ public class PostSql {
             postListControlPacket.postCount=index;
 
         }catch (SQLException e){
-            Hint.pop("空事件表！");
+           System.out.println("空事件表！");
             e.printStackTrace();
         }finally {
             DriverUtils.release(connection,statement,resultSets);
         }
         return  postListControlPacket;
     }
-    static public ThumbsUp showThumbsUp(ThumbsUp  thumbsUp) {
 
-        return  thumbsUp ;
-    }
 }
