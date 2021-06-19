@@ -33,7 +33,8 @@ public class PostDetailPage {
     public static Post selectedPost=new Post();
 
     public static ThumbsUp thumbsUpSelected=new ThumbsUp();
-    public static ChangeListener changeListener=new ChangeListener<Boolean>() {
+
+    private ChangeListener changeListener=new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             // TODO sql
@@ -46,6 +47,8 @@ public class PostDetailPage {
                         Hint.pop("点赞失败");
                     } else {
                         thumbsUpSelected = returnThumbsUp;
+                        selectedPost.setThumbsUpCount(selectedPost.getThumbsUpCount()+1);
+                        refreshPostDetail.fireEvent(new ActionEvent());
                         Hint.pop("点赞成功");
                     }
                 } catch (IOException e) {
@@ -58,6 +61,8 @@ public class PostDetailPage {
                 try {
                     returnThumbsUp = (ThumbsUp) Hint.send$Receive("deleteThumbsUp", thumbsUpSelected);
                     if (thumbsUpSelected.equals(returnThumbsUp)==false) {
+                        selectedPost.setThumbsUpCount(selectedPost.getThumbsUpCount()-1);
+                        refreshPostDetail.fireEvent(new ActionEvent());
                         Hint.pop("取消点赞成功");
                     }
                     else{
@@ -73,6 +78,8 @@ public class PostDetailPage {
     };
 
     //public static PostListControlPacket clientPacket=new PostListControlPacket();
+    @FXML
+    private Label thumbsUpCountLabel;
     @FXML
     private CheckBox FavouriteCheckBox;
 
@@ -236,7 +243,6 @@ public class PostDetailPage {
             }
             else {
                 thumbsUpCheckBox.setSelected(false);
-                //thumbsUpCheckBox.setSelected(true);
             }
 
             thumbsUpCheckBox.selectedProperty().addListener(changeListener);
@@ -245,6 +251,7 @@ public class PostDetailPage {
             articleArea.setText(selectedPost.getPostArticle());
             dateField.setText(selectedPost.getPostNewDate().toString());
             nicknameField.setText(selectedPost.getClientId().toString());
+            thumbsUpCountLabel.setText(selectedPost.getThumbsUpCount().toString());
         }
     }
 

@@ -52,6 +52,7 @@ public class ThumbsUpSql {
     static public ThumbsUp addThumbsUp(ThumbsUp  thumbsUp) {
         Connection connection=null;
         PreparedStatement statement=null;
+        PreparedStatement statementPost=null;
         ResultSet resultSets=null;
         try{
             connection = DriverUtils.getConnection();
@@ -67,7 +68,13 @@ public class ThumbsUpSql {
             statement.setLong(6,thumbsUp.getClientId());
             statement.setTimestamp(7,tempTime);
             statement.setBoolean(8,true);
-            if(statement.executeUpdate()>0){
+
+            String sqlPost="UPDATE POST SET " +
+                    "thumbs_up_count=thumbs_up_count+1" +
+                    " WHERE post_id=? ";
+            statementPost=connection.prepareStatement(sqlPost);
+            statementPost.setLong(1,thumbsUp.getPostId());
+            if(statement.executeUpdate()>0&&statementPost.executeUpdate()>0){
                   thumbsUp.setThumbsUpNewDate(tempTime);
             }
         }catch (SQLException e){
@@ -81,6 +88,7 @@ public class ThumbsUpSql {
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSets=null;
+        PreparedStatement statementPost=null;
         try{
             connection = DriverUtils.getConnection();
             String sql="UPDATE thumbs_up SET " +
@@ -92,7 +100,13 @@ public class ThumbsUpSql {
             statement.setTimestamp(2,tempTime);
             statement.setLong(3,thumbsUp.getPostId());
             statement.setLong(4,thumbsUp.getClientId());
-            if(statement.executeUpdate()>0){
+
+            String sqlPost="UPDATE POST SET " +
+                    "thumbs_up_count=thumbs_up_count-1" +
+                    " WHERE post_id=? ";
+            statementPost=connection.prepareStatement(sqlPost);
+            statementPost.setLong(1,thumbsUp.getPostId());
+            if(statement.executeUpdate()>0&&statementPost.executeUpdate()>0){
                 thumbsUp.setThumbsUpDropDate(tempTime);
             }
         }catch (SQLException e){
