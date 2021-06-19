@@ -24,7 +24,7 @@
       <ListView fx:id="commentListView" layoutX="76.0" layoutY="420.0" prefHeight="272.0" prefWidth="555.0" />
       <Button layoutX="1048.0" layoutY="420.0" mnemonicParsing="false" text="发布评论" />
       <CheckBox fx:id="thumbsUpCheckBox" layoutX="1048.0" layoutY="244.0" mnemonicParsing="false" text="点赞" />
-      <Button fx:id="deleteCurrentPostButton" layoutX="1160.0" layoutY="160.0" mnemonicParsing="false" text="删除此帖子！" />
+      <Button fx:id="deleteCurrentPostButton" layoutX="1160.0" layoutY="160.0" mnemonicParsing="false" onAction="#deleteButton" text="删除此帖子！" />
       <Label layoutX="1048.0" layoutY="283.0" text="点赞数:" />
       <Label fx:id="thumbsUpCountLabel" layoutX="1106.0" layoutY="283.0" prefHeight="20.0" prefWidth="144.0" text="Label" />
    </children>

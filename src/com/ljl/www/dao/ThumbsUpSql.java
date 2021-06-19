@@ -26,7 +26,7 @@ public class ThumbsUpSql {
         r4return.setClientId(-99L);
         try{
             connection = DriverUtils.getConnection();
-            String sql="SELECT * FROM thumbs_up WHERE client_id=? AND post_id=? " ;
+            String sql="SELECT * FROM thumbs_up WHERE client_id=? AND post_id=? and visible!=0;" ;
             statement=connection.prepareStatement(sql);
             statement.setLong(1,thumbsUp.getClientId());
             statement.setLong(2,thumbsUp.getPostId());
@@ -71,7 +71,7 @@ public class ThumbsUpSql {
 
             String sqlPost="UPDATE POST SET " +
                     "thumbs_up_count=thumbs_up_count+1" +
-                    " WHERE post_id=? ";
+                    " WHERE post_id=? and visible!=0;";
             statementPost=connection.prepareStatement(sqlPost);
             statementPost.setLong(1,thumbsUp.getPostId());
             if(statement.executeUpdate()>0&&statementPost.executeUpdate()>0){
@@ -103,7 +103,7 @@ public class ThumbsUpSql {
 
             String sqlPost="UPDATE POST SET " +
                     "thumbs_up_count=thumbs_up_count-1" +
-                    " WHERE post_id=? ";
+                    " WHERE post_id=? and visible!=0;";
             statementPost=connection.prepareStatement(sqlPost);
             statementPost.setLong(1,thumbsUp.getPostId());
             if(statement.executeUpdate()>0&&statementPost.executeUpdate()>0){

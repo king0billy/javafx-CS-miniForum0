@@ -1,4 +1,8 @@
 package com.ljl.www.po;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Objects;
 /**
  * @className Post
  * @description idea根据数据库表自动生成的Post的实体类，自动生成equals方法以进行查询结果成功与否的比较
@@ -7,12 +11,7 @@ package com.ljl.www.po;
  * @version 1.0
  * @since version-0.0
  */
-
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Objects;
-
-public class Post implements Serializable {
+public class Post implements Serializable  {
 
   private Long postId;
   private Long clientId;
@@ -22,6 +21,7 @@ public class Post implements Serializable {
   private Long thumbsUpCount;
   private Long favoriteCount;
   private Long remarkCount;
+  private Boolean visible;
 
   public Post() {
   }
@@ -36,19 +36,6 @@ public class Post implements Serializable {
     this.thumbsUpCount = thumbsUpCount;
     this.favoriteCount = favoriteCount;
     this.remarkCount = remarkCount;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Post post = (Post) o;
-    return Objects.equals(postId, post.postId) && Objects.equals(clientId, post.clientId) && Objects.equals(postNewDate, post.postNewDate) && Objects.equals(postTitle, post.postTitle) && Objects.equals(postArticle, post.postArticle) && Objects.equals(thumbsUpCount, post.thumbsUpCount) && Objects.equals(favoriteCount, post.favoriteCount) && Objects.equals(remarkCount, post.remarkCount);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(postId, clientId, postNewDate, postTitle, postArticle, thumbsUpCount, favoriteCount, remarkCount);
   }
 
   public Long getPostId() {
@@ -122,4 +109,25 @@ public class Post implements Serializable {
     this.remarkCount = remarkCount;
   }
 
+
+  public Boolean getVisible() {
+    return visible;
+  }
+
+  public void setVisible(Boolean visible) {
+    this.visible = visible;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Post post = (Post) o;
+    return Objects.equals(getPostId(), post.getPostId()) && Objects.equals(getClientId(), post.getClientId()) && Objects.equals(getPostNewDate(), post.getPostNewDate()) && Objects.equals(getPostTitle(), post.getPostTitle()) && Objects.equals(getPostArticle(), post.getPostArticle()) && Objects.equals(getThumbsUpCount(), post.getThumbsUpCount()) && Objects.equals(getFavoriteCount(), post.getFavoriteCount()) && Objects.equals(getRemarkCount(), post.getRemarkCount()) && Objects.equals(getVisible(), post.getVisible());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getPostId(), getClientId(), getPostNewDate(), getPostTitle(), getPostArticle(), getThumbsUpCount(), getFavoriteCount(), getRemarkCount(), getVisible());
+  }
 }

@@ -37,7 +37,7 @@ public class PostSql {
         ResultSet resultSets=null;
         try{
             connection = DriverUtils.getConnection();
-            String sql="SELECT * FROM post ORDER BY post_id DESC";
+            String sql="SELECT * FROM post where visible!=0 ORDER BY post_id DESC";
             statement=connection.prepareStatement(sql);
             resultSets=statement.executeQuery();//这里不用参数
 
@@ -83,7 +83,7 @@ public class PostSql {
         ResultSet resultSets=null;
         try{
             connection = DriverUtils.getConnection();
-            String sql="SELECT * FROM post WHERE post_id <=? ORDER BY post_id DESC limit ?";
+            String sql="SELECT * FROM post WHERE post_id <=? and visible!=0 ORDER BY post_id DESC limit ?";
             statement=connection.prepareStatement(sql);
             statement.setLong(1,postListControlPacket.paginationList.get(postListControlPacket.pageParam));
             statement.setLong(2,postListControlPacket.limit);
@@ -135,7 +135,7 @@ public class PostSql {
                 String sql = "UPDATE POST SET " +
                         "post_title=?,post_article=?,post_new_date=?" +
 
-                        " WHERE post_id=? ";
+                        " WHERE post_id=? and visible!=0";
                 statement=connection.prepareStatement(sql);
                 statement.setString(1, post.getPostTitle());
                 statement.setString(2, post.getPostArticle());
@@ -170,8 +170,8 @@ public class PostSql {
         try{
             connection = DriverUtils.getConnection();
 
-            String sql="INSERT INTO post(client_id,post_new_date,post_title,post_article,post_id)" +
-                    " VALUES(?,?,?,?,?);";
+            String sql="INSERT INTO post(client_id,post_new_date,post_title,post_article,post_id,visible)" +
+                    " VALUES(?,?,?,?,?,true);";
             statement=connection.prepareStatement(sql);
             statement.setLong(1,post.getClientId());
             statement.setTimestamp(2,new Timestamp(System.currentTimeMillis()));
@@ -183,7 +183,6 @@ public class PostSql {
             }
             while(statement.executeUpdate()<=0);
             r4return=post;
-
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -207,7 +206,7 @@ public class PostSql {
         ResultSet resultSets=null;
         try{
             connection = DriverUtils.getConnection();
-            String sql="SELECT * FROM post WHERE client_id=? ORDER BY post_id DESC" ;
+            String sql="SELECT * FROM post WHERE client_id=? and visible!=0 ORDER BY post_id DESC" ;
             statement=connection.prepareStatement(sql);
             statement.setLong(1,postListControlPacket.clientId);
             resultSets=statement.executeQuery();//这里不用参数
@@ -236,5 +235,41 @@ public class PostSql {
         }
         return  postListControlPacket;
     }
+    public Post deletePost(Post post){
+        /**
+         * @description 更新已有事件
+         * @exception SQLException
+         * @param [post]
+         * @return [com.ljl.www.po.Post]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/5/12 14:45
+         */
+        Connection connection=null;
+        PreparedStatement statement=null;
+        ResultSet resultSets=null;
+        Post r4return=new Post();
+        r4return.setClientId(-99L);
+        try{
+            connection = DriverUtils.getConnection();
+            if(post.getPostId()>-99L) {
+                String sql = "UPDATE POST SET " +
+                        "visible=?,post_new_date=?" +
 
+                        " WHERE post_id=? and visible!=0";
+                statement=connection.prepareStatement(sql);
+                statement.setInt(1, 0);
+                statement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+                statement.setLong(3, post.getPostId());
+                if(statement.executeUpdate()>0){
+                    r4return =post;
+                };
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            DriverUtils.release(connection,statement,resultSets);
+        }
+        return r4return;
+    }
 }

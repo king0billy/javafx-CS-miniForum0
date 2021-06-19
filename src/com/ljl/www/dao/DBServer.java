@@ -68,6 +68,9 @@ public class DBServer {
     public Post newPost(Post post){
         return new PostSql().newPost(post);
     }
+    public Post deletePost(Post post){
+        return new PostSql().deletePost(post);
+    }
     public PostListControlPacket getPulledList(PostListControlPacket postListControlPacket){
         return  PostSql.pulledPostList(postListControlPacket);
     }

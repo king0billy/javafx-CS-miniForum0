@@ -168,6 +168,16 @@ public class MainOperation {
                 oos.flush();
 
             }
+            else if(server_type.equals("deletePost")){
+                System.out.println("deletePost");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Post post = (Post) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.deletePost(post));
+                oos.flush();
+            }
             else if(server_type.equals("pullNewPost")){
                 System.out.println("pullNewPost");
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));

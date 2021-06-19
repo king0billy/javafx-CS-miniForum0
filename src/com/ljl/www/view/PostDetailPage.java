@@ -217,7 +217,51 @@ public class PostDetailPage {
          */
         initialize();
     }
-
+    @FXML
+    void deleteButton(ActionEvent event) throws IOException, ClassNotFoundException {
+        /**
+         * @description 删除键
+         * @exception
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/6/12 17:22
+         */
+        if(selectedPost.getClientId().equals(Login.clientLocal.getClientId())){
+            try {
+                Post replyPost = (Post) Hint.send$Receive("deletePost",selectedPost);
+                if(replyPost.equals(selectedPost)){
+                    selectedPost=replyPost;
+                    Hint.pop("是你自己的帖子，已删除");
+                }
+                else{
+                    Hint.pop("未知错误!");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            if(Login.clientLocal.getClientPrivilege()>=8){
+                try {
+                    Post replyPost = (Post) Hint.send$Receive("deletePost",selectedPost);
+                    if(replyPost.equals(selectedPost)){
+                        selectedPost=replyPost;
+                        Hint.pop("不是你的帖子,但你是管理员,已删除");
+                    }
+                    else{
+                        Hint.pop("未知错误!");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                Hint.pop("不是你的帖子且你不是管理员不能修改！");
+            }
+        }
+    }
     public  void initialize() throws IOException, ClassNotFoundException {
         /**
          * @description 没用的初始化页,原本想通过此控制器外的按键触发此动作
