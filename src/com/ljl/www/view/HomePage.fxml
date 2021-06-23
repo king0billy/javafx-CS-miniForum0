@@ -25,7 +25,7 @@
                             <fx:include source="Login.fxml" fx:id="loginButton" />
                             <Button layoutX="84.0" layoutY="10.0" mnemonicParsing="false" text="发帖" />
                           </fx:define>
-                       <test pattern="SHIT" /> -->
+                       <test pattern="nothing" /> -->
 
                         </Pagination>
                         <Button fx:id="refreshPost" layoutX="1150.0" layoutY="65.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" prefHeight="30.0" prefWidth="216.0" text="设置每页展示数并刷新事件列表">
@@ -70,26 +70,6 @@
                     <fx:include fx:id="pulledPost" source="PulledPost.fxml" />
                 </content>
             </Tab>
-            <Tab fx:id="pulledCommentTab" text="已发布评论">
-                <content>
-                    <fx:include fx:id="pulledComment" source="PulledPost.fxml" />
-                </content>
-            </Tab>
-          <Tab fx:id="thumbsUpPage" text="点赞合集">
-              <content>
-                  <fx:include fx:id="pulledThumbsUp" source="PulledPost.fxml" />
-              </content>
-          </Tab>
-            <Tab fx:id="favouritePage" text="收藏合集">
-                <content>
-                    <fx:include fx:id="pulledFavourite" source="PulledPost.fxml" />
-                </content>
-            </Tab>
-            <Tab fx:id="reportPage" text="举办与私信合集">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
             <Tab fx:id="personalInfo" text="个人信息">
               <content>
                       <fx:include fx:id="fx_user_pane" source="MyInfo.fxml" />
@@ -125,6 +105,33 @@
                         </SplitMenuButton>
                         <TextField fx:id="limitField" layoutX="732.0" layoutY="219.0" prefHeight="30.0" prefWidth="203.0" promptText="2" text="4" />
                         <CheckBox fx:id="FavouriteCheckBox" layoutX="319.0" layoutY="110.0" mnemonicParsing="false" text="收藏" />
+                        <Button fx:id="DeletePostButton" layoutX="612.0" layoutY="176.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" text="删除事件" />
+                        <TabPane layoutX="82.0" layoutY="448.0" prefHeight="249.0" prefWidth="738.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Untitled Tab 1" />
+                            <Tab text="Untitled Tab 2" />
+                              <Tab fx:id="pulledCommentTab" text="已发布评论">
+                                 <content>
+                                    <fx:include fx:id="pulledComment" source="PulledPost.fxml" />
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="thumbsUpPage" text="点赞合集">
+                                 <content>
+                                    <fx:include fx:id="pulledThumbsUp" source="PulledPost.fxml" />
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="favouritePage" text="收藏合集">
+                                 <content>
+                                    <fx:include fx:id="pulledFavourite" source="PulledPost.fxml" />
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="reportPage" text="举办与私信合集">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
                      </children>
                   </AnchorPane>
                </content>

@@ -3,6 +3,8 @@ package com.ljl.www.po;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
+
 /**
  * @className Client
  * @description idea根据数据库表自动生成的Client实体类，自己重写了一个equals方法（这里踩了坑，，忘了用自动生成又忘了Long是一个引用类型）
@@ -18,8 +20,8 @@ public class Client extends Object implements Serializable {
   private String clientPassword=new String("-99");
   private String clientNickname=new String("-99");
   private String clientSex=new String("-99");
-  private String clientAddress=new String("shit");
-  private String clientDescription=new String("shit");
+  private String clientAddress=new String("nothing");
+  private String clientDescription=new String("nothing");
   private java.sql.Timestamp clientEnrollDate=new Timestamp(System.currentTimeMillis());
   private Long clientPrivilege=-99L;
 
@@ -46,8 +48,8 @@ public class Client extends Object implements Serializable {
     this.clientPassword = clientPassword;
     this.clientNickname=new String("-99");
     clientSex=new String("-99");
-    clientAddress=new String("shit");
-    clientDescription=new String("shit");
+    clientAddress=new String("nothing");
+    clientDescription=new String("nothing");
     clientEnrollDate=new Timestamp(System.currentTimeMillis());
     clientPrivilege=-99L;//侧面说明构造方法后于属性赋值
   }
@@ -57,13 +59,13 @@ public class Client extends Object implements Serializable {
     this.clientPassword = clientPassword;
     this.clientNickname=new String("-99");
     clientSex=new String("-99");
-    clientAddress=new String("shit");
-    clientDescription=new String("shit");
+    clientAddress=new String("nothing");
+    clientDescription=new String("nothing");
     clientEnrollDate=new Timestamp(System.currentTimeMillis());
     clientPrivilege=-99L;//侧面说明构造方法后于属性赋值
   }
   //@Override
-  public boolean equals(Client client){
+/*  public boolean equals(Client client){
     if(client==null)return false;
     else {
       if(client==this)return true;
@@ -80,7 +82,24 @@ public class Client extends Object implements Serializable {
       }
     }
     return true;
+  }*/
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Client client = (Client) o;
+    return Objects.equals(getClientId(), client.getClientId()) && Objects.equals(getClientTel(), client.getClientTel()) &&
+            Objects.equals(getClientPassword(), client.getClientPassword()) && Objects.equals(getClientNickname(), client.getClientNickname()) &&
+            Objects.equals(getClientSex(), client.getClientSex()) && Objects.equals(getClientAddress(), client.getClientAddress()) &&
+            Objects.equals(getClientDescription(), client.getClientDescription()) && Objects.equals(getClientEnrollDate(), client.getClientEnrollDate()) && Objects.equals(getClientPrivilege(), client.getClientPrivilege());
   }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getClientId(), getClientTel(), getClientPassword(), getClientNickname(), getClientSex(), getClientAddress(), getClientDescription(), getClientEnrollDate(), getClientPrivilege());
+  }
+
   public Long getClientId() {
     return clientId;
   }

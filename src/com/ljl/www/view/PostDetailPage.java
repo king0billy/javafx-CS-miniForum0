@@ -136,8 +136,8 @@ public class PostDetailPage {
             Hint.pop("是你自己！");
             Parent root= childAnchor.getParent().getParent();
             TabPane tabPane=(TabPane) root;
-            tabPane.getSelectionModel().select(8);
-
+            //tabPane.getSelectionModel().select(8);
+            tabPane.getSelectionModel().select(4);
             Node test1=tabPane.lookup("#fx_user_pane");
             Node test2=test1.lookup("#refreshButton");
             test2.fireEvent(new ActionEvent());
@@ -153,8 +153,8 @@ public class PostDetailPage {
                     Parent root= childAnchor.getParent();
                     Parent root2= root.getParent();
                     TabPane tabPane=(TabPane) root2;
-                    tabPane.getSelectionModel().select(9);
-
+                    //tabPane.getSelectionModel().select(9);
+                    tabPane.getSelectionModel().select(5);
                     //Node test1=tabPane.lookup("#otherInfo");
                     Node test1=tabPane.lookup("#anotherClient");
                     Node test2=test1.lookup("#refreshButton");
@@ -243,7 +243,7 @@ public class PostDetailPage {
             }
         }
         else{
-            if(Login.clientLocal.getClientPrivilege()>=8){
+            if(Login.clientLocal.getClientPrivilege()>4){
                 try {
                     Post replyPost = (Post) Hint.send$Receive("deletePost",selectedPost);
                     if(replyPost.equals(selectedPost)){

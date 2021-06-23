@@ -83,9 +83,9 @@ public class PulledPost {
          */
         HBox hbox = new HBox();
         Label labelTitle = new Label("");
-        Label labelClientId = new Label("shit");
-        Label labelPostNewDate = new Label("shit");
-        Label labelArticle = new Label("shit");
+        Label labelClientId = new Label("nothing");
+        Label labelPostNewDate = new Label("nothing");
+        Label labelArticle = new Label("nothing");
         Pane pane = new Pane();
 
         public XCell() {

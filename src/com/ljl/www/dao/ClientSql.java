@@ -46,7 +46,7 @@ public class ClientSql {
             if(client.getClientId()>-99L) {
                 String sql = "UPDATE CLIENT SET " +
                         "client_tel=?,client_password=?,client_nickname=?," +
-                        "client_address=?,client_description=?,client_sex=?" +
+                        "client_address=?,client_description=?,client_sex=?,client_privilege=?" +
                         " WHERE client_id=? ";
                 statement=connection.prepareStatement(sql);
                 statement.setString(1, client.getClientTel());
@@ -55,7 +55,8 @@ public class ClientSql {
                 statement.setString(4, client.getClientAddress());
                 statement.setString(5, client.getClientDescription());
                 statement.setString(6, client.getClientSex());
-                statement.setLong(7, client.getClientId());
+                statement.setLong(7, client.getClientPrivilege());
+                statement.setLong(8, client.getClientId());
                 if(statement.executeUpdate()>0){
                     r4return =client;
                 };
@@ -108,6 +109,8 @@ public class ClientSql {
                 newClient.setClientEnrollDate(resultSets.getTimestamp("client_enroll_date"));
                 newClient.setClientPrivilege(resultSets.getLong("client_privilege"));
 
+                newClient.setClientPassword(resultSets.getString("client_password"));
+
                 System.out.println("password=" + resultSets.getString("client_password"));
             }
         } catch (SQLException e) {
@@ -143,18 +146,22 @@ public class ClientSql {
 
         try{
             connection = DriverUtils.getConnection();
-            if(client.getClientId()>-99L){
+/*            if(client.getClientId()>-99L){
                 String sql="SELECT * FROM CLIENT WHERE client_id=? AND client_password=?";
                 statement=connection.prepareStatement(sql);
                 statement.setLong(1,client.getClientId());
             }
             else{
-                String sql="SELECT * FROM CLIENT WHERE client_tel=? AND client_password=?";
+                String sql="SELECT * FROM CLIENT WHERE (client_tel=? or client_id=?) AND client_password=?";
                 statement=connection.prepareStatement(sql);
                 statement.setString(1,client.getClientTel());
             }
-
-            statement.setString(2,client.getClientPassword());
+            statement.setString(2,client.getClientPassword());*/
+            String sql="SELECT * FROM CLIENT WHERE (client_id=? or client_tel=? ) AND client_password=?";
+            statement=connection.prepareStatement(sql);
+            statement.setLong(1,client.getClientId());
+            statement.setString(2,client.getClientTel());
+            statement.setString(3,client.getClientPassword());
             resultSets=statement.executeQuery();
             while(resultSets.next()){
                 newClient.setClientId(resultSets.getLong("client_id"));

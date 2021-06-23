@@ -61,7 +61,7 @@ public class Register {
     }
     public void eventOnButtonRegister(ActionEvent event) throws IOException {
         /**
-         * @description 组测键
+         * @description 注册键
          * @exception IOException
          * @param [javafx.event.ActionEvent] [event]
          * @return [javafx.event.ActionEvent]
@@ -69,11 +69,15 @@ public class Register {
          * @author 22427(king0liam)
          * @date 2021/5/12 18:00
          */
-        if(passWord1st.getLength()<6||passWord1st.getLength()>20||passWord2nd.getLength()<6||passWord2nd.getLength()>20){
-            Hint.pop("密码长度应为6到20个字符！");
-            System.out.println("length!!");
-        }else{
-            if(passWord1st.getText().equals(passWord2nd.getText())==false){
+        if(clientTelField.getText().equals("")){
+            Hint.pop("手机号不能为空！");
+        }
+        else{
+            if(passWord1st.getLength()<6||passWord1st.getLength()>20||passWord2nd.getLength()<6||passWord2nd.getLength()>20){
+                Hint.pop("密码长度应为6到20个字符！");
+                System.out.println("length!!");
+            }
+            else if(passWord1st.getText().equals(passWord2nd.getText())==false){
                 Hint.pop("两次输入不一致！");
                 System.out.println("match!!");
             }
@@ -89,6 +93,7 @@ public class Register {
                     if(flag>0){
                         //用手机号注册,用文本框显示注册的账号
                         Hint.pop(flag);
+                        if(adminCodeField.getText().equals("666")){Hint.pop("你已注册为管理员");}
                         System.out.println("register success,"+flag);
                     }
                     else{

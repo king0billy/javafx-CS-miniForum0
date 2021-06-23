@@ -2,6 +2,7 @@ package com.ljl.www.dao;
 
 import com.ljl.www.po.Client;
 import com.ljl.www.po.ThumbsUp;
+import com.ljl.www.service.mainlogic.MainApp;
 import com.ljl.www.util.*;
 import com.ljl.www.po.Post;
 import com.ljl.www.view.Hint;
@@ -38,6 +39,7 @@ public class PostSql {
         try{
             connection = DriverUtils.getConnection();
             String sql="SELECT * FROM post where visible!=0 ORDER BY post_id DESC";
+            //String sql="SELECT * FROM post where visible!=0 ORDER BY post_id ";
             statement=connection.prepareStatement(sql);
             resultSets=statement.executeQuery();//这里不用参数
 
@@ -45,11 +47,7 @@ public class PostSql {
             int index=0;
             postListControlPacket.paginationList=new ArrayList<>();
             for(;resultSets.next();index++){
-                if(index%postListControlPacket.limit==0){
                     postListControlPacket.paginationList.add(resultSets.getLong("post_id"));
-                    System.out.println("PaginationList.get(i/limit)= "
-                            +postListControlPacket.paginationList.get(index/postListControlPacket.limit)+" i="+index);
-                }
             }
             postListControlPacket.postCount=index;
 
@@ -85,7 +83,8 @@ public class PostSql {
             connection = DriverUtils.getConnection();
             String sql="SELECT * FROM post WHERE post_id <=? and visible!=0 ORDER BY post_id DESC limit ?";
             statement=connection.prepareStatement(sql);
-            statement.setLong(1,postListControlPacket.paginationList.get(postListControlPacket.pageParam));
+            //statement.setLong(1,postListControlPacket.paginationList.get(postListControlPacket.pageParam*postListControlPacket.limit));
+            statement.setLong(1,postListControlPacket.paginationList.get(postListControlPacket.pageParam*postListControlPacket.limit));
             statement.setLong(2,postListControlPacket.limit);
             resultSets=statement.executeQuery();//这里不用参数
             System.out.println("done  分页显示 query here");
@@ -189,6 +188,9 @@ public class PostSql {
         }finally {
             DriverUtils.release(connection,statement,resultSets);
         }
+
+        //MainApp.chaos.paginationList.add(tag);
+
         return r4return;
     }
     static public PostListControlPacket pulledPostList(PostListControlPacket postListControlPacket){

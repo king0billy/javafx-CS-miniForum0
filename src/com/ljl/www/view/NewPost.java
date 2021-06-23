@@ -48,6 +48,9 @@ public class NewPost{
          * @date 2021/5/12 17:17
          */
         try {
+            if(articleArea.getText().length()<=10){
+                Hint.pop("贴子不能少于10个字!");return;
+            }
             postToPull.setClientId(Long.parseLong(nicknameField.getText()));
             postToPull.setPostTitle(titleField.getText());
             postToPull.setPostArticle(articleArea.getText());

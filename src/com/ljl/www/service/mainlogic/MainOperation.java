@@ -104,6 +104,7 @@ public class MainOperation {
         try {
             //todo 可以利用正则表达式实现log(n)查找?
             if(server_type.equals("postListControlPacket")){
+
                 System.out.println("postListControlPacket");
                 ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
                 Object obj = ois.readObject();

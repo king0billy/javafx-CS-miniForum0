@@ -64,6 +64,7 @@ public class Login {
                 try {
                     FileOutputStream oFile = new FileOutputStream("user.properties", false);
                     prop.setProperty("id", id);
+                    prop.setProperty("tel",tel);
                     prop.setProperty("password",password);
                     prop.setProperty("isSelected",keepPassword.isSelected()+"");
                     prop.store(oFile, null);
@@ -88,17 +89,12 @@ public class Login {
             Client client;
             if(id.equals("")){client=new Client(tel,password);}
             else{client=new Client(Long.parseLong(id),tel,password);}
-
+            //client=new Client(Long.parseLong(id),tel,password);
             Client replyClient=(Client)Hint.send$Receive("enter",client);
 
             if(replyClient.equals(client)==false){
                 clientLocal=replyClient;
                 new Hint().sceneSwitch("HomePage.fxml",event);
-                //Stage reflectedStage = (Stage) ((Node) getClass().getResource("HomePage.fxml")).getScene().getWindow();//null 了
-                //Node test1=reflectedStage.getScene().getRoot().lookup("#pulledPost");
-
-//                Node test1=(Node)(FXMLLoader.load(getClass().getResource("HomePage.fxml"))).lookup("#pulledPost");
-//                test1.lookup("#refreshList").fireEvent(new ActionEvent());
 
             }
             else{
@@ -137,6 +133,7 @@ public class Login {
                     clientPasswordField.setText(prop.getProperty(key));
                 }*/
                 clientNameField.setText( prop.getProperty("id"));
+                clientTelField.setText(prop.getProperty("tel"));
                 clientPasswordField.setText( prop.getProperty("password"));
                 keepPassword.setSelected(Boolean.parseBoolean(prop.getProperty("isSelected")));
                 in.close();

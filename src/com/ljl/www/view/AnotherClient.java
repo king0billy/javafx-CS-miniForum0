@@ -1,5 +1,6 @@
 package com.ljl.www.view;
 
+import com.ljl.www.po.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -54,12 +55,41 @@ public class AnotherClient {
     private ChoiceBox<?> sexChoiceBox;
 
     @FXML
+    private ChoiceBox privilegeChoice;
+
+    @FXML
     void eventOnRefresh(ActionEvent event) {
         initialize();
         Hint.pop("刷新成功");
     }
-
+    @FXML
+    void eventOnPrivilegeRefresh(ActionEvent event) {
+        if(Login.clientLocal.getClientPrivilege()<=PostDetailPage.author.getClientPrivilege()){
+            Hint.pop("你的权限比目标要小!,不能修改");return;
+        }
+        try {
+            Client replyClient = (Client) Hint.send$Receive("editMyInfo",PostDetailPage.author);
+            if(replyClient.equals(PostDetailPage.author)==true){
+                Hint.pop("修改成功");
+                refreshButton.fireEvent(new ActionEvent());
+            }
+            else{
+                Hint.pop("电话号码已被占用or服务器繁忙or毫无改变!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //initialize();
+        //Hint.pop("权限设置成功");
+    }
     public void initialize() {
+        if(privilegeChoice.getItems().size()==0) {
+            for(int i=1;i<Login.clientLocal.getClientPrivilege();i++)privilegeChoice.getItems().add(""+i);
+        }
+        privilegeChoice.getSelectionModel().selectedIndexProperty().addListener(
+                //我怀疑从0开始是索引!
+                (ov, value, new_value) -> PostDetailPage.author.setClientPrivilege(Long.parseLong(new_value.toString())+1)
+        );
         IDLabel.setText(PostDetailPage.author.getClientId().toString());
         telField.setText(PostDetailPage.author.getClientTel());
         nicknameFiled.setText(PostDetailPage.author.getClientNickname());

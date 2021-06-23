@@ -80,5 +80,11 @@
             <Font size="30.0" />
          </font>
       </Label>
+      <ChoiceBox fx:id="privilegeChoice" layoutX="810.0" layoutY="142.0" prefWidth="150.0" value="5" />
+      <Button fx:id="refreshPrivilege" layoutX="980.0" layoutY="142.0" mnemonicParsing="false" onAction="#eventOnPrivilegeRefresh" prefHeight="30.0" prefWidth="110.0" text="设置权限等级">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -1,8 +1,14 @@
 package com.ljl.www.service.mainlogic;
 
+import com.ljl.www.dao.PostSql;
+import com.ljl.www.util.PostListControlPacket;
+import com.ljl.www.view.PostDetailPage;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+
 /**
  * @className MainApp
  * @description 服务端主程序
@@ -14,7 +20,7 @@ import java.net.Socket;
  */
 
 public class MainApp {
-
+    //public static PostListControlPacket chaos=new PostListControlPacket();
     public static void main(String[] args){
         /**
          * @description 服务端主函数
@@ -26,6 +32,9 @@ public class MainApp {
          * @date 2021/5/12 15:12
          */
         try {
+
+            //PostSql.createPaginationList(chaos);//this is for Pagination!;
+
             //监听socket
             ServerSocket listen=new ServerSocket(6666);
             while(true){
