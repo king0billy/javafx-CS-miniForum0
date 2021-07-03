@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
  * @className AnotherClient
  * @description 当帖子作者不是本账号登陆者时显示的他人信息页面
  * @author  22427(king0liam)
- * @date 2021/5/12 15:22
+ * @date 2021/6/18 15:22
  * @version 1.0
  * @since version-0.0
  */
@@ -74,7 +74,7 @@ public class AnotherClient {
                 refreshButton.fireEvent(new ActionEvent());
             }
             else{
-                Hint.pop("电话号码已被占用or服务器繁忙or毫无改变!");
+                Hint.pop("服务器繁忙or毫无改变!");
             }
         }catch (Exception e){
             e.printStackTrace();

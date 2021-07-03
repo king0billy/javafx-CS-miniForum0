@@ -22,7 +22,7 @@ import java.io.*;
  * @className HomePage
  * @description 为实现分页listView而写的非常复杂的控制类
  * @author  22427(king0liam)
- * @date 2021/5/12 15:39
+ * @date 2021/6/18 15:39
  * @version 1.0
  * @since version-0.0
  */
@@ -86,7 +86,7 @@ public class HomePage {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:43
+         * @date 2021/6/18 15:43
          */
         //clientPacket.limit=Integer.parseInt(limitField.getText());
         //clientPacket.limit=Integer.parseInt(numberChoice.get());
@@ -103,7 +103,7 @@ public class HomePage {
          * @className XCell
          * @description 内部类,为了实现listView的pageFactory而设
          * @author  22427(king0liam)
-         * @date 2021/5/12 15:45
+         * @date 2021/6/18 15:45
          * @version 1.0
          * @since version-0.0
          */
@@ -129,7 +129,7 @@ public class HomePage {
              * @return []
              * @since version-1.0
              * @author 22427(king0liam)
-             * @date 2021/5/12 15:54
+             * @date 2021/6/18 15:54
              */
             super();
             hbox.setSpacing(10);
@@ -153,7 +153,7 @@ public class HomePage {
              * @return [com.ljl.www.po.Post, boolean]
              * @since version-1.0
              * @author 22427(king0liam)
-             * @date 2021/5/12 16:03
+             * @date 2021/6/18 16:03
              */
             super.updateItem(item, empty);
             setText(null);
@@ -178,7 +178,7 @@ public class HomePage {
          * @return []
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 16:08
+         * @date 2021/6/18 16:08
          */
 
         //postPagination.setPageCount(PostListSql.postCount/PostListSql.getLimit());
@@ -186,8 +186,7 @@ public class HomePage {
         postPagination.setCurrentPageIndex(0);
         postPagination.getStyleClass().add(Pagination.STYLE_CLASS_BULLET);
 
-    // TODO: 2021/5/9 输入非数字会不安全 ，应该用类似性别的choiceBox
-    // TODO: 2021/5/12 没实现的每页选择栏
+
         if(numberChoice.getItems().size()==0) {
             //limit=0有bug
             numberChoice.getItems().addAll("1","2","3","4","5","6","7","8","9","10","11");
@@ -203,7 +202,7 @@ public class HomePage {
              * @className Callback<Integer, Node>
              * @description 匿名对象
              * @author  22427(king0liam)
-             * @date 2021/5/12 16:44
+             * @date 2021/6/18 16:44
              * @version 1.0
              * @since version-0.0
              */
@@ -216,7 +215,7 @@ public class HomePage {
                  * @return [java.lang.Integer]
                  * @since version-1.0
                  * @author 22427(king0liam)
-                 * @date 2021/5/12 16:42
+                 * @date 2021/6/18 16:42
                  */
                 try{
                     clientPacket.pageParam=param;

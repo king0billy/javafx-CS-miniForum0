@@ -19,7 +19,7 @@ import java.util.Properties;
  * @className Login
  * @description 登录页面的控制器
  * @author  22427(king0liam)
- * @date 2021/5/12 17:01
+ * @date 2021/6/18 17:01
  * @version 1.0
  * @since version-0.0
  */
@@ -51,7 +51,7 @@ public class Login {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 16:59
+         * @date 2021/6/18 16:59
          */
         String id=clientNameField.getText();
         String tel=clientTelField.getText();
@@ -94,7 +94,12 @@ public class Login {
 
             if(replyClient.equals(client)==false){
                 clientLocal=replyClient;
+                if(clientLocal.getClientPrivilege()<=1){
+                    Hint.pop("你已被封禁,请与管理员联系!");
+                }
+                else{
                 new Hint().sceneSwitch("HomePage.fxml",event);
+                }
 
             }
             else{
@@ -112,7 +117,7 @@ public class Login {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:03
+         * @date 2021/6/18 17:03
          */
           new Hint().sceneSwitch("Register.fxml",event);
     }

@@ -4,3 +4,5 @@ alter table post alter column favorite_count set default 0;
 alter table post alter column remark_count set default 0;
 
 alter table client alter column client_privilege set default 4;
+
+select count(*) from thumbs_up where post_id=0;

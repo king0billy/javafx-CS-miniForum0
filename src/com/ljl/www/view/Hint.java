@@ -19,7 +19,7 @@ import java.util.Objects;
  * @className Hint
  * @description view下controller通用的工具类
  * @author  22427(king0liam)
- * @date 2021/5/12 15:37
+ * @date 2021/6/18 15:37
  * @version 1.0
  * @since version-0.0
  */
@@ -34,7 +34,7 @@ public class Hint {
          * @return [java.lang.String]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:38
+         * @date 2021/6/18 15:38
          */
         Label lbl = new Label(string);//创建面板
         //弃用的代码
@@ -61,7 +61,7 @@ public class Hint {
          * @return [java.lang.Long]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:39
+         * @date 2021/6/18 15:39
          */
         Label lbl = new Label("注册成功！请复制并保管你的id！");
         TextField textField=new TextField(String.valueOf(id));
@@ -86,7 +86,7 @@ public class Hint {
          * @return [java.lang.String, javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:39
+         * @date 2021/6/18 15:39
          */
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(xml)));//只能加载同一包下的？
         Scene creatingScene = new Scene(parent);

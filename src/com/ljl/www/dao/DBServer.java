@@ -9,13 +9,14 @@ import com.ljl.www.util.PostListControlPacket;
 
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
  * @className DBServer
  * @description 进一步封装查询类
  * @author  22427(king0liam)
- * @date 2021/5/12 14:19
+ * @date 2021/6/18 14:19
  * @version 1.0
  * @since version-0.0
  */
@@ -83,4 +84,14 @@ public class DBServer {
     public ThumbsUp deleteThumbsUp(ThumbsUp thumbsUp){
         return new ThumbsUpSql().deleteThumbsUp(thumbsUp);
     }
+    
+    public PostListControlPacket getThumbsUpList(PostListControlPacket postListControlPacket){return new ThumbsUpSql().getThumbsUpList(postListControlPacket);};
+    public PostListControlPacket getMyCommentList(PostListControlPacket postListControlPacket){return new RemarkSql().getMyCommentList(postListControlPacket);};
+
+    public ArrayList<Remark> getRemarkList(ArrayList<Remark> remarkList){return new RemarkSql().queryRemark(remarkList);};
+
+    public Remark insertRemark(Remark remark){return new RemarkSql().insertRemark(remark);}
+    public Remark editRemark(Remark remark){return new RemarkSql().editRemark(remark);}
+    public Remark deleteRemark(Remark remark){return new RemarkSql().deleteRemark(remark);}
+
 }

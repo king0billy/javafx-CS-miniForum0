@@ -3,7 +3,7 @@ package com.ljl.www.po;
  * @className Report
  * @description idea根据数据库表自动生成的Report实体类
  * @author  22427(king0liam)
- * @date 2021/5/12 15:09
+ * @date 2021/6/18 15:09
  * @version 1.0
  * @since version-0.0
  */

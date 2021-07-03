@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @className MainApp
  * @description 服务端主程序
  * @author  22427(king0liam)
- * @date 2021/5/12 15:11
+ * @date 2021/6/18 15:11
  * @version 1.0
  * @since version-0.0
  * @see Thread
@@ -29,7 +29,7 @@ public class MainApp {
          * @return [java.lang.String[]]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:12
+         * @date 2021/6/18 15:12
          */
         try {
 

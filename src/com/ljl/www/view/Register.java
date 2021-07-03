@@ -23,7 +23,7 @@ public class Register {
  * @className Register
  * @description 注册页面控制器
  * @author  22427(king0liam)
- * @date 2021/5/12 17:52
+ * @date 2021/6/18 17:52
  * @version 1.0
  * @since version-0.0
  */
@@ -55,7 +55,7 @@ public class Register {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 18:00
+         * @date 2021/6/18 18:00
          */
         new Hint().sceneSwitch("Login.fxml",event);
     }
@@ -67,7 +67,7 @@ public class Register {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 18:00
+         * @date 2021/6/18 18:00
          */
         if(clientTelField.getText().equals("")){
             Hint.pop("手机号不能为空！");

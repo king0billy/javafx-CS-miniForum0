@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  * @className NewPost
  * @description 发布新事件页面
  * @author  22427(king0liam)
- * @date 2021/5/12 17:16
+ * @date 2021/6/18 17:16
  * @version 1.0
  * @since version-0.0
  */
@@ -45,9 +45,12 @@ public class NewPost{
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:17
+         * @date 2021/6/18 17:17
          */
         try {
+            if(Login.clientLocal.getClientPrivilege()<=2){
+                Hint.pop("你仅能浏览!");return;
+            }
             if(articleArea.getText().length()<=10){
                 Hint.pop("贴子不能少于10个字!");return;
             }
@@ -81,7 +84,7 @@ public class NewPost{
          * @return []
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:17
+         * @date 2021/6/18 17:17
          */
         dateField.setText(new Timestamp(System.currentTimeMillis()).toString());
         nicknameField.setText(Login.clientLocal.getClientId().toString());

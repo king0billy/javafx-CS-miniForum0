@@ -9,7 +9,7 @@ import java.io.*;
  * @className MyInfo
  * @description 本人信息的展示页
  * @author  22427(king0liam)
- * @date 2021/5/12 17:13
+ * @date 2021/6/18 17:13
  * @version 1.0
  * @since version-0.0
  */
@@ -68,7 +68,7 @@ public class MyInfo {
         * @return []
         * @since version-1.0
         * @author 22427(king0liam)
-        * @date 2021/5/12 17:13
+        * @date 2021/6/18 17:13
         */
         IDLabel.setText(Login.clientLocal.getClientId().toString());
         telField.setText(Login.clientLocal.getClientTel());
@@ -107,7 +107,7 @@ public class MyInfo {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:14
+         * @date 2021/6/18 17:14
          */
         initialize();
         Hint.pop("刷新成功");
@@ -122,7 +122,7 @@ public class MyInfo {
         * @return [javafx.event.ActionEvent]
         * @since version-1.0
         * @author 22427(king0liam)
-        * @date 2021/5/12 17:14
+        * @date 2021/6/18 17:14
         */
         try {
             Login.clientLocal.setClientTel(telField.getText());

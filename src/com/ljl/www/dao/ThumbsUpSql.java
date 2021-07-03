@@ -3,6 +3,7 @@ package com.ljl.www.dao;
 import com.ljl.www.po.Post;
 import com.ljl.www.po.ThumbsUp;
 import com.ljl.www.util.MyID;
+import com.ljl.www.util.PostListControlPacket;
 import com.ljl.www.view.Hint;
 
 import java.sql.*;
@@ -115,6 +116,49 @@ public class ThumbsUpSql {
             DriverUtils.release(connection,statement,resultSets);
         }
         return thumbsUp;
+    }
+    static public PostListControlPacket getThumbsUpList(PostListControlPacket postListControlPacket){
+        /**
+         * @description 查询登录此账号用户点赞过的所有帖子
+         * @exception
+         * @param [com.ljl.www.util.PostListControlPacket] [postListControlPacket]
+         * @return [com.ljl.www.util.PostListControlPacket]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/6/18 14:49
+         */
+        Connection connection=null;
+        PreparedStatement statement=null;
+        ResultSet resultSets=null;
+        try{
+            connection = DriverUtils.getConnection();
+            String sql="SELECT * FROM post inner join thumbs_up ON thumbs_up.client_id=? and post.visible!=0 and thumbs_up.visible!=0 and thumbs_up.post_id=post.post_id ORDER BY post.post_id DESC" ;
+            statement=connection.prepareStatement(sql);
+            statement.setLong(1,postListControlPacket.clientId);
+            resultSets=statement.executeQuery();//这里不用参数
+            System.out.println("done getThumbsUpList");
+            int index=0;
+            postListControlPacket.postList=new ArrayList<>();
+            for(;resultSets.next();index++){
+                postListControlPacket.postList.add(new Post());
+                postListControlPacket.postList.get(index).setPostId(resultSets.getLong("post.post_id"));
+                postListControlPacket.postList.get(index).setClientId(resultSets.getLong("post.client_id"));
+                postListControlPacket.postList.get(index).setPostNewDate(resultSets.getTimestamp("post_new_date"));
+                postListControlPacket.postList.get(index).setPostTitle(resultSets.getString("post_title"));
+                postListControlPacket.postList.get(index).setPostArticle(resultSets.getString("post_article"));
+                postListControlPacket.postList.get(index).setThumbsUpCount(resultSets.getLong("thumbs_up_count"));
+                postListControlPacket.postList.get(index).setFavoriteCount(resultSets.getLong("favorite_count"));
+                postListControlPacket.postList.get(index).setRemarkCount(resultSets.getLong("remark_count"));
+            }
+            postListControlPacket.postCount=index;
+
+        }catch (SQLException e){
+            System.out.println("空事件表！");
+            e.printStackTrace();
+        }finally {
+            DriverUtils.release(connection,statement,resultSets);
+        }
+        return  postListControlPacket;
     }
 /*    static  private Boolean select(ThumbsUp  thumbsUp){//没有必要了
         return false;

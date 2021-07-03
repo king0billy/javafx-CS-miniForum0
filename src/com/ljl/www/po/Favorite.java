@@ -3,7 +3,7 @@ package com.ljl.www.po;
  * @className Favorite
  * @description idea根据数据库表自动生成的Favorite表的实体类
  * @author  22427(king0liam)
- * @date 2021/5/12 15:04
+ * @date 2021/6/18 15:04
  * @version 1.0
  * @since version-0.0
  */

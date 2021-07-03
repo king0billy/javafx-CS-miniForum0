@@ -18,7 +18,7 @@ import java.util.Objects;
  * @className Connect2Server
  * @description 客户端见到的第一个页面,先与服务端建立socket连接
  * @author  22427(king0liam)
- * @date 2021/5/12 15:30
+ * @date 2021/6/18 15:30
  * @version 1.0
  * @since version-0.0
  */
@@ -39,7 +39,7 @@ public class Connect2Server {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:31
+         * @date 2021/6/18 15:31
          */
         try {
             String ip=IPField.getText();

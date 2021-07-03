@@ -9,7 +9,7 @@ import java.util.Objects;
  * @className Client
  * @description idea根据数据库表自动生成的Client实体类，自己重写了一个equals方法（这里踩了坑，，忘了用自动生成又忘了Long是一个引用类型）
  * @author  22427(king0liam)
- * @date 2021/5/12 14:58
+ * @date 2021/6/18 14:58
  * @version 1.0
  * @since version-0.0
  */

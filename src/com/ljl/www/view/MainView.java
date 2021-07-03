@@ -15,7 +15,7 @@ import java.util.Stack;
  * @className MainView
  * @description 主程序
  * @author  22427(king0liam)
- * @date 2021/5/12 17:05
+ * @date 2021/6/18 17:05
  * @version 1.0
  * @since version-0.0
  */
@@ -35,11 +35,11 @@ public class MainView extends Application {
          * @return [javafx.stage.Stage]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:06
+         * @date 2021/6/18 17:06
          */
         Parent root= FXMLLoader.load(getClass().getResource("Connect2Server.fxml"));
         Scene scene=new Scene(root);
-        primaryStage.setTitle("TiliTili");
+        primaryStage.setTitle("B/S的javafx论坛");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

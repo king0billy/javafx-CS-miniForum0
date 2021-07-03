@@ -18,7 +18,7 @@ import java.io.*;
  * @className PulledPost
  * @description 个人已发布的事件,按发布时间倒序
  * @author  22427(king0liam)
- * @date 2021/5/12 17:28
+ * @date 2021/6/18 17:28
  * @version 1.0
  * @since version-0.0
  */
@@ -43,7 +43,7 @@ public class PulledPost {
          * @return []
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:30
+         * @date 2021/6/18 17:30
          */
         if(HomePage.clientPacket.firstLogin>0){
             pulledPostList.clientId=Login.clientLocal.getClientId();
@@ -77,7 +77,7 @@ public class PulledPost {
          * @className XCell
          * @description 内部类
          * @author  22427(king0liam)
-         * @date 2021/5/12 17:36
+         * @date 2021/6/18 17:36
          * @version 1.0
          * @since version-0.0
          */
@@ -96,7 +96,7 @@ public class PulledPost {
              * @return []
              * @since version-1.0
              * @author 22427(king0liam)
-             * @date 2021/5/12 17:40
+             * @date 2021/6/18 17:40
              */
             super();
             hbox.setSpacing(10);
@@ -117,7 +117,7 @@ public class PulledPost {
              * @return [com.ljl.www.po.Post, boolean]
              * @since version-1.0
              * @author 22427(king0liam)
-             * @date 2021/5/12 17:44
+             * @date 2021/6/18 17:44
              */
             super.updateItem(item, empty);
             setText(null);
@@ -141,12 +141,83 @@ public class PulledPost {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:35
+         * @date 2021/6/18 17:35
          */
             initialize();
             Hint.pop("pulledPost刷新成功");
     }
+    public void eventOnButtonRefreshThumbsUp(ActionEvent event)throws Exception{
+        /**
+         * @description 刷新点赞过的贴子
+         * @exception
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/6/18 17:35
+         */
+        if(HomePage.clientPacket.firstLogin>0){
+            pulledPostList.clientId=Login.clientLocal.getClientId();
+            pulledPostList.operation.delete(0,pulledPostList.operation.length());//??这样很啰嗦？
+            pulledPostList.operation.append("getThumbsUpList");
+            pulledPostList = (PostListControlPacket) Hint.send$Receive("postListControlPacket",pulledPostList);
 
+            pulledListView.setItems(FXCollections.observableList(pulledPostList.postList));
+            //根据xCell setCellFactory
+            pulledListView.setCellFactory(params -> new PulledPost.XCell());
+            pulledListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            pulledListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                //pulledListView.getSelectionModel().getSelectedItem();
+                pulledPostList.postListSelectedIndex=pulledListView.getSelectionModel().getSelectedIndex();
+                PostDetailPage.selectedPost=pulledPostList.postList.get(pulledPostList.postListSelectedIndex);
+                Parent root1= refreshList.getParent();
+                Parent root2= root1.getParent();
+                Parent root3= root2.getParent();
+                TabPane tabPane=(TabPane) root3;
+                tabPane.getSelectionModel().select(1);
+
+                Node test2=tabPane.lookup("#refreshPostDetail");
+                test2.fireEvent(new ActionEvent());
+            });
+        }
+        Hint.pop("ThumbsUpPost刷新成功");
+    }
+    public void eventOnButtonRefreshRemark(ActionEvent event)throws Exception{
+        /**
+         * @description 刷新点赞过的贴子
+         * @exception
+         * @param [javafx.event.ActionEvent] [event]
+         * @return [javafx.event.ActionEvent]
+         * @since version-1.0
+         * @author 22427(king0liam)
+         * @date 2021/6/18 17:35
+         */
+        if(HomePage.clientPacket.firstLogin>0){
+            pulledPostList.clientId=Login.clientLocal.getClientId();
+            pulledPostList.operation.delete(0,pulledPostList.operation.length());//??这样很啰嗦？
+            pulledPostList.operation.append("getMyCommentList");
+            pulledPostList = (PostListControlPacket) Hint.send$Receive("postListControlPacket",pulledPostList);
+
+            pulledListView.setItems(FXCollections.observableList(pulledPostList.postList));
+            //根据xCell setCellFactory
+            pulledListView.setCellFactory(params -> new PulledPost.XCell());
+            pulledListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            pulledListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                //pulledListView.getSelectionModel().getSelectedItem();
+                pulledPostList.postListSelectedIndex=pulledListView.getSelectionModel().getSelectedIndex();
+                PostDetailPage.selectedPost=pulledPostList.postList.get(pulledPostList.postListSelectedIndex);
+                Parent root1= refreshList.getParent();
+                Parent root2= root1.getParent();
+                Parent root3= root2.getParent();
+                TabPane tabPane=(TabPane) root3;
+                tabPane.getSelectionModel().select(1);
+
+                Node test2=tabPane.lookup("#refreshPostDetail");
+                test2.fireEvent(new ActionEvent());
+            });
+        }
+        Hint.pop("RemarkPost刷新成功");
+    }
 
 
 }

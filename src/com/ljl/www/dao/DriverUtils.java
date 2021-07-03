@@ -11,7 +11,7 @@ import java.util.Properties;
  * @className DriverUtils
  * @description 数据库连接工具类
  * @author  22427(king0liam)
- * @date 2021/5/12 14:28
+ * @date 2021/6/18 14:28
  * @version 1.0
  * @since version-0.0
  */
@@ -27,7 +27,7 @@ public class DriverUtils {
      * @return
      * @since version-1.0
      * @author 22427(king0liam)
-     * @date 2021/5/12 14:30
+     * @date 2021/6/18 14:30
      */
     static{
         try{
@@ -59,7 +59,7 @@ public class DriverUtils {
          * @return [java.sql.Connection, java.sql.Statement, java.sql.ResultSet]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 14:30
+         * @date 2021/6/18 14:30
          */
         if(resultSet!=null){
             try {

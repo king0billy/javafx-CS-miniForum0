@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @className PostListControlPacket
  * @description 封装好的传输控制包,以便传输各种Post相关的信息
  * @author  22427(king0liam)
- * @date 2021/5/12 15:21
+ * @date 2021/6/18 15:21
  * @version 1.0
  * @since version-0.0
  */

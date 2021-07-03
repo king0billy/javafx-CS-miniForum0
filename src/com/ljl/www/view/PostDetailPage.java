@@ -3,30 +3,41 @@ package com.ljl.www.view;
 
 import com.ljl.www.po.Client;
 import com.ljl.www.po.Post;
+import com.ljl.www.po.Remark;
 import com.ljl.www.po.ThumbsUp;
-import com.ljl.www.util.PostListControlPacket;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+
 import java.io.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * @className PostDetailPage
  * @description 事件详情页
  * @author  22427(king0liam)
- * @date 2021/5/12 17:18
+ * @date 2021/6/18 17:18
  * @version 1.0
  * @since version-0.0
  */
 
 public class PostDetailPage {
+    public static ArrayList<Remark> remarkList=new ArrayList(){{
+        add(new Remark());
+    }};
+    public static Remark newRemark=new Remark();
 
     public static Client author=new Client();
 
@@ -93,7 +104,7 @@ public class PostDetailPage {
     private Label dateField;
 
     @FXML
-    private ListView<?> commentListView;
+    private ListView<Remark> commentListView;
 
     @FXML
     private CheckBox thumbsUpCheckBox;
@@ -118,7 +129,8 @@ public class PostDetailPage {
 
     @FXML
     private Label nicknameField;
-
+    @FXML
+    private Button insertRemarkButton;
     @FXML
     void authorButton(ActionEvent event) {
         /**
@@ -128,7 +140,7 @@ public class PostDetailPage {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:19
+         * @date 2021/6/18 17:19
          */
         if(selectedPost.getClientId()
                 .equals(Login.clientLocal.getClientId())){
@@ -172,6 +184,7 @@ public class PostDetailPage {
     }
     @FXML
     void editButton(ActionEvent event) {
+
         /**
          * @description 修改事件按钮
          * @exception
@@ -179,10 +192,13 @@ public class PostDetailPage {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:20
+         * @date 2021/6/18 17:20
          */
                 //childAnchor.getParent().allTabPane.getSelectionModel().select(postDetail);
         if(selectedPost.getClientId().equals(Login.clientLocal.getClientId())){
+            if(Login.clientLocal.getClientPrivilege()<=2){
+                Hint.pop("你仅能浏览!");return;
+            }
             try {
                 selectedPost.setPostTitle(titleField.getText());
                 selectedPost.setPostArticle(articleArea.getText());
@@ -213,7 +229,7 @@ public class PostDetailPage {
          * @return [javafx.event.ActionEvent]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:22
+         * @date 2021/6/18 17:22
          */
         initialize();
     }
@@ -229,6 +245,9 @@ public class PostDetailPage {
          * @date 2021/6/12 17:22
          */
         if(selectedPost.getClientId().equals(Login.clientLocal.getClientId())){
+            if(Login.clientLocal.getClientPrivilege()<=2){
+                Hint.pop("你仅能浏览!");return;
+            }
             try {
                 Post replyPost = (Post) Hint.send$Receive("deletePost",selectedPost);
                 if(replyPost.equals(selectedPost)){
@@ -262,6 +281,77 @@ public class PostDetailPage {
             }
         }
     }
+    @FXML
+    void eventOnInsertRemarkButton(ActionEvent event) throws IOException, ClassNotFoundException {//回复选中评论
+        newRemark.setClientId(Login.clientLocal.getClientId());
+        newRemark.setFatherId(selectedPost.getPostId());
+        newRemark.setRemarkArticle(commentArea.getText());
+        newRemark.setToFloor(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getFloor());
+        Remark returnRemark=(Remark) Hint.send$Receive("insertRemark",newRemark);
+        if(returnRemark.equals(newRemark)==false){
+            refreshButton(new ActionEvent());
+            Hint.pop("插入成功");
+        }
+        else{
+            Hint.pop("插入失败");
+        }
+
+    }
+    @FXML
+    void eventOnInsertRemarkToPostButton(ActionEvent event) throws IOException, ClassNotFoundException {//回复贴子
+        newRemark.setClientId(Login.clientLocal.getClientId());
+        newRemark.setFatherId(selectedPost.getPostId());
+        newRemark.setRemarkArticle(commentArea.getText());
+        newRemark.setToFloor(0);
+        Remark returnRemark=(Remark) Hint.send$Receive("insertRemark",newRemark);
+        if(returnRemark.equals(newRemark)==false){
+            refreshButton(new ActionEvent());
+            Hint.pop("插入成功");
+        }
+        else{
+            Hint.pop("插入失败");
+        }
+    }
+    @FXML
+    void eventOnEditRemarkButton(ActionEvent event) throws IOException, ClassNotFoundException {
+        newRemark.setClientId(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getClientId());
+        newRemark.setFatherId(selectedPost.getPostId());
+        newRemark.setFloor(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getFloor());
+        newRemark.setRemarkArticle(commentArea.getText());
+        if( !Login.clientLocal.getClientId().equals(newRemark.getClientId())){
+            Hint.pop("不是你的评论不能编辑");
+        }
+        else{
+            Remark returnRemark=(Remark) Hint.send$Receive("editRemark",newRemark);
+            if(returnRemark.equals(newRemark)==false){
+                refreshButton(new ActionEvent());
+                Hint.pop("编辑成功");
+            }
+            else{
+                Hint.pop("编辑失败");
+            }
+        }
+    }
+    @FXML
+    void eventOnDeleteRemarkButton(ActionEvent event) throws IOException, ClassNotFoundException {
+        newRemark.setClientId(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getClientId());
+        newRemark.setFatherId(selectedPost.getPostId());
+        newRemark.setFloor(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getFloor());
+
+        if( !Login.clientLocal.getClientId().equals(newRemark.getClientId())&& Login.clientLocal.getClientPrivilege()>4&& !Login.clientLocal.getClientId().equals(selectedPost.getClientId())){
+            Hint.pop("不是你的评论,且你不是管理员，且你不是楼主,不能删除");
+        }
+        else{
+            Remark returnRemark=(Remark) Hint.send$Receive("deleteRemark",newRemark);
+            if(returnRemark.equals(newRemark)==false){
+                refreshButton(new ActionEvent());
+                Hint.pop("删除成功");
+            }
+            else{
+                Hint.pop("删除失败");
+            }
+        }
+    }
     public  void initialize() throws IOException, ClassNotFoundException {
         /**
          * @description 没用的初始化页,原本想通过此控制器外的按键触发此动作
@@ -270,9 +360,8 @@ public class PostDetailPage {
          * @return []
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 17:22
+         * @date 2021/6/18 17:22
          */
-
         if(HomePage.clientPacket.firstLogin>=2){
             thumbsUpCheckBox.selectedProperty().removeListener(changeListener);
 
@@ -297,7 +386,118 @@ public class PostDetailPage {
             nicknameField.setText(selectedPost.getClientId().toString());
             thumbsUpCountLabel.setText(selectedPost.getThumbsUpCount().toString());
         }
+
+//
+            /**
+             * @description 按下刷新键再查评论表(楼数如何控制)
+             * @exception IOException, ClassNotFoundException
+             * @param [] []
+             * @return []
+             * @since version-1.0
+             * @author 22427(king0liam)
+             * @date 2021/6/18 17:30
+             */
+
+            if(HomePage.clientPacket.firstLogin>=2){
+
+                commentListView.setItems(FXCollections.observableList(new ArrayList<>()));//为了评论区清空
+
+                //remarkList=new ArrayList<>();
+//                remarkList=new ArrayList(){{
+//                    add(new Remark());
+//                }};
+
+                remarkList.get(0).setFatherId(selectedPost.getPostId());
+
+                remarkList.get(0).setClientId(-9866564);//纯粹是为了使得1->2->1显示平论区正确
+
+                ArrayList<Remark> replyRemark=remarkList;
+                Object obj=Hint.send$Receive("getRemarkList",remarkList);
+                if (obj instanceof ArrayList<?>){
+                    replyRemark = (ArrayList<Remark>) obj;
+                }
+                //commentListView.setCellFactory(
+                if (remarkList.equals(replyRemark)==false){
+                    remarkList=replyRemark;
+
+                    commentListView.setItems(FXCollections.observableList(remarkList));
+                    //根据xCell setCellFactory
+                    commentListView.setCellFactory(params -> new PostDetailPage.XCell());
+                    commentListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                    commentListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                        if(remarkList.size()>=1){//防空指针
+                            commentArea.setText(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getRemarkArticle());
+                        }
+                });
+                }
+            }
     }
+
+    class XCell extends ListCell<Remark> {
+        /**
+         * @className XCell
+         * @description 内部类
+         * @author  22427(king0liam)
+         * @date 2021/6/18 17:36
+         * @version 1.0
+         * @since version-0.0
+         */
+        HBox hbox = new HBox();
+        Label labelFloor = new Label("");
+        Label label2Floor = new Label("");
+        Label labelClientId = new Label("nothing");
+        Label labelRemarkNewDate = new Label("nothing");
+        Label labelArticle = new Label("nothing");
+        Pane pane = new Pane();
+
+        public XCell() {
+            /**
+             * @description 默认构造方法
+             * @exception
+             * @param [] []
+             * @return []
+             * @since version-1.0
+             * @author 22427(king0liam)
+             * @date 2021/6/18 17:40
+             */
+            super();
+            hbox.setSpacing(10);
+            hbox.setMargin(labelFloor, new Insets(0, 10, 0, 10));
+            hbox.setMargin(label2Floor, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelClientId, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelArticle, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelRemarkNewDate, new Insets(0, 10, 0, 10));
+            hbox.getChildren().addAll(labelFloor,labelClientId,label2Floor,labelArticle,labelRemarkNewDate
+                    ,pane
+            );
+            HBox.setHgrow(pane, Priority.ALWAYS);
+        }
+
+        protected void updateItem(Remark item, boolean empty) {
+            /**
+             * @description 自动调用的更新方法
+             * @exception
+             * @param [com.ljl.www.po.Post, boolean] [item, empty]
+             * @return [com.ljl.www.po.Post, boolean]
+             * @since version-1.0
+             * @author 22427(king0liam)
+             * @date 2021/6/18 17:44
+             */
+            super.updateItem(item, empty);
+            setText(null);
+            setGraphic(null);
+
+            if (item != null && !empty) {
+                labelFloor.setText("楼层:"+item.getFloor());
+                labelClientId.setText("作者id："+item.getClientId());
+                if(item.getRemarkArticle().length()<=10){labelArticle.setText("文章摘要："+item.getRemarkArticle());}
+                else{labelArticle.setText("文章摘要："+item.getRemarkArticle().substring(0,10));}
+                label2Floor.setText("回复楼层:"+item.getToFloor());
+                labelRemarkNewDate.setText("创建or最后修改日期："+item.getRemarkNewDate().toString());
+                setGraphic(hbox);
+            }
+        }
+    }//
 
 }
 

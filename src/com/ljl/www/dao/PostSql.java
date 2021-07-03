@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @className PostSql
  * @description 和用户有关的数据库语句，内部方法接受的参数统一为数据库实体类po下的Post,
  * @author  22427(king0liam)
- * @date 2021/5/12 14:36
+ * @date 2021/6/18 14:36
  * @version 1.0
  * @since version-0.0
  */
@@ -31,7 +31,7 @@ public class PostSql {
          * @return [com.ljl.www.util.PostListControlPacket]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 14:38
+         * @date 2021/6/18 14:38
          */
         Connection connection=null;
         PreparedStatement statement=null;
@@ -68,7 +68,7 @@ public class PostSql {
          * @return [com.ljl.www.util.PostListControlPacket]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 14:44
+         * @date 2021/6/18 14:44
          */
         System.out.println("postListControlPacket.firstLogin= "+postListControlPacket.firstLogin);
         //postListControlPacket.firstLogin++;
@@ -121,7 +121,7 @@ public class PostSql {
          * @return [com.ljl.www.po.Post]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 14:45
+         * @date 2021/6/18 14:45
          */
         Connection connection=null;
         PreparedStatement statement=null;
@@ -159,7 +159,7 @@ public class PostSql {
          * @return [com.ljl.www.po.Post]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 14:46
+         * @date 2021/6/18 14:46
          */
         Connection connection=null;
         PreparedStatement statement=null;
@@ -201,7 +201,7 @@ public class PostSql {
          * @return [com.ljl.www.util.PostListControlPacket]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 14:49
+         * @date 2021/6/18 14:49
          */
         Connection connection=null;
         PreparedStatement statement=null;
@@ -245,7 +245,7 @@ public class PostSql {
          * @return [com.ljl.www.po.Post]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 14:45
+         * @date 2021/6/18 14:45
          */
         Connection connection=null;
         PreparedStatement statement=null;

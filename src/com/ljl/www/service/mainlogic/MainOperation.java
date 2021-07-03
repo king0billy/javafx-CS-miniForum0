@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import com.ljl.www.po.*;
 import com.ljl.www.util.*;
@@ -16,7 +17,7 @@ import com.ljl.www.dao.*;
  * @className MainOperation
  * @description 服务器主逻辑
  * @author  22427(king0liam)
- * @date 2021/5/12 15:15
+ * @date 2021/6/18 15:15
  * @version 1.0
  * @since version-0.0
  */
@@ -38,7 +39,7 @@ public class MainOperation {
          * @return []
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:17
+         * @date 2021/6/18 15:17
          */
         try {
             //写入
@@ -99,7 +100,7 @@ public class MainOperation {
          * @return [java.lang.String]
          * @since version-1.0
          * @author 22427(king0liam)
-         * @date 2021/5/12 15:19
+         * @date 2021/6/18 15:19
          */
         try {
             //todo 可以利用正则表达式实现log(n)查找?
@@ -133,7 +134,20 @@ public class MainOperation {
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
                     oos.writeObject(ppcp);
                     oos.flush();
-
+                }
+                else if(ppcp.operation.toString().equals("getThumbsUpList")){
+                    System.out.println("equals=getThumbsUpList");
+                    db.getThumbsUpList(ppcp);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(ppcp);
+                    oos.flush();
+                }
+                else if(ppcp.operation.toString().equals("getMyCommentList")){
+                    System.out.println("equals=getMyCommentList");
+                    db.getMyCommentList(ppcp);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(ppcp);
+                    oos.flush();
                 }
             }
             else if(server_type.equals("editMyInfo")){
@@ -217,6 +231,46 @@ public class MainOperation {
 
                 ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
                 oos.writeObject(db.deleteThumbsUp(thumbsUp));
+                oos.flush();
+            }
+            else if(server_type.equals("getRemarkList")){
+                System.out.println("getRemarkList");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                ArrayList<Remark> remarkList = (ArrayList<Remark>) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.getRemarkList(remarkList));
+                oos.flush();
+            }
+            else if(server_type.equals("insertRemark")){
+                System.out.println("insertRemark");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Remark remark = (Remark) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.insertRemark(remark));
+                oos.flush();
+            }
+            else if(server_type.equals("editRemark")){
+                System.out.println("editRemark");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Remark remark = (Remark) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.editRemark(remark));
+                oos.flush();
+            }
+            else if(server_type.equals("deleteRemark")){
+                System.out.println("deleteRemark");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Remark remark = (Remark) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.deleteRemark(remark));
                 oos.flush();
             }
 
