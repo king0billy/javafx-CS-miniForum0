@@ -39,7 +39,7 @@ public class MainView extends Application {
          */
         Parent root= FXMLLoader.load(getClass().getResource("Connect2Server.fxml"));
         Scene scene=new Scene(root);
-        primaryStage.setTitle("B/S的javafx论坛");
+        primaryStage.setTitle("C/S的javafx论坛");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

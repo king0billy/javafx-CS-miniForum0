@@ -283,9 +283,15 @@ public class PostDetailPage {
     }
     @FXML
     void eventOnInsertRemarkButton(ActionEvent event) throws IOException, ClassNotFoundException {//回复选中评论
+        if(Login.clientLocal.getClientPrivilege()<=2){
+            Hint.pop("你仅能浏览!");return;
+        }
         newRemark.setClientId(Login.clientLocal.getClientId());
         newRemark.setFatherId(selectedPost.getPostId());
         newRemark.setRemarkArticle(commentArea.getText());
+        if(newRemark.getRemarkArticle().length()<5){
+            Hint.pop("评论字数不能少于5个字!");return;
+        }
         newRemark.setToFloor(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getFloor());
         Remark returnRemark=(Remark) Hint.send$Receive("insertRemark",newRemark);
         if(returnRemark.equals(newRemark)==false){
@@ -299,9 +305,15 @@ public class PostDetailPage {
     }
     @FXML
     void eventOnInsertRemarkToPostButton(ActionEvent event) throws IOException, ClassNotFoundException {//回复贴子
+        if(Login.clientLocal.getClientPrivilege()<=2){
+            Hint.pop("你仅能浏览!");return;
+        }
         newRemark.setClientId(Login.clientLocal.getClientId());
         newRemark.setFatherId(selectedPost.getPostId());
         newRemark.setRemarkArticle(commentArea.getText());
+        if(newRemark.getRemarkArticle().length()<5){
+            Hint.pop("评论字数不能少于5个字!");return;
+        }
         newRemark.setToFloor(0);
         Remark returnRemark=(Remark) Hint.send$Receive("insertRemark",newRemark);
         if(returnRemark.equals(newRemark)==false){
@@ -314,6 +326,9 @@ public class PostDetailPage {
     }
     @FXML
     void eventOnEditRemarkButton(ActionEvent event) throws IOException, ClassNotFoundException {
+        if(Login.clientLocal.getClientPrivilege()<=2){
+            Hint.pop("你仅能浏览!");return;
+        }
         newRemark.setClientId(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getClientId());
         newRemark.setFatherId(selectedPost.getPostId());
         newRemark.setFloor(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getFloor());
@@ -334,6 +349,9 @@ public class PostDetailPage {
     }
     @FXML
     void eventOnDeleteRemarkButton(ActionEvent event) throws IOException, ClassNotFoundException {
+        if(Login.clientLocal.getClientPrivilege()<=2){
+            Hint.pop("你仅能浏览!");return;
+        }
         newRemark.setClientId(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getClientId());
         newRemark.setFatherId(selectedPost.getPostId());
         newRemark.setFloor(remarkList.get(commentListView.getSelectionModel().getSelectedIndex()).getFloor());
@@ -462,7 +480,7 @@ public class PostDetailPage {
              */
             super();
             hbox.setSpacing(10);
-            hbox.setMargin(labelFloor, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelFloor, new Insets(0, 10, 0, 0));
             hbox.setMargin(label2Floor, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelClientId, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelArticle, new Insets(0, 10, 0, 10));

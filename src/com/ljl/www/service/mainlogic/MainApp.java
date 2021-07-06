@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 
 public class MainApp {
-    //public static PostListControlPacket chaos=new PostListControlPacket();
+    //public static PostListControlPacket list8TimeDESC=new PostListControlPacket();
     public static void main(String[] args){
         /**
          * @description 服务端主函数
@@ -33,7 +33,7 @@ public class MainApp {
          */
         try {
 
-            //PostSql.createPaginationList(chaos);//this is for Pagination!;
+            //PostSql.createPaginationList(list8TimeDESC);//this is for Pagination!;
 
             //监听socket
             ServerSocket listen=new ServerSocket(6666);

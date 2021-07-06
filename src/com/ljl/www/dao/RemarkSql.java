@@ -32,6 +32,7 @@ public class RemarkSql {
          */
         Connection connection=null;
         PreparedStatement statement=null;
+        PreparedStatement statementPost=null;
         ResultSet resultSets=null;
         try{
             int floor=1;
@@ -54,7 +55,13 @@ public class RemarkSql {
             statement.setString(5,remark.getRemarkArticle());
             statement.setTimestamp(6,new Timestamp(System.currentTimeMillis()));
             statement.setTimestamp(7,new Timestamp(System.currentTimeMillis()));
-            if(statement.executeUpdate()>0) {
+
+            String sqlPost="UPDATE POST SET " +
+                    "remark_count=remark_count+1" +
+                    " WHERE post_id=? and visible!=0;";
+            statementPost=connection.prepareStatement(sqlPost);
+            statementPost.setLong(1,remark.getFatherId());
+            if(statement.executeUpdate()>0&&statementPost.executeUpdate()>0){
                 remark=new Remark();
             }
         }catch (SQLException e){
@@ -125,6 +132,7 @@ public class RemarkSql {
          */
         Connection connection=null;
         PreparedStatement statement=null;
+        PreparedStatement statementPost=null;
         ResultSet resultSets=null;
         try{
             connection = DriverUtils.getConnection();
@@ -134,7 +142,13 @@ public class RemarkSql {
             statement.setString(2,remark.getRemarkArticle());
             statement.setLong(3,remark.getFatherId());
             statement.setLong(4,remark.getFloor());
-            if(statement.executeUpdate()>0) {
+
+            String sqlPost="UPDATE POST SET " +
+                    "remark_count=remark_count-1" +
+                    " WHERE post_id=? and visible!=0;";
+            statementPost=connection.prepareStatement(sqlPost);
+            statementPost.setLong(1,remark.getFatherId());
+            if(statement.executeUpdate()>0&&statementPost.executeUpdate()>0){
                 remark=new Remark();
             }
         }catch (SQLException e){

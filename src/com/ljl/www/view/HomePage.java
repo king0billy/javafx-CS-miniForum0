@@ -88,9 +88,7 @@ public class HomePage {
          * @author 22427(king0liam)
          * @date 2021/6/18 15:43
          */
-        //clientPacket.limit=Integer.parseInt(limitField.getText());
         //clientPacket.limit=Integer.parseInt(numberChoice.get());
-        //??这样很啰嗦？clientPacket.operation=new StringBuffer("refresh");
         clientPacket.operation.delete(0,clientPacket.operation.length());
         clientPacket.operation.append("refreshPostList");
         clientPacket = (PostListControlPacket)Hint.send$Receive("postListControlPacket",clientPacket);
@@ -133,7 +131,7 @@ public class HomePage {
              */
             super();
             hbox.setSpacing(10);
-            hbox.setMargin(labelTitle, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelTitle, new Insets(0, 10, 0, 0));
             hbox.setMargin(labelArticle, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelClientId, new Insets(0, 10, 0, 50));
             hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -9,8 +10,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.NewPost">
    <children>
       <TextField fx:id="titleField" layoutX="94.0" layoutY="28.0" prefHeight="30.0" prefWidth="567.0" />
-      <TextArea fx:id="articleArea" layoutX="31.0" layoutY="96.0" prefHeight="438.0" prefWidth="997.0" />
-      <Button fx:id="pullButton" layoutX="1042.0" layoutY="96.0" mnemonicParsing="false" onAction="#pullNewPost" text="更改or发布" />
+      <TextArea fx:id="articleArea" layoutX="31.0" layoutY="96.0" prefHeight="194.0" prefWidth="981.0" />
+      <Button fx:id="pullButton" layoutX="1042.0" layoutY="96.0" mnemonicParsing="false" onAction="#pullNewPost" text="发布新贴子" />
       <Label layoutX="683.0" layoutY="33.0" text="作者昵称：" />
       <Label layoutX="959.0" layoutY="33.0" text="发布or打开本页面日期：" />
       <Label fx:id="nicknameField" layoutX="758.0" layoutY="33.0" prefHeight="20.0" prefWidth="197.0" text="Label" />

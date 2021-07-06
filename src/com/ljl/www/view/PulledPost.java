@@ -100,7 +100,7 @@ public class PulledPost {
              */
             super();
             hbox.setSpacing(10);
-            hbox.setMargin(labelTitle, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelTitle, new Insets(0, 10, 0, 0));
             hbox.setMargin(labelArticle, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelClientId, new Insets(0, 10, 0, 50));
             hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate
