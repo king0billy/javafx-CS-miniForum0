@@ -57,6 +57,9 @@ public class DBServer {
     public PostListControlPacket getPostListView(PostListControlPacket postListControlPacket){
         return  PostSql.setPaginationList(postListControlPacket);
     }
+    public PostListControlPacket getTopList(PostListControlPacket postListControlPacket){
+        return  PostSql.setTopList(postListControlPacket);
+    }
     public Client updateMyInfo(Client client){
         return new ClientSql().myInfoUpdate(client);
     }
@@ -72,9 +75,8 @@ public class DBServer {
     public Post deletePost(Post post){
         return new PostSql().deletePost(post);
     }
-    public PostListControlPacket getPulledList(PostListControlPacket postListControlPacket){
-        return  PostSql.pulledPostList(postListControlPacket);
-    }
+    public Post updatePostLevel(Post post){ return new PostSql().updatePostLevel(post); }
+
     public ThumbsUp showThumbsUp(ThumbsUp thumbsUp){
         return new ThumbsUpSql().showThumbsUp(thumbsUp);
     }
@@ -84,7 +86,10 @@ public class DBServer {
     public ThumbsUp deleteThumbsUp(ThumbsUp thumbsUp){
         return new ThumbsUpSql().deleteThumbsUp(thumbsUp);
     }
-    
+
+    public PostListControlPacket getPulledList(PostListControlPacket postListControlPacket){
+        return  PostSql.pulledPostList(postListControlPacket);
+    }
     public PostListControlPacket getThumbsUpList(PostListControlPacket postListControlPacket){return new ThumbsUpSql().getThumbsUpList(postListControlPacket);};
     public PostListControlPacket getMyCommentList(PostListControlPacket postListControlPacket){return new RemarkSql().getMyCommentList(postListControlPacket);};
 

@@ -113,9 +113,15 @@ public class MainOperation {
 
                 System.out.println("ppcp="+ppcp.operation);
 
-
                 if(ppcp.operation.toString().equals("refreshPostList")){
                     db.setPaginationList(ppcp);
+                    ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                    oos.writeObject(ppcp);
+                    oos.flush();
+                }
+                else if(ppcp.operation.toString().equals("getTopList")){
+                    System.out.println("equals=getTopList");
+                    db.getTopList(ppcp);
                     ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
                     oos.writeObject(ppcp);
                     oos.flush();
@@ -271,6 +277,16 @@ public class MainOperation {
 
                 ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
                 oos.writeObject(db.deleteRemark(remark));
+                oos.flush();
+            }
+            else if(server_type.equals("updatePostLevel")){
+                System.out.println("updatePostLevel");
+                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(ss.getInputStream()));
+                Object obj = ois.readObject();
+                Post post = (Post) obj;
+
+                ObjectOutputStream oos=new ObjectOutputStream(ss.getOutputStream());
+                oos.writeObject(db.updatePostLevel(post));
                 oos.flush();
             }
 

@@ -13,15 +13,15 @@ import java.util.Objects;
  */
 public class Post implements Serializable  {
 
-  private Long postId;
-  private Long clientId;
+  private Long postId=-99L;
+  private Long clientId=-99L;
   private java.sql.Timestamp postNewDate;
   private String postTitle;
   private String postArticle;
-  private Long thumbsUpCount;
-  private Long favoriteCount;
-  private Long remarkCount;
-  private Boolean visible;
+  private Long thumbsUpCount=-99L;
+  private Long favoriteCount=-99L;
+  private Long remarkCount=-99L;
+  private Byte visible=-99;
 
   public Post() {
   }
@@ -110,11 +110,11 @@ public class Post implements Serializable  {
   }
 
 
-  public Boolean getVisible() {
+  public Byte getVisible() {
     return visible;
   }
 
-  public void setVisible(Boolean visible) {
+  public void setVisible(Byte visible) {
     this.visible = visible;
   }
 

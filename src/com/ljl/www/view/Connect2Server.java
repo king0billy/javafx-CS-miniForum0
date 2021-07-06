@@ -43,7 +43,6 @@ public class Connect2Server {
          */
         try {
             String ip=IPField.getText();
-            //ServerSocket serverSocket = new ServerSocket(6666);//【这一步已在server中先运行了！！！】
             MainView.ss=new Socket(ip,6666);//ip输入框
             //根据ip和端口连接服务器
             if(MainView.ss.isConnected()){

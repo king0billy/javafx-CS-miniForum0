@@ -19,7 +19,7 @@
             <content>
               <AnchorPane fx:id="rootAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="729.0" prefWidth="1366.0">
                      <children>
-                        <Pagination fx:id="postPagination" layoutX="224.0" layoutY="199.0" prefHeight="729.0" prefWidth="1150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="216.0" AnchorPane.topAnchor="0.0">
+                        <Pagination fx:id="postPagination" layoutX="224.0" layoutY="192.0" prefHeight="537.0" prefWidth="1148.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="218.0" AnchorPane.topAnchor="192.0">
                           <!--- <test pattern="SCAN" />
                           <fx:define>
                             <fx:include source="Login.fxml" fx:id="loginButton" />
@@ -28,11 +28,11 @@
                        <test pattern="nothing" /> -->
 
                         </Pagination>
-                        <Button fx:id="refreshPost" layoutX="1150.0" layoutY="65.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" prefHeight="30.0" prefWidth="216.0" text="设置每页展示数并刷新事件列表">
+                        <Button fx:id="refreshPost" layoutX="1148.0" layoutY="350.0" mnemonicParsing="false" onAction="#eventOnButtonRefreshPost" prefHeight="30.0" prefWidth="216.0" text="设置每页展示数并刷新事件列表">
                            <font>
                               <Font size="14.0" />
                            </font></Button>
-                        <ChoiceBox fx:id="numberChoice" layoutX="1150.0" layoutY="122.0" prefWidth="150.0" value="5">
+                        <ChoiceBox fx:id="numberChoice" layoutX="1148.0" layoutY="392.0" prefWidth="150.0" value="5">
 <!--                         <items>
                              <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="1" />
@@ -47,6 +47,8 @@
                              </FXCollections>
                          </items>-->
                      </ChoiceBox>
+                        <ListView fx:id="topListView" layoutX="14.0" layoutY="14.0" prefHeight="171.0" prefWidth="1134.0" />
+                        <Label layoutX="1163.0" layoutY="14.0" text="置顶贴子区" />
                      </children>
                   </AnchorPane>
             </content>

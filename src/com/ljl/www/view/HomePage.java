@@ -1,6 +1,7 @@
 package com.ljl.www.view;
 
 import com.ljl.www.po.Post;
+import com.ljl.www.po.Remark;
 import com.ljl.www.util.PostListControlPacket;
 import com.sun.glass.ui.Screen;
 import javafx.collections.FXCollections;
@@ -9,6 +10,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -76,7 +78,11 @@ public class HomePage {
     @FXML
     private TextField limitField;
 
+    @FXML
+    private ListView<Post> topListView;
+
     public static PostListControlPacket clientPacket=new PostListControlPacket();
+    public static PostListControlPacket topList=new PostListControlPacket();
 
     public void eventOnButtonRefreshPost(ActionEvent event)throws Exception{
         /**
@@ -112,6 +118,7 @@ public class HomePage {
         Label labelArticle = new Label("nothing");
         Label labelRemarkCount = new Label("nothing");
         Label labelThumbsUpCount = new Label("nothing");
+        Label labelVisible = new Label("nothing");
         Pane pane = new Pane();
         //弃用,必须选中listView中的一条才能得到事件的信息,这些按键就啰嗦无用了
         /*
@@ -137,9 +144,11 @@ public class HomePage {
             hbox.setMargin(labelArticle, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelClientId, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelPostNewDate, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelThumbsUpCount, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelRemarkCount, new Insets(0, 10, 0, 10));
+            //hbox.setMargin(labelVisible, new Insets(0, 10, 0, 10));
             hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate,
-                    labelThumbsUpCount,labelRemarkCount
+                    labelThumbsUpCount,labelRemarkCount,labelVisible
                     ,pane
 /*                    , buttonDetail,checkBoxThumbsUP,checkBoxFavorite,buttonComment,buttonReport*/
             );
@@ -168,12 +177,13 @@ public class HomePage {
                 labelPostNewDate.setText("创建or最后修改日期："+item.getPostNewDate().toString());
                 labelThumbsUpCount.setText("点赞数: "+item.getThumbsUpCount().toString());
                 labelRemarkCount.setText("评论数: "+item.getRemarkCount().toString());
+                labelVisible.setText("优先级: "+item.getVisible().toString());
                 setGraphic(hbox);
             }
         }
     }
 
-    public void initialize() {
+    public void initialize() throws IOException, ClassNotFoundException {
         /**
          * @description 首页的初始化函数
          * @exception
@@ -183,23 +193,34 @@ public class HomePage {
          * @author 22427(king0liam)
          * @date 2021/6/18 16:08
          */
+        topList.clientId=Login.clientLocal.getClientId();
+        topList.operation.delete(0,topList.operation.length());//??这样很啰嗦？
+        topList.operation.append("getTopList");
+        topList = (PostListControlPacket) Hint.send$Receive("postListControlPacket",topList);
 
-        //postPagination.setPageCount(PostListSql.postCount/PostListSql.getLimit());
+        topListView.setItems(FXCollections.observableList(topList.postList));
+        //根据xCell setCellFactory
+        topListView.setCellFactory(params -> new XCell());
+        topListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        topListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //topListView.getSelectionModel().getSelectedItem();
+            topList.postListSelectedIndex=topListView.getSelectionModel().getSelectedIndex();
+
+            allTabPane.getSelectionModel().select(1);
+            PostDetailPage.selectedPost=topList.postList.get(topList.postListSelectedIndex);
+            postDetail.getContent().lookup("#refreshPostDetail").fireEvent(new ActionEvent());
+        });
+
         postPagination.setMaxPageIndicatorCount(10);
         postPagination.setCurrentPageIndex(0);
         postPagination.getStyleClass().add(Pagination.STYLE_CLASS_BULLET);
-
-
-        if(numberChoice.getItems().size()==0) {
-            //limit=0有bug
+        if(numberChoice.getItems().size()==0) {//limit=0有bug
             numberChoice.getItems().addAll("1","2","3","4","5","6","7","8","9","10","11");
         }
-        numberChoice.getSelectionModel().selectedIndexProperty().addListener(
-                //我怀疑从0开始是索引!
+        numberChoice.getSelectionModel().selectedIndexProperty().addListener(//我怀疑从0开始是索引!
                 (ov, value, new_value) -> clientPacket.limit = Integer.parseInt(new_value.toString())+1
         );
-
-
+        
         postPagination.setPageFactory(new Callback<Integer, Node>() {
             /**
              * @className Callback<Integer, Node>
@@ -232,16 +253,13 @@ public class HomePage {
                         pulledPostTab.getContent().lookup("#refreshList").fireEvent(new ActionEvent());
                         HomePage.clientPacket.firstLogin++;
                     }
-
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
                 ListView<Post> lv = new ListView<>();
                 lv.setItems(FXCollections.observableList(clientPacket.postList));
                 lv.setCellFactory(params -> new XCell());
                 lv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
                 //添加监视器
                 lv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                     clientPacket.postListSelectedIndex=lv.getSelectionModel().getSelectedIndex();

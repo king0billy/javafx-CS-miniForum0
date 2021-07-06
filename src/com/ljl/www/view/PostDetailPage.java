@@ -133,6 +133,11 @@ public class PostDetailPage {
     @FXML
     private Button insertRemarkButton;
     @FXML
+    private TextField levelField;
+    @FXML
+    private Button updateLevelButton;
+
+    @FXML
     void authorButton(ActionEvent event) {
         /**
          * @description 查看作者按钮
@@ -374,6 +379,28 @@ public class PostDetailPage {
             }
         }
     }
+    @FXML
+    void eventOnuUpdateLevelButton(ActionEvent event) {
+        if(Login.clientLocal.getClientPrivilege()<=4){
+            Hint.pop("权限不够!");
+        }
+        else{
+            try {
+                selectedPost.setVisible(Byte.parseByte(levelField.getText()));
+                Post replyPost = (Post) Hint.send$Receive("updatePostLevel",selectedPost);
+                if(replyPost.equals(selectedPost)){
+                    selectedPost=replyPost;
+                    Hint.pop("已设置好指定等级");
+                }
+                else{
+                    Hint.pop("未知错误!");
+                }
+            } catch (Exception e) {
+                Hint.pop("输入范围出错或格式不对!");
+                e.printStackTrace();
+            }
+        }
+    }
     public  void initialize() throws IOException, ClassNotFoundException {
         /**
          * @description 没用的初始化页,原本想通过此控制器外的按键触发此动作
@@ -401,12 +428,13 @@ public class PostDetailPage {
             }
 
             thumbsUpCheckBox.selectedProperty().addListener(changeListener);
+            thumbsUpCountLabel.setText(selectedPost.getThumbsUpCount().toString());
 
             titleField.setText(selectedPost.getPostTitle());
             articleArea.setHtmlText(selectedPost.getPostArticle());//articleArea.getHtmlText(selectedPost.getPostArticle());
             dateField.setText(selectedPost.getPostNewDate().toString());
             nicknameField.setText(selectedPost.getClientId().toString());
-            thumbsUpCountLabel.setText(selectedPost.getThumbsUpCount().toString());
+            levelField.setText(selectedPost.getVisible().toString());
         }
 
 //

@@ -39,5 +39,7 @@
       <Button fx:id="deleteCurrentPostButton1" layoutX="1161.0" layoutY="521.0" mnemonicParsing="false" onAction="#eventOnDeleteRemarkButton" text="删除此评论！" />
       <Button fx:id="pullButton1" layoutX="1161.0" layoutY="566.0" mnemonicParsing="false" onAction="#eventOnEditRemarkButton" text="更改选中评论" />
       <HTMLEditor fx:id="articleArea" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="31.0" layoutY="87.0" prefHeight="328.0" prefWidth="1078.0" />
+      <TextField fx:id="levelField" layoutX="1131.0" layoutY="343.0" prefHeight="30.0" prefWidth="210.0" promptText="置顶等级2~127,越高越前面" />
+      <Button fx:id="updateLevelButton" layoutX="1201.0" layoutY="385.0" mnemonicParsing="false" onAction="#eventOnuUpdateLevelButton" text="管理设置置顶等级" />
    </children>
 </AnchorPane>

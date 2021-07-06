@@ -221,6 +221,7 @@ public Remark deleteRemark(Remark remark){
                 postListControlPacket.postList.get(index).setThumbsUpCount(resultSets.getLong("thumbs_up_count"));
                 postListControlPacket.postList.get(index).setFavoriteCount(resultSets.getLong("favorite_count"));
                 postListControlPacket.postList.get(index).setRemarkCount(resultSets.getLong("remark_count"));
+                postListControlPacket.postList.get(index).setVisible(resultSets.getByte("visible"));
             }
             postListControlPacket.postCount=index;
 
