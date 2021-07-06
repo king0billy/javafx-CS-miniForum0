@@ -17,7 +17,7 @@ public class SafeTestMode {
             statement=connection.prepareStatement(sql);
             //statement.setInt(1,1);
             statement.setString(1,"119009999");
-            statement.setString(2,"shit");
+            statement.setString(2,"nothing");
             statement.setString(3," 男");
             statement.setInt(4,19);
             statement.setString(5," CS");

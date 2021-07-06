@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.web.HTMLEditor;
 
 import java.io.*;
 import java.sql.Timestamp;
@@ -125,7 +126,7 @@ public class PostDetailPage {
     private AnchorPane childAnchor;
 
     @FXML
-    private TextArea articleArea;
+    private HTMLEditor articleArea;
 
     @FXML
     private Label nicknameField;
@@ -200,8 +201,11 @@ public class PostDetailPage {
                 Hint.pop("你仅能浏览!");return;
             }
             try {
-                selectedPost.setPostTitle(titleField.getText());
-                selectedPost.setPostArticle(articleArea.getText());
+                if(titleField.getText().length()>0)selectedPost.setPostTitle(titleField.getText());
+                else{
+                    selectedPost.setPostTitle(articleArea.getHtmlText().substring(0,10));
+                }
+                selectedPost.setPostArticle(articleArea.getHtmlText());
                 selectedPost.setPostNewDate(Timestamp.valueOf(dateField.getText()));
                 Post replyPost = (Post) Hint.send$Receive("editPost",selectedPost);
                 if(replyPost.equals(selectedPost)){
@@ -399,7 +403,7 @@ public class PostDetailPage {
             thumbsUpCheckBox.selectedProperty().addListener(changeListener);
 
             titleField.setText(selectedPost.getPostTitle());
-            articleArea.setText(selectedPost.getPostArticle());
+            articleArea.setHtmlText(selectedPost.getPostArticle());//articleArea.getHtmlText(selectedPost.getPostArticle());
             dateField.setText(selectedPost.getPostNewDate().toString());
             nicknameField.setText(selectedPost.getClientId().toString());
             thumbsUpCountLabel.setText(selectedPost.getThumbsUpCount().toString());

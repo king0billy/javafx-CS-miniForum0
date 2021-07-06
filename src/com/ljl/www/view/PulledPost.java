@@ -86,6 +86,8 @@ public class PulledPost {
         Label labelClientId = new Label("nothing");
         Label labelPostNewDate = new Label("nothing");
         Label labelArticle = new Label("nothing");
+        Label labelRemarkCount = new Label("nothing");
+        Label labelThumbsUpCount = new Label("nothing");
         Pane pane = new Pane();
 
         public XCell() {
@@ -103,7 +105,8 @@ public class PulledPost {
             hbox.setMargin(labelTitle, new Insets(0, 10, 0, 0));
             hbox.setMargin(labelArticle, new Insets(0, 10, 0, 10));
             hbox.setMargin(labelClientId, new Insets(0, 10, 0, 50));
-            hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate
+            hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate,
+                    labelThumbsUpCount,labelRemarkCount
                     ,pane
             );
             HBox.setHgrow(pane, Priority.ALWAYS);
@@ -129,6 +132,8 @@ public class PulledPost {
                 else{labelArticle.setText("文章摘要："+item.getPostArticle().substring(0,20));}
                 labelClientId.setText("作者id："+item.getClientId().toString());
                 labelPostNewDate.setText("创建or最后修改日期："+item.getPostNewDate().toString());
+                labelThumbsUpCount.setText("点赞数: "+item.getThumbsUpCount().toString());
+                labelRemarkCount.setText("评论数: "+item.getRemarkCount().toString());
                 setGraphic(hbox);
             }
         }

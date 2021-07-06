@@ -107,9 +107,11 @@ public class HomePage {
          */
         HBox hbox = new HBox();
         Label labelTitle = new Label("");
-        Label labelClientId = new Label("shit");
-        Label labelPostNewDate = new Label("shit");
-        Label labelArticle = new Label("shit");
+        Label labelClientId = new Label("nothing");
+        Label labelPostNewDate = new Label("nothing");
+        Label labelArticle = new Label("nothing");
+        Label labelRemarkCount = new Label("nothing");
+        Label labelThumbsUpCount = new Label("nothing");
         Pane pane = new Pane();
         //弃用,必须选中listView中的一条才能得到事件的信息,这些按键就啰嗦无用了
         /*
@@ -133,12 +135,13 @@ public class HomePage {
             hbox.setSpacing(10);
             hbox.setMargin(labelTitle, new Insets(0, 10, 0, 0));
             hbox.setMargin(labelArticle, new Insets(0, 10, 0, 10));
-            hbox.setMargin(labelClientId, new Insets(0, 10, 0, 50));
-            hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate
+            hbox.setMargin(labelClientId, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelPostNewDate, new Insets(0, 10, 0, 10));
+            hbox.setMargin(labelRemarkCount, new Insets(0, 10, 0, 10));
+            hbox.getChildren().addAll(labelTitle,labelArticle,labelClientId,labelPostNewDate,
+                    labelThumbsUpCount,labelRemarkCount
                     ,pane
-/*                    , buttonDetail
-                  ,checkBoxThumbsUP,checkBoxFavorite,
-                    buttonComment,buttonReport*/
+/*                    , buttonDetail,checkBoxThumbsUP,checkBoxFavorite,buttonComment,buttonReport*/
             );
             HBox.setHgrow(pane, Priority.ALWAYS);
         }
@@ -160,9 +163,11 @@ public class HomePage {
             if (item != null && !empty) {
                 labelTitle.setText("标题："+item.getPostTitle());
                 if(item.getPostArticle().length()<=20){labelArticle.setText("文章摘要："+item.getPostArticle());}
-                else{labelArticle.setText("文章摘要："+item.getPostArticle().substring(0,20));}
+                else{labelArticle.setText("摘要："+item.getPostArticle().substring(0,20));}
                 labelClientId.setText("作者id："+item.getClientId().toString());
                 labelPostNewDate.setText("创建or最后修改日期："+item.getPostNewDate().toString());
+                labelThumbsUpCount.setText("点赞数: "+item.getThumbsUpCount().toString());
+                labelRemarkCount.setText("评论数: "+item.getRemarkCount().toString());
                 setGraphic(hbox);
             }
         }

@@ -1,8 +1,9 @@
 CREATE TABLE POST(  
 ##post_id VARCHAR(15)PRIMARY KEY,
-post_id BIGINT PRIMARY KEY,client_id BIGINT, 
+post_id BIGINT PRIMARY KEY,
+client_id BIGINT, 
 post_new_date DATETIME DEFAULT '2021-01-01' NOT NULL,
-##post_article varchar(5000) DEFAULT'shit',
+##post_article varchar(5000) DEFAULT'nothing',
 
 post_title varchar(100) DEFAULT (SUBSTR(post_article FROM 1 FOR 10)),##BLOB, TEXT, GEOMETRY or JSON column 'post_title' can't have a default value
 post_article LONGTEXT,

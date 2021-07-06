@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -10,29 +11,33 @@
 <AnchorPane fx:id="childAnchor" prefHeight="729.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ljl.www.view.PostDetailPage">
    <children>
       <TextField fx:id="titleField" layoutX="94.0" layoutY="28.0" prefHeight="30.0" prefWidth="567.0" />
-      <TextArea fx:id="articleArea" layoutX="31.0" layoutY="96.0" prefHeight="244.0" prefWidth="997.0" />
-      <TextArea fx:id="commentArea" layoutX="31.0" layoutY="620.0" prefHeight="65.0" prefWidth="997.0" />
-      <Button fx:id="pullButton" layoutX="1167.0" layoutY="96.0" mnemonicParsing="false" onAction="#editButton" text="更改贴子" />
-      <Button fx:id="authorInfoButton" layoutX="1042.0" layoutY="96.0" mnemonicParsing="false" onAction="#authorButton" text="查看楼主信息" />
+      <TextArea fx:id="articleArea1" layoutX="79.0" layoutY="70.0" prefHeight="9.0" prefWidth="15.0">
+         <font>
+            <Font size="1.0" />
+         </font></TextArea>
+      <TextArea fx:id="commentArea" layoutX="31.0" layoutY="646.0" prefHeight="39.0" prefWidth="1078.0" />
+      <Button fx:id="pullButton" layoutX="1247.0" layoutY="96.0" mnemonicParsing="false" onAction="#editButton" text="更改贴子" />
+      <Button fx:id="authorInfoButton" layoutX="1126.0" layoutY="96.0" mnemonicParsing="false" onAction="#authorButton" prefHeight="30.0" prefWidth="110.0" text="查看楼主信息" />
       <Label layoutX="683.0" layoutY="33.0" text="作者昵称：" />
-      <Label layoutX="959.0" layoutY="33.0" text="发布or打开本页面日期：" />
+      <Label layoutX="959.0" layoutY="33.0" text="最后编辑本贴时间：" />
       <Label fx:id="nicknameField" layoutX="758.0" layoutY="33.0" prefHeight="20.0" prefWidth="197.0" />
       <Label fx:id="dateField" layoutX="1128.0" layoutY="33.0" />
       <Label layoutX="31.0" layoutY="28.0" prefHeight="30.0" prefWidth="54.0" text="标题：" />
       <Label layoutX="31.0" layoutY="67.0" text="正文：" />
-      <Label layoutX="1251.0" layoutY="365.0" lineSpacing="8.0" prefHeight="303.0" prefWidth="0.0" text="评论区" wrapText="true">
+      <Label layoutX="1133.0" layoutY="425.0" lineSpacing="8.0" prefHeight="39.0" prefWidth="156.0" text="评论区" wrapText="true">
          <font>
-            <Font size="52.0" />
+            <Font size="41.0" />
          </font></Label>
-      <Button fx:id="refreshPostDetail" layoutX="1045.0" layoutY="160.0" mnemonicParsing="false" onAction="#refreshButton" text="刷新！" />
-      <ListView fx:id="commentListView" layoutX="31.0" layoutY="347.0" prefHeight="266.0" prefWidth="997.0" />
-      <Button fx:id="insertRemarkButton" layoutX="1047.0" layoutY="560.0" mnemonicParsing="false" onAction="#eventOnInsertRemarkButton" text="发布评论to选中楼层" />
-      <CheckBox fx:id="thumbsUpCheckBox" layoutX="1048.0" layoutY="244.0" mnemonicParsing="false" text="点赞" />
-      <Button fx:id="deleteCurrentPostButton" layoutX="1167.0" layoutY="160.0" mnemonicParsing="false" onAction="#deleteButton" text="删除此帖子！" />
-      <Label layoutX="1048.0" layoutY="283.0" text="点赞数:" />
-      <Label fx:id="thumbsUpCountLabel" layoutX="1106.0" layoutY="283.0" prefHeight="20.0" prefWidth="144.0" text="Label" />
-      <Button fx:id="insertRemarkButton1" layoutX="1050.0" layoutY="652.0" mnemonicParsing="false" onAction="#eventOnInsertRemarkToPostButton" text="发布评论to主贴" />
-      <Button fx:id="deleteCurrentPostButton1" layoutX="1042.0" layoutY="365.0" mnemonicParsing="false" onAction="#eventOnDeleteRemarkButton" text="删除此评论！" />
-      <Button fx:id="pullButton1" layoutX="1049.0" layoutY="604.0" mnemonicParsing="false" onAction="#eventOnEditRemarkButton" text="更改or发布" />
+      <Button fx:id="refreshPostDetail" layoutX="1128.0" layoutY="160.0" mnemonicParsing="false" onAction="#refreshButton" text="刷新！" />
+      <ListView fx:id="commentListView" layoutX="31.0" layoutY="425.0" prefHeight="209.0" prefWidth="1078.0" />
+      <Button fx:id="insertRemarkButton" layoutX="1115.0" layoutY="610.0" mnemonicParsing="false" onAction="#eventOnInsertRemarkButton" text="发布评论to选中楼层" />
+      <CheckBox fx:id="thumbsUpCheckBox" layoutX="1132.0" layoutY="251.0" mnemonicParsing="false" text="点赞" />
+      <Button fx:id="deleteCurrentPostButton" layoutX="1247.0" layoutY="160.0" mnemonicParsing="false" onAction="#deleteButton" text="删除此帖" />
+      <Label layoutX="1132.0" layoutY="290.0" text="点赞数:" />
+      <Label fx:id="thumbsUpCountLabel" layoutX="1189.0" layoutY="290.0" prefHeight="21.0" prefWidth="88.0" text="Label" />
+      <Button fx:id="insertRemarkButton1" layoutX="1145.0" layoutY="653.0" mnemonicParsing="false" onAction="#eventOnInsertRemarkToPostButton" text="发布评论to主贴" />
+      <Button fx:id="deleteCurrentPostButton1" layoutX="1161.0" layoutY="521.0" mnemonicParsing="false" onAction="#eventOnDeleteRemarkButton" text="删除此评论！" />
+      <Button fx:id="pullButton1" layoutX="1161.0" layoutY="566.0" mnemonicParsing="false" onAction="#eventOnEditRemarkButton" text="更改选中评论" />
+      <HTMLEditor fx:id="articleArea" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="31.0" layoutY="87.0" prefHeight="328.0" prefWidth="1078.0" />
    </children>
 </AnchorPane>

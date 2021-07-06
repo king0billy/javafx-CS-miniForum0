@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.web.HTMLEditor;
+
 import java.io.*;
 import java.sql.Timestamp;
 
@@ -31,7 +33,7 @@ public class NewPost{
     private Label dateField;
 
     @FXML
-    private TextArea articleArea;
+    private HTMLEditor articleArea;
 
     @FXML
     private Label nicknameField;
@@ -51,12 +53,15 @@ public class NewPost{
             if(Login.clientLocal.getClientPrivilege()<=2){
                 Hint.pop("你仅能浏览!");return;
             }
-            if(articleArea.getText().length()<=10){
+            if(articleArea.getHtmlText().length()<=10){
                 Hint.pop("贴子不能少于10个字!");return;
             }
             postToPull.setClientId(Long.parseLong(nicknameField.getText()));
-            postToPull.setPostTitle(titleField.getText());
-            postToPull.setPostArticle(articleArea.getText());
+            if(titleField.getText().length()>0)postToPull.setPostTitle(titleField.getText());
+            else{
+                postToPull.setPostTitle(articleArea.getHtmlText().substring(0,10));
+            }
+            postToPull.setPostArticle(articleArea.getHtmlText());
             //postToPull.setPostNewDate(new Timestamp(System.currentTimeMillis()));
 
             Post replyPost = (Post) Hint.send$Receive("pullNewPost",postToPull);
